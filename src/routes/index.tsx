@@ -216,25 +216,6 @@ function Index() {
 
             <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:shadow-[0_0_80px_-10px_oklch(0.82_0.17_75/0.65)]">
               <img src={profile} alt="Portrait of Hasanul Haque Moon" className="w-full h-auto object-cover" />
-              {/* floating socials */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border z-10">
-                {socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.h}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={s.label}
-                    className="w-9 h-9 grid place-items-center rounded-full text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all magnetic"
-                  >
-                    <s.Icon size={16} strokeWidth={2} />
-                  </a>
-                ))}
-              </div>
-              {/* music off pill */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border text-xs text-muted-foreground flex items-center gap-2 z-10">
-                <span className="w-2 h-2 rounded-full bg-muted-foreground" /> Music Off
-              </div>
             </div>
 
             {/* Circular rotating text badge — top-right edge */}
