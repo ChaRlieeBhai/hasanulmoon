@@ -283,6 +283,7 @@ function Index() {
       <div
         className={`fixed inset-0 z-[100] grid place-items-center overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         style={{
+          backgroundColor: "oklch(0.12 0.04 38)",
           backgroundImage: `url(${introBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center 18%",
