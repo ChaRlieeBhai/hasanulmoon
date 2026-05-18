@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
@@ -648,7 +648,7 @@ function Index() {
                   title="Locked — enter PIN"
                   className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary glow-primary-sm hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
                 >
-                  <Camera size={20} strokeWidth={2.2} />
+                  <Lock size={20} strokeWidth={2.2} />
                 </button>
               </div>
             </div>
@@ -959,7 +959,7 @@ function Index() {
 
             <div className="text-center mb-5">
               <div className="mx-auto w-12 h-12 rounded-full border border-white/25 bg-white/10 grid place-items-center text-primary glow-primary-sm">
-                <Camera size={20} strokeWidth={2.2} />
+                <Lock size={20} strokeWidth={2.2} />
               </div>
               <h3 className="mt-3 text-lg font-medium text-white">Locked</h3>
               <p className="text-xs text-white/70">Enter 4-digit PIN to unlock</p>
