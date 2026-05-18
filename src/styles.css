@@ -229,6 +229,9 @@ html, body, header, section, article, aside, nav, footer, main,
   100% { width: 100%; }
 }
 
+/* Skip rendering/paint for off-screen heavy sections */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+
 /* ---------- Mobile performance optimizations ---------- */
 @media (max-width: 768px) {
   /* background-attachment: fixed is GPU-expensive on mobile */
