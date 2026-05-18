@@ -475,6 +475,34 @@ function Index() {
           <p className="text-3xl text-primary" style={{ fontFamily: '"Allison", cursive' }}>Charlie</p>
         </div>
       </footer>
+
+      {/* Scroll to top */}
+      <button
+        onClick={() => lenisRef.current?.scrollTo(0)}
+        aria-label="Scroll to top"
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full border border-border bg-card/50 backdrop-blur-xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.5)] transition-all duration-500 grid place-items-center ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
+      >
+        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <circle
+            cx="50" cy="50" r="44"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            className="text-border"
+          />
+          <circle
+            cx="50" cy="50" r="44"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            className="text-primary transition-all duration-150"
+            strokeDasharray={2 * Math.PI * 44}
+            strokeDashoffset={2 * Math.PI * 44 * (1 - scrollProgress)}
+          />
+        </svg>
+        <ArrowUp size={20} className="relative text-primary" />
+      </button>
     </div>
   );
 }
