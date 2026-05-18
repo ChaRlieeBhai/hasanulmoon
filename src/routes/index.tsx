@@ -647,15 +647,18 @@ function Index() {
             { img: work3, title: "Reach" },
             { img: work4, title: "Details" },
           ].map((w) => (
-            <div
+            <button
+              type="button"
               key={w.title}
+              onClick={() => setLightbox({ img: w.img, title: w.title })}
               className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
             >
               <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
                 <img srcSet={w.img} sizes="(max-width: 640px) 90vw, 400px" alt={w.title} loading="lazy" decoding="async" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
               </div>
               <p className="mt-5 font-display text-2xl md:text-3xl italic group-hover:text-primary transition-colors">{w.title}</p>
-            </div>
+              <span className="mt-2 text-xs uppercase tracking-[0.3em] text-primary opacity-0 group-hover:opacity-100 transition-opacity">View image ↗</span>
+            </button>
           ))}
         </div>
       </section>
