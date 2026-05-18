@@ -95,6 +95,29 @@
   --glow: oklch(1 0 0);
 }
 
+:root[data-theme="sky"] .glow-ring,
+:root[data-theme="sky"] .glow-ring:hover,
+:root[data-theme="sky"] .glow-primary-hover:hover,
+:root[data-theme="sky"] .group:hover .group-hover\:glow-primary-hover {
+  box-shadow: none !important;
+}
+:root[data-theme="sky"] .hover\:text-primary:hover,
+:root[data-theme="sky"] .char-rise:hover,
+:root[data-theme="sky"] .arrow-link:hover {
+  color: inherit !important;
+}
+:root[data-theme="sky"] .hover\:border-primary:hover {
+  border-color: var(--border) !important;
+}
+:root[data-theme="sky"] .tilt-card:hover {
+  transform: none !important;
+  border-color: var(--border) !important;
+  background-color: transparent !important;
+}
+:root[data-theme="sky"] .reveal-line:hover::after {
+  right: 100% !important;
+}
+
 html, body, .grain, .stars, header, section, div, p, h1, h2, h3, a, span, button, ul, li, img {
   transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
 }

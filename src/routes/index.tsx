@@ -378,16 +378,24 @@ function Index() {
             {/* Hover glow */}
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
-            <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:glow-primary-hover">
-              <img
-                key={themeIdx}
-                src={themeCycle[themeIdx].img}
-                alt="Portrait of Hasanul Haque Moon"
-                fetchPriority="high"
-                decoding="async"
-                onClick={() => setThemeIdx((i) => (i + 1) % themeCycle.length)}
-                className="w-full h-auto object-cover animate-fade-in cursor-pointer select-none"
-              />
+            <div
+              className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:glow-primary-hover cursor-pointer"
+              onClick={() => setThemeIdx((i) => (i + 1) % themeCycle.length)}
+            >
+              <div className="relative w-full">
+                {themeCycle.map((t, i) => (
+                  <img
+                    key={i}
+                    src={t.img}
+                    alt="Portrait of Hasanul Haque Moon"
+                    fetchPriority={i === 0 ? "high" : "low"}
+                    decoding="async"
+                    draggable={false}
+                    className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-700 ease-out`}
+                    style={{ opacity: i === themeIdx ? 1 : 0 }}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* @hasanulmoon liquid glass tag + popover */}
