@@ -168,6 +168,7 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
   const [activeSkill, setActiveSkill] = useState<(typeof skills)[number] | null>(null);
+  const [lightbox, setLightbox] = useState<{ img: string; title: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
