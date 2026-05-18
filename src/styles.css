@@ -118,8 +118,11 @@
   right: 100% !important;
 }
 
-html, body, .grain, .stars, header, section, div, p, h1, h2, h3, a, span, button, ul, li, img {
-  transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+html, body, header, section, article, aside, nav, footer, main,
+.grain, .stars, .tilt-card, .glow-ring,
+[class*="bg-card"], [class*="bg-background"], [class*="bg-primary"], [class*="bg-accent"], [class*="bg-muted"], [class*="bg-secondary"],
+[class*="border-"], [class*="text-primary"], [class*="text-muted"], [class*="text-accent"], [class*="text-foreground"] {
+  transition: background-color 0.7s ease, color 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
 }
 
 @layer base {
