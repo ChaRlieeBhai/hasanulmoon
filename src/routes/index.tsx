@@ -182,14 +182,21 @@ function Index() {
   const [typed, setTyped] = useState("");
   useEffect(() => {
     if (loading) return;
-    setTyped("");
     let i = 0;
-    const id = window.setInterval(() => {
+    let cancelled = false;
+    setTyped("");
+    const tick = () => {
+      if (cancelled) return;
       i += 1;
       setTyped(TAGLINE.slice(0, i));
-      if (i >= TAGLINE.length) window.clearInterval(id);
-    }, 75);
-    return () => window.clearInterval(id);
+      if (i < TAGLINE.length) window.setTimeout(tick, 90);
+    };
+    const start = window.setTimeout(tick, 300);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(start);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const toggleMusic = () => {
