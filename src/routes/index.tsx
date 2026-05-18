@@ -11,14 +11,35 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const skills = [
-  "Computer Applications",
-  "Microsoft Office",
-  "Digital Marketing",
-  "Communication",
-  "Customer Handling",
-  "Canva Design",
-  "Fluent English",
+const skills: { name: string; brief: string }[] = [
+  {
+    name: "Computer Applications",
+    brief: "Practical knowledge of everyday software — operating systems, productivity suites, browsers, and file management — used to solve real tasks quickly and confidently in any digital workspace.",
+  },
+  {
+    name: "Microsoft Office",
+    brief: "Hands-on with Word, Excel, and PowerPoint — drafting documents, building spreadsheets with formulas and charts, and creating clean presentations for business communication.",
+  },
+  {
+    name: "Digital Marketing",
+    brief: "Promoting products and brands online through social media, content, SEO basics, paid ads, and analytics — turning attention into engagement, leads, and sales.",
+  },
+  {
+    name: "Communication",
+    brief: "Clear, respectful, and confident exchange of ideas — listening actively, explaining simply, and adapting tone to the audience whether in writing or in person.",
+  },
+  {
+    name: "Customer Handling",
+    brief: "Welcoming customers, understanding their needs, resolving concerns patiently, and turning everyday interactions into trust and repeat business.",
+  },
+  {
+    name: "Canva Design",
+    brief: "Designing posts, banners, ads, and presentations in Canva — combining typography, color, and layout to produce on-brand visuals fast, without needing complex design software.",
+  },
+  {
+    name: "Fluent English",
+    brief: "Comfortable speaking, reading, and writing in English — able to communicate naturally with customers, colleagues, and international audiences in both casual and professional contexts.",
+  },
 ];
 
 const education = [
@@ -77,6 +98,7 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
+  const [activeSkill, setActiveSkill] = useState<(typeof skills)[number] | null>(null);
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -406,9 +428,14 @@ function Index() {
         <SectionTitle kicker="Things I do well" title="Skills" />
         <div className="flex flex-wrap justify-center gap-3">
           {skills.map((s) => (
-            <span key={s} className="px-5 py-3 text-sm md:text-base rounded-full border border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 magnetic cursor-default">
-              {s}
-            </span>
+            <button
+              key={s.name}
+              type="button"
+              onClick={() => setActiveSkill(s)}
+              className="px-5 py-3 text-sm md:text-base rounded-full border border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 magnetic cursor-pointer"
+            >
+              {s.name}
+            </button>
           ))}
         </div>
       </section>
