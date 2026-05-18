@@ -238,17 +238,25 @@ function Index() {
             </div>
 
             {/* Circular rotating text badge — top-right edge */}
-            <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10 w-28 h-28 md:w-36 md:h-36 z-20 pointer-events-none">
+            <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10 w-28 h-28 md:w-36 md:h-36 z-20">
               <div className="relative w-full h-full">
-                <svg viewBox="0 0 200 200" className="spin-slow w-full h-full">
+                <svg viewBox="0 0 200 200" className="spin-slow w-full h-full pointer-events-none">
                   <defs>
-                    <path id="circlePath" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+                    <path id="circlePath" d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" />
                   </defs>
-                  <text fill="currentColor" className="text-primary" style={{ fontSize: "17px", letterSpacing: "3px", fontFamily: "Inter, sans-serif", fontWeight: 700 }}>
-                    <textPath href="#circlePath">MARKETING SPECIALIST  ➤  </textPath>
+                  <text fill="currentColor" className="text-primary" style={{ fontSize: "22px", letterSpacing: "6px", fontFamily: "Inter, sans-serif", fontWeight: 700 }}>
+                    <textPath href="#circlePath" startOffset="0">MARKETING  •  SPECIALIST  •  </textPath>
                   </text>
                 </svg>
-                <div className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.7)]" />
+                <a
+                  href="https://www.facebook.com/hasanulmoon"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook · hasanulmoon"
+                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.7)] hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                >
+                  <Facebook size={20} strokeWidth={2.2} />
+                </a>
               </div>
             </div>
           </div>
