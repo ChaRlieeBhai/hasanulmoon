@@ -103,6 +103,65 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
   );
 }
 
+function MatrixRain({ active }: { active: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    if (!active) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const dpr = window.devicePixelRatio || 1;
+    const resize = () => {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    const fontSize = 16 * dpr;
+    const cols = Math.floor(canvas.width / fontSize);
+    const drops = Array(cols).fill(0).map(() => Math.random() * -50);
+    const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJ0123456789@#$%&*<>/\\".split("");
+    let raf = 0;
+    const draw = () => {
+      ctx.fillStyle = "rgba(0,0,0,0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = `${fontSize}px monospace`;
+      for (let i = 0; i < drops.length; i++) {
+        const ch = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+        ctx.fillStyle = Math.random() > 0.975 ? "#d6ffe0" : "#39ff7a";
+        ctx.fillText(ch, x, y);
+        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, [active]);
+  return (
+    <>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />
+      <div className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-40"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(0,255,120,0.08) 0px, rgba(0,255,120,0.08) 1px, transparent 2px, transparent 4px)",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none animate-pulse"
+        style={{ boxShadow: "inset 0 0 200px rgba(0,255,120,0.35)" }}
+      />
+    </>
+  );
+}
+
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
@@ -123,7 +182,7 @@ function Index() {
   useEffect(() => {
     const id = setInterval(() => {
       setThemeIdx((i) => (i + 1) % themeCycle.length);
-    }, 15000);
+    }, 60000);
     return () => clearInterval(id);
   }, []);
 
@@ -177,13 +236,18 @@ function Index() {
     <div className="grain relative min-h-screen overflow-hidden">
       {/* Opening loader */}
       <div
-        className={`fixed inset-0 z-[100] grid place-items-center bg-background transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-[100] grid place-items-center bg-black overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         aria-hidden={!loading}
       >
-        <div className="flex flex-col items-center gap-6 w-[80%] max-w-md">
+        <MatrixRain active={loading} />
+        <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
-            className={`text-primary text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
-            style={{ fontFamily: '"Allison", cursive' }}
+            className={`text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+            style={{
+              fontFamily: '"Allison", cursive',
+              color: "#39ff7a",
+              textShadow: "0 0 20px #39ff7a, 0 0 40px rgba(57,255,122,0.6), 2px 0 0 rgba(255,0,80,0.6), -2px 0 0 rgba(0,200,255,0.6)",
+            }}
           >
             Charlie
           </p>
@@ -315,7 +379,15 @@ function Index() {
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
             <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:glow-primary-hover">
-              <img key={themeIdx} src={themeCycle[themeIdx].img} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover animate-fade-in" />
+              <img
+                key={themeIdx}
+                src={themeCycle[themeIdx].img}
+                alt="Portrait of Hasanul Haque Moon"
+                fetchPriority="high"
+                decoding="async"
+                onClick={() => setThemeIdx((i) => (i + 1) % themeCycle.length)}
+                className="w-full h-auto object-cover animate-fade-in cursor-pointer select-none"
+              />
             </div>
 
             {/* @hasanulmoon liquid glass tag + popover */}
