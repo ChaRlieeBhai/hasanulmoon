@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin } from "lucide-react";
 import profile from "@/assets/profile.png";
 
 export const Route = createFileRoute("/")({
@@ -252,38 +252,60 @@ function Index() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Say hello" title="Contact" />
-        <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto">
-          <div className="space-y-5">
-            <a href="mailto:hasanulhaquemoon@gmail.com" className="arrow-link block text-lg md:text-xl font-display border-b border-border pb-3">
-              hasanulhaquemoon@gmail.com <span>→</span>
-            </a>
-            <a href="tel:+8801823444069" className="arrow-link block text-lg md:text-xl font-display border-b border-border pb-3">
-              01823 444069 <span>→</span>
-            </a>
-            <a href="tel:+8801521758718" className="arrow-link block text-lg md:text-xl font-display border-b border-border pb-3">
-              01521 758718 <span>→</span>
-            </a>
-            <p className="text-muted-foreground pt-2">Narail Sadar, Narail · Bangladesh</p>
-          </div>
-          <ul className="flex md:justify-end gap-3 items-start">
-            {socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.h}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  title={s.label}
-                  className="w-12 h-12 grid place-items-center rounded-full border border-border text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-110 transition-all magnetic"
-                >
-                  <s.Icon size={18} />
-                </a>
-              </li>
-            ))}
+
+        {/* Liquid glass card */}
+        <div className="relative rounded-3xl overflow-hidden border border-border/60 bg-card/30 backdrop-blur-xl shadow-[0_20px_80px_-20px_oklch(0_0_0/0.5)]">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
+          <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-accent/20 blur-3xl pointer-events-none" />
+
+          <ul className="relative divide-y divide-border/40">
+            {[
+              { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
+              { Icon: Phone, label: "Phone", value: "01823 444069", href: "tel:+8801823444069" },
+              { Icon: Phone, label: "Phone", value: "01521 758718", href: "tel:+8801521758718" },
+              { Icon: MapPin, label: "Location", value: "Narail Sadar, Narail · Bangladesh", href: null as string | null },
+            ].map((row, i) => {
+              const Inner = (
+                <div className="flex items-center gap-4 p-5 md:p-6 group transition-colors hover:bg-primary/5">
+                  <span className="w-11 h-11 shrink-0 grid place-items-center rounded-full bg-background/60 border border-border text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 transition-all">
+                    <row.Icon size={18} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{row.label}</p>
+                    <p className="text-base md:text-lg font-display truncate group-hover:text-primary transition-colors">{row.value}</p>
+                  </div>
+                  {row.href && <span className="text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2 transition-all">→</span>}
+                </div>
+              );
+              return (
+                <li key={i}>
+                  {row.href ? <a href={row.href}>{Inner}</a> : Inner}
+                </li>
+              );
+            })}
           </ul>
         </div>
+
+        {/* Socials */}
+        <ul className="mt-10 flex justify-center gap-4">
+          {socials.map((s) => (
+            <li key={s.label}>
+              <a
+                href={s.h}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={s.label}
+                title={s.label}
+                className="w-14 h-14 md:w-16 md:h-16 grid place-items-center rounded-full border border-border bg-card/30 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-110 hover:-translate-y-1 transition-all magnetic shadow-lg"
+              >
+                <s.Icon size={22} />
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <footer className="border-t border-border/50 relative">
