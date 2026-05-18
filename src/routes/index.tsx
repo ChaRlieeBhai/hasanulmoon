@@ -180,6 +180,39 @@ function Index() {
   // Typewriter effect for hero tagline
   const TAGLINE = "A life without plot armour";
   const [typed, setTyped] = useState("");
+  const [lockOpen, setLockOpen] = useState(false);
+  const [pin, setPin] = useState("");
+  const [pinError, setPinError] = useState(false);
+  const SHOT_URL = "https://shotbymoon.lovable.app";
+  const CORRECT_PIN = "2003";
+
+  function handlePinPress(digit: string) {
+    setPinError(false);
+    setPin((prev) => {
+      if (prev.length >= 4) return prev;
+      const next = prev + digit;
+      if (next.length === 4) {
+        if (next === CORRECT_PIN) {
+          setTimeout(() => {
+            window.open(SHOT_URL, "_blank", "noreferrer");
+            setLockOpen(false);
+            setPin("");
+          }, 250);
+        } else {
+          setTimeout(() => {
+            setPinError(true);
+            setPin("");
+          }, 200);
+        }
+      }
+      return next;
+    });
+  }
+
+  function handlePinDelete() {
+    setPinError(false);
+    setPin((prev) => prev.slice(0, -1));
+  }
   useEffect(() => {
     if (loading) return;
     let i = 0;
