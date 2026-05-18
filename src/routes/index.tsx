@@ -222,15 +222,20 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || loading || activeSkill ? "hidden" : "";
+    document.body.style.overflow = menuOpen || loading ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen, loading, activeSkill]);
+  }, [menuOpen, loading]);
 
   useEffect(() => {
     if (!activeSkill) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setActiveSkill(null);
+    const onClick = () => setActiveSkill(null);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("click", onClick);
+    };
   }, [activeSkill]);
 
   return (
