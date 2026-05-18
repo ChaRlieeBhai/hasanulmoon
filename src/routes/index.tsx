@@ -546,16 +546,42 @@ function Index() {
       <section id="skills" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Things I do well" title="Skills" />
         <div className="flex flex-wrap justify-center gap-3">
-          {skills.map((s) => (
-            <button
-              key={s.name}
-              type="button"
-              onClick={() => setActiveSkill(s)}
-              className="px-5 py-3 text-sm md:text-base rounded-full border border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 magnetic cursor-pointer"
-            >
-              {s.name}
-            </button>
-          ))}
+          {skills.map((s) => {
+            const isOpen = activeSkill?.name === s.name;
+            return (
+              <div key={s.name} className="relative">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveSkill(isOpen ? null : s);
+                  }}
+                  aria-expanded={isOpen}
+                  className={`px-5 py-3 text-sm md:text-base rounded-full border transition-all duration-300 magnetic cursor-pointer ${
+                    isOpen
+                      ? "bg-primary text-primary-foreground border-primary glow-primary-sm"
+                      : "border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary"
+                  }`}
+                >
+                  {s.name}
+                </button>
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-3 z-30 w-[260px] sm:w-[300px] transition-all duration-300 ${
+                    isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"
+                  }`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="relative rounded-2xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl glow-primary-md p-4 shadow-[0_12px_40px_-12px_oklch(0_0_0/0.5)]">
+                    <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-40 pointer-events-none" />
+                    <p className="relative text-[9px] uppercase tracking-[0.3em] text-primary mb-1.5">Skill</p>
+                    <h3 className="relative font-display text-lg md:text-xl italic text-foreground mb-2">{s.name}</h3>
+                    <p className="relative text-xs md:text-sm text-foreground/85 leading-relaxed">{s.brief}</p>
+                  </div>
+                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 rotate-45 bg-white/10 backdrop-blur-2xl border-r border-b border-primary/40" />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
