@@ -34,8 +34,8 @@ const skills: { name: string; brief: string }[] = [
     brief: "Promoting products and brands online through social media, content, SEO basics, paid ads, and analytics — turning attention into engagement, leads, and sales.",
   },
   {
-    name: "Communication",
-    brief: "Clear, respectful, and confident exchange of ideas — listening actively, explaining simply, and adapting tone to the audience whether in writing or in person.",
+    name: "Web Developer",
+    brief: "Building responsive, modern websites with clean HTML, CSS, and JavaScript — crafting fast, accessible interfaces and bringing designs to life on the web.",
   },
   {
     name: "Customer Handling",
