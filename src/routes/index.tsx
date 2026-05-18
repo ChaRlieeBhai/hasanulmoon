@@ -698,36 +698,6 @@ function Index() {
         </div>
       </footer>
 
-      {/* Skill brief modal */}
-      <div
-        className={`fixed inset-0 z-[60] transition-all duration-400 ${activeSkill ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        onClick={() => setActiveSkill(null)}
-      >
-        <div className={`absolute inset-0 bg-background/60 backdrop-blur-md transition-opacity duration-400 ${activeSkill ? "opacity-100" : "opacity-0"}`} />
-        <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md transition-all duration-400 ${activeSkill ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="relative rounded-3xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl glow-primary-xl p-7">
-            <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50 pointer-events-none" />
-            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-accent/25 blur-3xl pointer-events-none" />
-
-            <button
-              onClick={() => setActiveSkill(null)}
-              aria-label="Close"
-              className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full border border-white/20 bg-white/10 text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
-            >
-              <X size={16} />
-            </button>
-
-            <p className="relative text-[10px] uppercase tracking-[0.35em] text-primary mb-3">Skill</p>
-            <h3 className="relative font-display text-3xl md:text-4xl italic text-foreground glow-text-primary">{activeSkill?.name}</h3>
-            <p className="relative mt-5 text-sm md:text-base text-foreground/85 leading-relaxed">{activeSkill?.brief}</p>
-          </div>
-        </div>
-      </div>
-
       {/* Scroll to top */}
       <button
         onClick={() => lenisRef.current?.scrollTo(0)}
