@@ -236,10 +236,11 @@ function Index() {
     <div className="grain relative min-h-screen overflow-hidden">
       {/* Opening loader */}
       <div
-        className={`fixed inset-0 z-[100] grid place-items-center bg-background transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-[100] grid place-items-center bg-black overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         aria-hidden={!loading}
       >
-        <div className="flex flex-col items-center gap-6 w-[80%] max-w-md">
+        <MatrixRain active={loading} />
+        <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
             className={`text-primary text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
             style={{ fontFamily: '"Allison", cursive' }}
