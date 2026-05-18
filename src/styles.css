@@ -156,3 +156,8 @@
   0%, 100% { opacity: 0.45; }
   50% { opacity: 0.85; }
 }
+
+@keyframes shimmer {
+  0% { transform: translateX(-150%) rotate(45deg); }
+  100% { transform: translateX(150%) rotate(45deg); }
+}
