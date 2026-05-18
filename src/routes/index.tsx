@@ -222,15 +222,20 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || loading || activeSkill ? "hidden" : "";
+    document.body.style.overflow = menuOpen || loading ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen, loading, activeSkill]);
+  }, [menuOpen, loading]);
 
   useEffect(() => {
     if (!activeSkill) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setActiveSkill(null);
+    const onClick = () => setActiveSkill(null);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("click", onClick);
+    };
   }, [activeSkill]);
 
   return (
@@ -546,16 +551,42 @@ function Index() {
       <section id="skills" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Things I do well" title="Skills" />
         <div className="flex flex-wrap justify-center gap-3">
-          {skills.map((s) => (
-            <button
-              key={s.name}
-              type="button"
-              onClick={() => setActiveSkill(s)}
-              className="px-5 py-3 text-sm md:text-base rounded-full border border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 magnetic cursor-pointer"
-            >
-              {s.name}
-            </button>
-          ))}
+          {skills.map((s) => {
+            const isOpen = activeSkill?.name === s.name;
+            return (
+              <div key={s.name} className="relative">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveSkill(isOpen ? null : s);
+                  }}
+                  aria-expanded={isOpen}
+                  className={`px-5 py-3 text-sm md:text-base rounded-full border transition-all duration-300 magnetic cursor-pointer ${
+                    isOpen
+                      ? "bg-primary text-primary-foreground border-primary glow-primary-sm"
+                      : "border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary"
+                  }`}
+                >
+                  {s.name}
+                </button>
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-3 z-30 w-[260px] sm:w-[300px] transition-all duration-300 ${
+                    isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"
+                  }`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="relative rounded-2xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl glow-primary-md p-4 shadow-[0_12px_40px_-12px_oklch(0_0_0/0.5)]">
+                    <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-40 pointer-events-none" />
+                    <p className="relative text-[9px] uppercase tracking-[0.3em] text-primary mb-1.5">Skill</p>
+                    <h3 className="relative font-display text-lg md:text-xl italic text-foreground mb-2">{s.name}</h3>
+                    <p className="relative text-xs md:text-sm text-foreground/85 leading-relaxed">{s.brief}</p>
+                  </div>
+                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 rotate-45 bg-white/10 backdrop-blur-2xl border-r border-b border-primary/40" />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -671,36 +702,6 @@ function Index() {
           <p className="text-3xl text-primary" style={{ fontFamily: '"Allison", cursive' }}>Charlie</p>
         </div>
       </footer>
-
-      {/* Skill brief modal */}
-      <div
-        className={`fixed inset-0 z-[60] transition-all duration-400 ${activeSkill ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        onClick={() => setActiveSkill(null)}
-      >
-        <div className={`absolute inset-0 bg-background/60 backdrop-blur-md transition-opacity duration-400 ${activeSkill ? "opacity-100" : "opacity-0"}`} />
-        <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md transition-all duration-400 ${activeSkill ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="relative rounded-3xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl glow-primary-xl p-7">
-            <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50 pointer-events-none" />
-            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-accent/25 blur-3xl pointer-events-none" />
-
-            <button
-              onClick={() => setActiveSkill(null)}
-              aria-label="Close"
-              className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full border border-white/20 bg-white/10 text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
-            >
-              <X size={16} />
-            </button>
-
-            <p className="relative text-[10px] uppercase tracking-[0.35em] text-primary mb-3">Skill</p>
-            <h3 className="relative font-display text-3xl md:text-4xl italic text-foreground glow-text-primary">{activeSkill?.name}</h3>
-            <p className="relative mt-5 text-sm md:text-base text-foreground/85 leading-relaxed">{activeSkill?.brief}</p>
-          </div>
-        </div>
-      </div>
 
       {/* Scroll to top */}
       <button
