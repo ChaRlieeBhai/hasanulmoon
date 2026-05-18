@@ -425,7 +425,42 @@ function Index() {
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
               <span className="text-primary italic">Hasanul</span>
               <br />
-              <span>Haque Moon</span>
+              <span className="inline-flex items-center gap-3 flex-wrap">
+                <span>Haque Moon</span>
+                <span
+                  role="img"
+                  aria-label="Verified"
+                  title="Verified"
+                  className="relative inline-flex items-center justify-center align-middle"
+                  style={{ width: "0.7em", height: "0.7em" }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 rounded-full blur-md opacity-60"
+                    style={{ background: "radial-gradient(circle, oklch(0.7 0.18 240 / 0.7), transparent 70%)" }}
+                  />
+                  <svg viewBox="0 0 24 24" className="relative w-full h-full drop-shadow-[0_2px_8px_rgba(56,135,255,0.45)]">
+                    <defs>
+                      <linearGradient id="vbadge" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#4aa3ff" />
+                        <stop offset="100%" stopColor="#1c6ee0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      fill="url(#vbadge)"
+                      d="M12 1.5l2.39 1.86 2.99-.42 1.27 2.74 2.74 1.27-.42 2.99L22.5 12l-1.86 2.39.42 2.99-2.74 1.27-1.27 2.74-2.99-.42L12 22.5l-2.39-1.86-2.99.42-1.27-2.74-2.74-1.27.42-2.99L1.5 12l1.86-2.39-.42-2.99 2.74-1.27L6.95 2.61l2.99.42L12 1.5z"
+                    />
+                    <path
+                      d="M7.5 12.3l3 3 6-6.2"
+                      fill="none"
+                      stroke="#ffffff"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </span>
             </h1>
             <p className="mt-8 max-w-lg text-lg text-muted-foreground leading-relaxed">
               Motivated quick learner with a foundation in <span className="text-primary">computer applications</span>,
