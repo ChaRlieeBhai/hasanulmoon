@@ -190,6 +190,25 @@ function Index() {
 
   useEffect(() => {
     let raf = 0;
+    let scrollHandler: (() => void) | null = null;
+    const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+    const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (isMobile || prefersReduced) {
+      // Native scroll on mobile — cheaper, no rAF loop
+      scrollHandler = () => {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const p = max > 0 ? doc.scrollTop / max : 0;
+        setScrollProgress(p);
+        setShowTopBtn(p > 0.08);
+      };
+      window.addEventListener("scroll", scrollHandler, { passive: true });
+      return () => {
+        if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
+      };
+    }
+
     (async () => {
       const Lenis = (await import("lenis")).default;
       const lenis = new Lenis({
@@ -506,7 +525,7 @@ function Index() {
       </section>
 
       {/* Education */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="education" className="cv-auto relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Where I learned" title="Education" />
         <div className="space-y-4">
           {education.map((e) => (
@@ -523,7 +542,7 @@ function Index() {
       </section>
 
       {/* Experience */}
-      <section id="work" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="work" className="cv-auto relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="What I've done" title="Experience" />
         <div className="space-y-4">
           {experience.map((e) => (
@@ -549,7 +568,7 @@ function Index() {
       </section>
 
       {/* Skills */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="skills" className="cv-auto relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Things I do well" title="Skills" />
         <div className="flex flex-wrap justify-center gap-3">
           {skills.map((s) => {
@@ -605,7 +624,7 @@ function Index() {
       </section>
 
       {/* Works */}
-      <section id="works" className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
+      <section id="works" className="cv-auto relative max-w-6xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Stuff I made" title="Works" />
 
         <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
@@ -641,7 +660,7 @@ function Index() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-24 md:py-32">
+      <section id="contact" className="cv-auto relative max-w-3xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Say hello" title="Contact" />
 
         {/* Liquid glass card */}
@@ -706,7 +725,10 @@ function Index() {
 
       {/* Scroll to top */}
       <button
-        onClick={() => lenisRef.current?.scrollTo(0)}
+        onClick={() => {
+          if (lenisRef.current) lenisRef.current.scrollTo(0);
+          else window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         aria-label="Scroll to top"
         className={`fixed bottom-5 right-5 z-50 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-white/10 backdrop-blur-2xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.4)] transition-all duration-500 grid place-items-center overflow-hidden group hover:scale-110 hover:glow-primary-md ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
       >
