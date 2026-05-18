@@ -238,8 +238,26 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 2200);
-    return () => clearTimeout(t);
+    const MIN_MS = 1800;
+    const MAX_MS = 4500;
+    const start = Date.now();
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      const elapsed = Date.now() - start;
+      const wait = Math.max(0, MIN_MS - elapsed);
+      window.setTimeout(() => setLoading(false), wait);
+    };
+    const img = new Image();
+    img.src = introBg;
+    if (img.complete) finish();
+    else {
+      img.onload = finish;
+      img.onerror = finish;
+    }
+    const hardCap = window.setTimeout(finish, MAX_MS);
+    return () => window.clearTimeout(hardCap);
   }, []);
 
   useEffect(() => {
@@ -265,6 +283,7 @@ function Index() {
       <div
         className={`fixed inset-0 z-[100] grid place-items-center overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         style={{
+          backgroundColor: "oklch(0.12 0.04 38)",
           backgroundImage: `url(${introBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center 18%",
