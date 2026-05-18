@@ -76,15 +76,47 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const t = setTimeout(() => setLoading(false), 2200);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen || loading ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  }, [menuOpen, loading]);
 
   return (
     <div className="grain relative min-h-screen overflow-hidden">
+      {/* Opening loader */}
+      <div
+        className={`fixed inset-0 z-[100] grid place-items-center bg-background transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        aria-hidden={!loading}
+      >
+        <div className="flex flex-col items-center gap-6 w-[80%] max-w-md">
+          <p
+            className={`text-primary text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+            style={{ fontFamily: '"Allison", cursive' }}
+          >
+            Charlie
+          </p>
+          <div className="w-full h-[3px] rounded-full bg-border/60 overflow-hidden">
+            <div
+              className="h-full bg-primary rounded-full"
+              style={{
+                width: loading ? "100%" : "100%",
+                animation: loading ? "loader-fill 2s ease-out forwards" : "none",
+              }}
+            />
+          </div>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Loading</p>
+        </div>
+      </div>
+
       <div className="stars" aria-hidden />
+
 
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/50 border-b border-border/40">

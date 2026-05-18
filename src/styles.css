@@ -140,3 +140,8 @@
   }
   .arrow-link:hover { color: var(--color-primary); gap: 0.9rem; }
 }
+
+@keyframes loader-fill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
