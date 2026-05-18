@@ -160,6 +160,7 @@ function MatrixRain({ active }: { active: boolean }) {
       />
     </>
   );
+}
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
