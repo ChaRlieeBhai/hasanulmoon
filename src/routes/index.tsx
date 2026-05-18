@@ -725,7 +725,10 @@ function Index() {
 
       {/* Scroll to top */}
       <button
-        onClick={() => lenisRef.current?.scrollTo(0)}
+        onClick={() => {
+          if (lenisRef.current) lenisRef.current.scrollTo(0);
+          else window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         aria-label="Scroll to top"
         className={`fixed bottom-5 right-5 z-50 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-white/10 backdrop-blur-2xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.4)] transition-all duration-500 grid place-items-center overflow-hidden group hover:scale-110 hover:glow-primary-md ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
       >
