@@ -135,7 +135,7 @@ html, body, header, section, article, aside, nav, footer, main,
     background-image:
       radial-gradient(ellipse 70% 50% at 15% 20%, oklch(0.38 0.13 55 / 0.55), transparent 60%),
       radial-gradient(ellipse 50% 40% at 90% 80%, oklch(0.32 0.1 50 / 0.4), transparent 60%);
-    background-attachment: fixed;
+    /* background-attachment: fixed causes major repaint cost on scroll — use a fixed pseudo layer instead if needed */
   }
   h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.015em; font-weight: 400; }
 }
