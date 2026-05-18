@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
@@ -241,7 +241,7 @@ function Index() {
         style={{
           backgroundImage: `url(${introBg})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center 18%",
         }}
         aria-hidden={!loading}
       >
@@ -467,13 +467,14 @@ function Index() {
                   </text>
                 </svg>
                 <a
-                  href="https://www.facebook.com/hasanulmoon"
+                  href="https://www.instagram.com/hasanulmoon"
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Facebook · hasanulmoon"
+                  aria-label="Shot on iPhone — Hasanul Moon"
+                  title="Shot on iPhone — Hasanul Moon"
                   className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary glow-primary-sm hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
                 >
-                  <Facebook size={20} strokeWidth={2.2} />
+                  <Camera size={20} strokeWidth={2.2} />
                 </a>
               </div>
             </div>
