@@ -314,7 +314,7 @@ function Index() {
             {/* Hover glow */}
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
-            <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:shadow-[0_0_80px_-10px_oklch(0.82_0.17_75/0.65)]">
+            <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:glow-primary-hover">
               <img key={themeIdx} src={themeCycle[themeIdx].img} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover animate-fade-in" />
             </div>
 
@@ -325,17 +325,17 @@ function Index() {
                 onClick={() => setTagOpen((v) => !v)}
                 aria-expanded={tagOpen}
                 aria-label="Toggle social links"
-                className="relative rounded-full px-4 py-1.5 border border-primary/50 bg-primary/20 backdrop-blur-2xl shadow-[0_0_40px_-4px_oklch(0.82_0.17_75/0.6)] overflow-hidden hover:scale-105 active:scale-95 transition-transform"
+                className="relative rounded-full px-4 py-1.5 border border-primary/50 bg-primary/20 backdrop-blur-2xl glow-primary-md overflow-hidden hover:scale-105 active:scale-95 transition-transform"
               >
                 <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/25 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-70" />
-                <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-white font-bold drop-shadow-[0_0_10px_oklch(0.82_0.17_75/0.9)]">@hasanulmoon</span>
+                <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary font-bold glow-text-primary">@hasanulmoon</span>
               </button>
 
               {/* Liquid glass social popover */}
               <div
                 className={`absolute left-1/2 -translate-x-1/2 top-full mt-3 transition-all duration-400 ${tagOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}
               >
-                <div className="relative rounded-2xl border border-primary/40 bg-white/10 backdrop-blur-2xl shadow-[0_10px_50px_-8px_oklch(0.82_0.17_75/0.55)] p-3 overflow-hidden">
+                <div className="relative rounded-2xl border border-primary/40 bg-white/10 backdrop-blur-2xl glow-primary-lg p-3 overflow-hidden">
                   <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50 pointer-events-none" />
                   <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full bg-primary/30 blur-3xl pointer-events-none" />
                   <div className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full bg-accent/30 blur-3xl pointer-events-none" />
@@ -356,7 +356,7 @@ function Index() {
                           rel="noreferrer"
                           aria-label={s.label}
                           title={s.label}
-                          className="w-10 h-10 grid place-items-center rounded-full border border-white/20 bg-white/10 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:-translate-y-0.5 hover:shadow-[0_0_25px_-2px_oklch(0.82_0.17_75/0.9)] transition-all"
+                          className="w-10 h-10 grid place-items-center rounded-full border border-white/20 bg-white/10 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:-translate-y-0.5 hover:glow-primary-sm transition-all"
                         >
                           <s.Icon size={16} />
                         </a>
@@ -383,7 +383,7 @@ function Index() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Facebook · hasanulmoon"
-                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.7)] hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary glow-primary-sm hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
                 >
                   <Facebook size={20} strokeWidth={2.2} />
                 </a>
@@ -593,7 +593,7 @@ function Index() {
           className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md transition-all duration-400 ${activeSkill ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative rounded-3xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl shadow-[0_20px_80px_-20px_oklch(0.82_0.17_75/0.6)] p-7">
+          <div className="relative rounded-3xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl glow-primary-xl p-7">
             <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50 pointer-events-none" />
             <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
             <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-accent/25 blur-3xl pointer-events-none" />
@@ -607,7 +607,7 @@ function Index() {
             </button>
 
             <p className="relative text-[10px] uppercase tracking-[0.35em] text-primary mb-3">Skill</p>
-            <h3 className="relative font-display text-3xl md:text-4xl italic text-white drop-shadow-[0_0_15px_oklch(0.82_0.17_75/0.5)]">{activeSkill?.name}</h3>
+            <h3 className="relative font-display text-3xl md:text-4xl italic text-foreground glow-text-primary">{activeSkill?.name}</h3>
             <p className="relative mt-5 text-sm md:text-base text-foreground/85 leading-relaxed">{activeSkill?.brief}</p>
           </div>
         </div>
@@ -617,7 +617,7 @@ function Index() {
       <button
         onClick={() => lenisRef.current?.scrollTo(0)}
         aria-label="Scroll to top"
-        className={`fixed bottom-5 right-5 z-50 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-white/10 backdrop-blur-2xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.4)] transition-all duration-500 grid place-items-center overflow-hidden group hover:scale-110 hover:shadow-[0_0_40px_-5px_oklch(0.82_0.17_75/0.5)] ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
+        className={`fixed bottom-5 right-5 z-50 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-white/10 backdrop-blur-2xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.4)] transition-all duration-500 grid place-items-center overflow-hidden group hover:scale-110 hover:glow-primary-md ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
       >
         {/* Liquid glass shimmer */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
