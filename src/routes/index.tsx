@@ -266,9 +266,9 @@ function Index() {
             </div>
 
             {/* @hasanulmoon liquid glass tag */}
-            <div className="mt-3 mx-auto w-fit relative rounded-full px-4 py-1.5 border border-white/15 bg-white/8 backdrop-blur-2xl shadow-[0_0_25px_-5px_oklch(0.82_0.17_75/0.35)] overflow-hidden group/tag">
-              <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-40" />
-              <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary/90 font-medium">@hasanulmoon</span>
+            <div className="mt-3 mx-auto w-fit relative rounded-full px-4 py-1.5 border border-primary/30 bg-primary/10 backdrop-blur-2xl shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.45)] overflow-hidden group/tag">
+              <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50" />
+              <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary font-semibold drop-shadow-[0_0_6px_oklch(0.82_0.17_75/0.6)]">@hasanulmoon</span>
             </div>
 
             {/* Circular rotating text badge — top-right edge */}
