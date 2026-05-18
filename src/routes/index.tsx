@@ -2,6 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
+import profileJersey from "@/assets/profile-jersey.png";
+import profileJacket from "@/assets/profile-jacket.png";
+
+const themeCycle = [
+  { theme: "", img: profile },
+  { theme: "green", img: profileJersey },
+  { theme: "sky", img: profileJacket },
+] as const;
 import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
 import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
 import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
@@ -102,7 +110,22 @@ function Index() {
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
+  const [themeIdx, setThemeIdx] = useState(0);
   const lenisRef = useRef<import("lenis").default | null>(null);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const { theme } = themeCycle[themeIdx];
+    if (theme) root.setAttribute("data-theme", theme);
+    else root.removeAttribute("data-theme");
+  }, [themeIdx]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setThemeIdx((i) => (i + 1) % themeCycle.length);
+    }, 15000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -292,7 +315,7 @@ function Index() {
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
             <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:shadow-[0_0_80px_-10px_oklch(0.82_0.17_75/0.65)]">
-              <img src={profile} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
+              <img key={themeIdx} src={themeCycle[themeIdx].img} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover animate-fade-in" />
             </div>
 
             {/* @hasanulmoon liquid glass tag + popover */}
