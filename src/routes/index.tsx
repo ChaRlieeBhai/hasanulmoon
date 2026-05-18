@@ -420,19 +420,20 @@ function Index() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2">
-              A life without plot armour <span>💛</span>
+              <span className="typing-line" aria-label="A life without plot armour">A life without plot armour</span>
+              <span>💛</span>
             </p>
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
               <span className="text-primary italic">Hasanul</span>
               <br />
-              <span className="inline-flex items-center gap-3 flex-wrap">
-                <span>Haque Moon</span>
+              <span className="whitespace-nowrap">
+                Haque Moon
                 <span
                   role="img"
                   aria-label="Verified"
                   title="Verified"
-                  className="relative inline-flex items-center justify-center align-middle"
-                  style={{ width: "0.7em", height: "0.7em" }}
+                  className="relative inline-block align-middle ml-2"
+                  style={{ width: "0.55em", height: "0.55em", verticalAlign: "0.18em" }}
                 >
                   <span
                     aria-hidden="true"
