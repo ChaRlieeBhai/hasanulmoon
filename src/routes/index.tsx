@@ -648,7 +648,7 @@ function Index() {
                   title="Locked — enter PIN"
                   className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary glow-primary-sm hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
                 >
-                  <Camera size={20} strokeWidth={2.2} />
+                  <Lock size={20} strokeWidth={2.2} />
                 </button>
               </div>
             </div>
