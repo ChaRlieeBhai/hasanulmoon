@@ -76,6 +76,7 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tagOpen, setTagOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -265,10 +266,53 @@ function Index() {
               <img src={profile} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
             </div>
 
-            {/* @hasanulmoon liquid glass tag */}
-            <div className="mt-3 mx-auto w-fit relative rounded-full px-4 py-1.5 border border-primary/50 bg-primary/20 backdrop-blur-2xl shadow-[0_0_40px_-4px_oklch(0.82_0.17_75/0.6)] overflow-hidden group/tag">
-              <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/25 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-70" />
-              <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-white font-bold drop-shadow-[0_0_10px_oklch(0.82_0.17_75/0.9)]">@hasanulmoon</span>
+            {/* @hasanulmoon liquid glass tag + popover */}
+            <div className="mt-3 mx-auto w-fit relative z-30">
+              <button
+                type="button"
+                onClick={() => setTagOpen((v) => !v)}
+                aria-expanded={tagOpen}
+                aria-label="Toggle social links"
+                className="relative rounded-full px-4 py-1.5 border border-primary/50 bg-primary/20 backdrop-blur-2xl shadow-[0_0_40px_-4px_oklch(0.82_0.17_75/0.6)] overflow-hidden hover:scale-105 active:scale-95 transition-transform"
+              >
+                <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/25 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-70" />
+                <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-white font-bold drop-shadow-[0_0_10px_oklch(0.82_0.17_75/0.9)]">@hasanulmoon</span>
+              </button>
+
+              {/* Liquid glass social popover */}
+              <div
+                className={`absolute left-1/2 -translate-x-1/2 top-full mt-3 transition-all duration-400 ${tagOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}
+              >
+                <div className="relative rounded-2xl border border-primary/40 bg-white/10 backdrop-blur-2xl shadow-[0_10px_50px_-8px_oklch(0.82_0.17_75/0.55)] p-3 overflow-hidden">
+                  <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50 pointer-events-none" />
+                  <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full bg-primary/30 blur-3xl pointer-events-none" />
+                  <div className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full bg-accent/30 blur-3xl pointer-events-none" />
+                  <ul className="relative flex items-center gap-2">
+                    {socials.map((s, i) => (
+                      <li
+                        key={s.label}
+                        className="transition-all duration-500"
+                        style={{
+                          transitionDelay: tagOpen ? `${80 + i * 60}ms` : "0ms",
+                          opacity: tagOpen ? 1 : 0,
+                          transform: tagOpen ? "translateY(0)" : "translateY(6px)",
+                        }}
+                      >
+                        <a
+                          href={s.h}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={s.label}
+                          title={s.label}
+                          className="w-10 h-10 grid place-items-center rounded-full border border-white/20 bg-white/10 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:-translate-y-0.5 hover:shadow-[0_0_25px_-2px_oklch(0.82_0.17_75/0.9)] transition-all"
+                        >
+                          <s.Icon size={16} />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
 
             {/* Circular rotating text badge — top-right edge */}
