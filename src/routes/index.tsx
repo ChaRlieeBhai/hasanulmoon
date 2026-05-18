@@ -79,6 +79,28 @@ function Index() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let lenis: import("lenis").default | null = null;
+    let raf = 0;
+    (async () => {
+      const Lenis = (await import("lenis")).default;
+      lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+      const loop = (time: number) => {
+        lenis?.raf(time);
+        raf = requestAnimationFrame(loop);
+      };
+      raf = requestAnimationFrame(loop);
+    })();
+    return () => {
+      cancelAnimationFrame(raf);
+      lenis?.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
     const t = setTimeout(() => setLoading(false), 2200);
     return () => clearTimeout(t);
   }, []);
