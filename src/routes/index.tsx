@@ -2,6 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
+import profileJersey from "@/assets/profile-jersey.png";
+import profileJacket from "@/assets/profile-jacket.png";
+
+const themeCycle = [
+  { theme: "", img: profile },
+  { theme: "green", img: profileJersey },
+  { theme: "sky", img: profileJacket },
+] as const;
 import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
 import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
 import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
