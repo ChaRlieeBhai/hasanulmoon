@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import profile from "@/assets/profile.png";
 
 export const Route = createFileRoute("/")({
