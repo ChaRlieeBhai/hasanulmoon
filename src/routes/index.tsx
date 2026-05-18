@@ -214,26 +214,6 @@ function Index() {
             <div className="absolute -inset-4 bg-gradient-to-tr from-primary/30 to-accent/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-90 transition-opacity duration-700" />
             <div className="relative overflow-hidden rounded-2xl border border-border tilt-card">
               <img src={profile} alt="Portrait of Hasanul Haque Moon" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
-              {/* rotating circular text badge */}
-              <div className="absolute -top-4 -right-4 md:-top-6 md:-right-6 w-24 h-24 md:w-28 md:h-28 z-10">
-                <svg viewBox="0 0 100 100" className="w-full h-full animate-[spin_10s_linear_infinite]">
-                  <defs>
-                    <path id="circlePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-                  </defs>
-                  <text className="fill-primary" style={{ fontSize: '11.5px', fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}>
-                    <textPath href="#circlePath" startOffset="0%">
-                      MARKETING SPECIALIST • MARKETING SPECIALIST •
-                    </textPath>
-                  </text>
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
               {/* floating socials */}
               <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border">
                 {socials.map((s) => (
