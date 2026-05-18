@@ -236,31 +236,32 @@ function Index() {
     <div className="grain relative min-h-screen overflow-hidden">
       {/* Opening loader */}
       <div
-        className={`fixed inset-0 z-[100] grid place-items-center bg-black overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-[100] grid place-items-center overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        style={{ background: "oklch(0.99 0.005 60)" }}
         aria-hidden={!loading}
       >
-        <MatrixRain active={loading} />
         <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
-            className={`text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+            className={`text-6xl md:text-7xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
             style={{
-              fontFamily: '"Allison", cursive',
-              color: "#39ff7a",
-              textShadow: "0 0 20px #39ff7a, 0 0 40px rgba(57,255,122,0.6), 2px 0 0 rgba(255,0,80,0.6), -2px 0 0 rgba(0,200,255,0.6)",
+              fontFamily: '"Instrument Serif", serif',
+              fontStyle: "italic",
+              color: "oklch(0.15 0.02 40)",
             }}
           >
-            Charlie
+            Hasanul Moon
           </p>
-          <div className="w-full h-[3px] rounded-full bg-border/60 overflow-hidden">
+          <div className="w-full h-[2px] rounded-full overflow-hidden" style={{ background: "oklch(0.3 0.05 45 / 20%)" }}>
             <div
-              className="h-full bg-primary rounded-full"
+              className="h-full rounded-full"
               style={{
+                background: "oklch(0.15 0.02 40)",
                 width: loading ? "100%" : "100%",
                 animation: loading ? "loader-fill 2s ease-out forwards" : "none",
               }}
             />
           </div>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Loading</p>
+          <p className="text-[10px] uppercase tracking-[0.4em]" style={{ color: "oklch(0.35 0.04 45)" }}>Loading</p>
         </div>
       </div>
 
