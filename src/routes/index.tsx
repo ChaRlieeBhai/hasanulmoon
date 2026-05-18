@@ -182,14 +182,21 @@ function Index() {
   const [typed, setTyped] = useState("");
   useEffect(() => {
     if (loading) return;
-    setTyped("");
     let i = 0;
-    const id = window.setInterval(() => {
+    let cancelled = false;
+    setTyped("");
+    const tick = () => {
+      if (cancelled) return;
       i += 1;
       setTyped(TAGLINE.slice(0, i));
-      if (i >= TAGLINE.length) window.clearInterval(id);
-    }, 75);
-    return () => window.clearInterval(id);
+      if (i < TAGLINE.length) window.setTimeout(tick, 90);
+    };
+    const start = window.setTimeout(tick, 300);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(start);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const toggleMusic = () => {
@@ -499,7 +506,7 @@ function Index() {
             </div>
           </div>
 
-          <div className="relative group justify-self-center md:justify-self-end w-full max-w-md">
+          <div className="relative group justify-self-center lg:justify-self-end w-full max-w-md mx-auto">
             {/* Hover glow */}
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
