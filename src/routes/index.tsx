@@ -124,7 +124,7 @@ function Index() {
           <a href="#top" className="text-primary text-5xl md:text-6xl leading-none translate-y-1" style={{ fontFamily: '"Allison", cursive' }}>Charlie</a>
 
           {/* Desktop inline nav */}
-          <ul className="hidden lg:flex items-center gap-1 px-3 py-2 rounded-full border border-border/60 bg-card/30 backdrop-blur-xl">
+          <ul className="hidden md:flex items-center gap-1 px-3 py-2 rounded-full border border-border/60 bg-card/30 backdrop-blur-xl">
             {navItems.map((s) => (
               <li key={s.l}>
                 <a
@@ -141,7 +141,7 @@ function Index() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            className="lg:hidden relative w-11 h-11 grid place-items-center rounded-full border border-border bg-card/40 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-110 transition-all magnetic"
+            className="md:hidden relative w-11 h-11 grid place-items-center rounded-full border border-border bg-card/40 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-110 transition-all magnetic"
           >
             <Menu size={18} className={`absolute transition-all duration-300 ${menuOpen ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"}`} />
             <X size={18} className={`absolute transition-all duration-300 ${menuOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"}`} />
