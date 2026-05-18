@@ -382,7 +382,7 @@ function Index() {
               className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:glow-primary-hover cursor-pointer"
               onClick={() => setThemeIdx((i) => (i + 1) % themeCycle.length)}
             >
-              <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+              <div className="relative w-full">
                 {themeCycle.map((t, i) => (
                   <img
                     key={i}
@@ -391,7 +391,7 @@ function Index() {
                     fetchPriority={i === 0 ? "high" : "low"}
                     decoding="async"
                     draggable={false}
-                    className="absolute inset-0 w-full h-full object-cover select-none transition-opacity duration-700 ease-out"
+                    className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-700 ease-out`}
                     style={{ opacity: i === themeIdx ? 1 : 0 }}
                   />
                 ))}
