@@ -110,7 +110,22 @@ function Index() {
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
+  const [themeIdx, setThemeIdx] = useState(0);
   const lenisRef = useRef<import("lenis").default | null>(null);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const { theme } = themeCycle[themeIdx];
+    if (theme) root.setAttribute("data-theme", theme);
+    else root.removeAttribute("data-theme");
+  }, [themeIdx]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setThemeIdx((i) => (i + 1) % themeCycle.length);
+    }, 15000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     let raf = 0;
