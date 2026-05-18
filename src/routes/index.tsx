@@ -211,17 +211,6 @@ function Index() {
           </div>
 
           <div className="relative group justify-self-center md:justify-self-end w-full max-w-md">
-            {/* Layered images peeking from edges */}
-            <div className="absolute -top-6 -left-6 w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-md rotate-[-8deg] opacity-70 group-hover:opacity-100 group-hover:-translate-y-1 group-hover:-translate-x-1 transition-all duration-500 shadow-xl pointer-events-none">
-              <img src={work2} alt="" className="w-full h-full object-cover" />
-            </div>
-            <div className="absolute -bottom-6 -right-6 w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-md rotate-[10deg] opacity-70 group-hover:opacity-100 group-hover:translate-y-1 group-hover:translate-x-1 transition-all duration-500 shadow-xl pointer-events-none">
-              <img src={work3} alt="" className="w-full h-full object-cover" />
-            </div>
-            <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-md rotate-[6deg] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 shadow-xl pointer-events-none hidden md:block">
-              <img src={work4} alt="" className="w-full h-full object-cover" />
-            </div>
-
             {/* Hover glow */}
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
@@ -255,13 +244,11 @@ function Index() {
                   <defs>
                     <path id="circlePath" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
                   </defs>
-                  <text fill="currentColor" className="text-primary" style={{ fontSize: "18px", letterSpacing: "4px", fontFamily: "Inter, sans-serif" }}>
-                    <textPath href="#circlePath">DIGITAL MARKETING · CANVA · COMMUNICATION · </textPath>
+                  <text fill="currentColor" className="text-primary" style={{ fontSize: "17px", letterSpacing: "3px", fontFamily: "Inter, sans-serif", fontWeight: 700 }}>
+                    <textPath href="#circlePath">MARKETING SPECIALIST  ➤  </textPath>
                   </text>
                 </svg>
-                <div className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.7)]">
-                  <span className="text-lg">↙</span>
-                </div>
+                <div className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.7)]" />
               </div>
             </div>
           </div>
