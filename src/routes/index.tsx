@@ -392,8 +392,8 @@ function Index() {
                     fetchPriority={i === 0 ? "high" : "low"}
                     decoding="async"
                     draggable={false}
-                    className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-700 ease-out`}
-                    style={{ opacity: i === themeIdx ? 1 : 0 }}
+                    className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-1000 ease-out`}
+                    style={{ opacity: i === themeIdx ? 1 : 0, willChange: "opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
                   />
                 ))}
               </div>
