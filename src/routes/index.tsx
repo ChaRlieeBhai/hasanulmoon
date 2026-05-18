@@ -103,6 +103,64 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
   );
 }
 
+function MatrixRain({ active }: { active: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    if (!active) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const dpr = window.devicePixelRatio || 1;
+    const resize = () => {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    const fontSize = 16 * dpr;
+    const cols = Math.floor(canvas.width / fontSize);
+    const drops = Array(cols).fill(0).map(() => Math.random() * -50);
+    const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJ0123456789@#$%&*<>/\\".split("");
+    let raf = 0;
+    const draw = () => {
+      ctx.fillStyle = "rgba(0,0,0,0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = `${fontSize}px monospace`;
+      for (let i = 0; i < drops.length; i++) {
+        const ch = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+        ctx.fillStyle = Math.random() > 0.975 ? "#d6ffe0" : "#39ff7a";
+        ctx.fillText(ch, x, y);
+        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, [active]);
+  return (
+    <>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />
+      <div className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-40"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(0,255,120,0.08) 0px, rgba(0,255,120,0.08) 1px, transparent 2px, transparent 4px)",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none animate-pulse"
+        style={{ boxShadow: "inset 0 0 200px rgba(0,255,120,0.35)" }}
+      />
+    </>
+  );
+
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
