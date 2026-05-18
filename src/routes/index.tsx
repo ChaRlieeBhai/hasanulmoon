@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
 import profileJacket from "@/assets/profile-jacket.png";
+import introBg from "@/assets/intro-bg.jpg";
 
 const themeCycle = [
   { theme: "", img: profile },
@@ -237,9 +238,14 @@ function Index() {
       {/* Opening loader */}
       <div
         className={`fixed inset-0 z-[100] grid place-items-center overflow-hidden transition-opacity duration-700 ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        style={{ background: "oklch(0.99 0.005 60)" }}
+        style={{
+          backgroundImage: `url(${introBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
         aria-hidden={!loading}
       >
+        <div className="absolute inset-0" style={{ background: "oklch(0.99 0.005 60 / 0.78)", backdropFilter: "blur(2px)" }} />
         <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
             className={`text-4xl sm:text-6xl md:text-7xl leading-none whitespace-nowrap transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
