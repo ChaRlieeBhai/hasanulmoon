@@ -85,7 +85,7 @@ function Index() {
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/50 border-b border-border/40">
         <nav className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <a href="#top" className="font-display text-2xl tracking-[0.25em] text-primary font-semibold">MOON</a>
+          <a href="#top" className="text-primary text-5xl md:text-6xl leading-none translate-y-1" style={{ fontFamily: '"Allison", cursive' }}>Charlie</a>
           <button
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -137,8 +137,8 @@ function Index() {
                 </li>
               ))}
             </ul>
-            <p className="relative text-center text-xs uppercase tracking-[0.3em] text-muted-foreground pb-5">
-              A life without plot armour 💛
+            <p className="relative text-center text-4xl text-primary pb-5" style={{ fontFamily: '"Allison", cursive' }}>
+              Charlie
             </p>
           </div>
         </div>
@@ -366,7 +366,7 @@ function Index() {
       <footer className="border-t border-border/50 relative">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} Hasanul Haque Moon</p>
-          <p className="italic font-display text-base">A life without plot armour 💛</p>
+          <p className="text-3xl text-primary" style={{ fontFamily: '"Allison", cursive' }}>Charlie</p>
         </div>
       </footer>
     </div>
