@@ -430,14 +430,17 @@ function Index() {
         </div>
       </div>
 
-      {/* Hero */}
-      <section id="top" className="relative max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2">
-              <span className="typing-line" aria-label="A life without plot armour">A life without plot armour</span>
-              <span>💛</span>
-            </p>
+       {/* Hero */}
+       <section id="top" className="relative max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28">
+         <div className="grid lg:grid-cols-2 gap-12 items-center">
+           <div>
+             <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2 min-h-[1.25em]">
+               <span aria-label={TAGLINE}>
+                 {typed}
+                 <span className="type-caret" aria-hidden="true">|</span>
+               </span>
+               <span>💛</span>
+             </p>
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
               <span className="text-primary italic">Hasanul</span>
               <br />
