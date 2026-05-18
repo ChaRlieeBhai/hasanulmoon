@@ -34,8 +34,8 @@ const skills: { name: string; brief: string }[] = [
     brief: "Promoting products and brands online through social media, content, SEO basics, paid ads, and analytics — turning attention into engagement, leads, and sales.",
   },
   {
-    name: "Communication",
-    brief: "Clear, respectful, and confident exchange of ideas — listening actively, explaining simply, and adapting tone to the audience whether in writing or in person.",
+    name: "Web Developer",
+    brief: "Building responsive, modern websites with clean HTML, CSS, and JavaScript — crafting fast, accessible interfaces and bringing designs to life on the web.",
   },
   {
     name: "Customer Handling",
@@ -168,6 +168,7 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
   const [activeSkill, setActiveSkill] = useState<(typeof skills)[number] | null>(null);
+  const [lightbox, setLightbox] = useState<{ img: string; title: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -646,15 +647,18 @@ function Index() {
             { img: work3, title: "Reach" },
             { img: work4, title: "Details" },
           ].map((w) => (
-            <div
+            <button
+              type="button"
               key={w.title}
+              onClick={() => setLightbox({ img: w.img, title: w.title })}
               className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
             >
               <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
                 <img srcSet={w.img} sizes="(max-width: 640px) 90vw, 400px" alt={w.title} loading="lazy" decoding="async" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
               </div>
               <p className="mt-5 font-display text-2xl md:text-3xl italic group-hover:text-primary transition-colors">{w.title}</p>
-            </div>
+              <span className="mt-2 text-xs uppercase tracking-[0.3em] text-primary opacity-0 group-hover:opacity-100 transition-opacity">View image ↗</span>
+            </button>
           ))}
         </div>
       </section>
@@ -757,6 +761,29 @@ function Index() {
         </svg>
         <ArrowUp size={18} className="relative text-primary group-hover:-translate-y-0.5 transition-transform" />
       </button>
+
+      {/* Image lightbox */}
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[100] grid place-items-center p-4 md:p-8 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+        >
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label="Close"
+            className="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl text-white grid place-items-center hover:bg-white/20 transition"
+          >
+            <X size={20} />
+          </button>
+          <img
+            srcSet={lightbox.img}
+            alt={lightbox.title}
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 }
