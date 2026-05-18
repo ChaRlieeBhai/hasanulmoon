@@ -69,12 +69,12 @@ const experience = [
     ],
   },
   {
-    role: "Pharmacy Assistant",
-    org: "Narail",
+    role: "E-commerce Business Moderator & Customer Support Executive",
+    org: "Prop BD & SR Dream IT",
     period: "2023 — 2025",
     points: [
-      "Assisted customers and handled queries in a fast-paced environment.",
-      "Sharpened communication and interpersonal skills through daily interaction.",
+      "Managed customer communication, handled inquiries professionally, and ensured smooth order support to improve customer satisfaction.",
+      "Assisted in increasing sales through effective customer handling, product guidance, and maintaining strong client engagement.",
     ],
   },
 ];
