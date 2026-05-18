@@ -123,7 +123,7 @@ function Index() {
   useEffect(() => {
     const id = setInterval(() => {
       setThemeIdx((i) => (i + 1) % themeCycle.length);
-    }, 15000);
+    }, 60000);
     return () => clearInterval(id);
   }, []);
 
