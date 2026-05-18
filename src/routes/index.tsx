@@ -265,6 +265,12 @@ function Index() {
               <img src={profile} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
             </div>
 
+            {/* @hasanulmoon liquid glass tag */}
+            <div className="mt-3 mx-auto w-fit relative rounded-full px-4 py-1.5 border border-white/15 bg-white/8 backdrop-blur-2xl shadow-[0_0_25px_-5px_oklch(0.82_0.17_75/0.35)] overflow-hidden group/tag">
+              <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-40" />
+              <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary/90 font-medium">@hasanulmoon</span>
+            </div>
+
             {/* Circular rotating text badge — top-right edge */}
             <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10 w-28 h-28 md:w-36 md:h-36 z-20">
               <div className="relative w-full h-full">
