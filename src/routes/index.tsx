@@ -242,7 +242,7 @@ function Index() {
       >
         <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
-            className={`text-6xl md:text-7xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+            className={`text-4xl sm:text-6xl md:text-7xl leading-none whitespace-nowrap transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
             style={{
               fontFamily: '"Instrument Serif", serif',
               fontStyle: "italic",
@@ -392,8 +392,8 @@ function Index() {
                     fetchPriority={i === 0 ? "high" : "low"}
                     decoding="async"
                     draggable={false}
-                    className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-700 ease-out`}
-                    style={{ opacity: i === themeIdx ? 1 : 0 }}
+                    className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-1000 ease-out`}
+                    style={{ opacity: i === themeIdx ? 1 : 0, willChange: "opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
                   />
                 ))}
               </div>
