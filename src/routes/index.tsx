@@ -245,29 +245,30 @@ function Index() {
         }}
         aria-hidden={!loading}
       >
-        <div className="absolute inset-0" style={{ background: "oklch(0.99 0.005 60 / 0.78)", backdropFilter: "blur(2px)" }} />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, oklch(0.18 0.04 45 / 0.2) 0%, oklch(0.14 0.05 40 / 0.5) 70%, oklch(0.1 0.04 35 / 0.72) 100%)" }} />
         <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
             className={`text-4xl sm:text-6xl md:text-7xl leading-none whitespace-nowrap transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
             style={{
               fontFamily: '"Instrument Serif", serif',
               fontStyle: "italic",
-              color: "oklch(0.15 0.02 40)",
+              color: "oklch(0.96 0.03 70)",
+              textShadow: "0 2px 24px oklch(0.1 0.04 35 / 0.85)",
             }}
           >
             Hasanul Moon
           </p>
-          <div className="w-full h-[2px] rounded-full overflow-hidden" style={{ background: "oklch(0.3 0.05 45 / 20%)" }}>
+          <div className="w-full h-[2px] rounded-full overflow-hidden" style={{ background: "oklch(0.96 0.03 70 / 25%)" }}>
             <div
               className="h-full rounded-full"
               style={{
-                background: "oklch(0.15 0.02 40)",
+                background: "oklch(0.85 0.1 65)",
                 width: loading ? "100%" : "100%",
                 animation: loading ? "loader-fill 2s ease-out forwards" : "none",
               }}
             />
           </div>
-          <p className="text-[10px] uppercase tracking-[0.4em]" style={{ color: "oklch(0.35 0.04 45)" }}>Loading</p>
+          <p className="text-[10px] uppercase tracking-[0.4em]" style={{ color: "oklch(0.88 0.05 70 / 0.85)" }}>Loading</p>
         </div>
       </div>
 
