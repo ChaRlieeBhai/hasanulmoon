@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png?w=480;800;1200&format=webp&as=srcset";
 import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
 import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
@@ -77,26 +77,36 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showTopBtn, setShowTopBtn] = useState(false);
+  const lenisRef = useRef<import("lenis").default | null>(null);
 
   useEffect(() => {
-    let lenis: import("lenis").default | null = null;
     let raf = 0;
     (async () => {
       const Lenis = (await import("lenis")).default;
-      lenis = new Lenis({
+      const lenis = new Lenis({
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
       });
+      lenisRef.current = lenis;
+
+      lenis.on("scroll", (e: { progress: number }) => {
+        setScrollProgress(e.progress);
+        setShowTopBtn(e.progress > 0.08);
+      });
+
       const loop = (time: number) => {
-        lenis?.raf(time);
+        lenis.raf(time);
         raf = requestAnimationFrame(loop);
       };
       raf = requestAnimationFrame(loop);
     })();
     return () => {
       cancelAnimationFrame(raf);
-      lenis?.destroy();
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
@@ -465,6 +475,34 @@ function Index() {
           <p className="text-3xl text-primary" style={{ fontFamily: '"Allison", cursive' }}>Charlie</p>
         </div>
       </footer>
+
+      {/* Scroll to top */}
+      <button
+        onClick={() => lenisRef.current?.scrollTo(0)}
+        aria-label="Scroll to top"
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full border border-border bg-card/50 backdrop-blur-xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.5)] transition-all duration-500 grid place-items-center ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
+      >
+        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <circle
+            cx="50" cy="50" r="44"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            className="text-border"
+          />
+          <circle
+            cx="50" cy="50" r="44"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            className="text-primary transition-all duration-150"
+            strokeDasharray={2 * Math.PI * 44}
+            strokeDashoffset={2 * Math.PI * 44 * (1 - scrollProgress)}
+          />
+        </svg>
+        <ArrowUp size={20} className="relative text-primary" />
+      </button>
     </div>
   );
 }
