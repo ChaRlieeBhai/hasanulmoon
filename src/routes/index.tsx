@@ -11,14 +11,35 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const skills = [
-  "Computer Applications",
-  "Microsoft Office",
-  "Digital Marketing",
-  "Communication",
-  "Customer Handling",
-  "Canva Design",
-  "Fluent English",
+const skills: { name: string; brief: string }[] = [
+  {
+    name: "Computer Applications",
+    brief: "Practical knowledge of everyday software — operating systems, productivity suites, browsers, and file management — used to solve real tasks quickly and confidently in any digital workspace.",
+  },
+  {
+    name: "Microsoft Office",
+    brief: "Hands-on with Word, Excel, and PowerPoint — drafting documents, building spreadsheets with formulas and charts, and creating clean presentations for business communication.",
+  },
+  {
+    name: "Digital Marketing",
+    brief: "Promoting products and brands online through social media, content, SEO basics, paid ads, and analytics — turning attention into engagement, leads, and sales.",
+  },
+  {
+    name: "Communication",
+    brief: "Clear, respectful, and confident exchange of ideas — listening actively, explaining simply, and adapting tone to the audience whether in writing or in person.",
+  },
+  {
+    name: "Customer Handling",
+    brief: "Welcoming customers, understanding their needs, resolving concerns patiently, and turning everyday interactions into trust and repeat business.",
+  },
+  {
+    name: "Canva Design",
+    brief: "Designing posts, banners, ads, and presentations in Canva — combining typography, color, and layout to produce on-brand visuals fast, without needing complex design software.",
+  },
+  {
+    name: "Fluent English",
+    brief: "Comfortable speaking, reading, and writing in English — able to communicate naturally with customers, colleagues, and international audiences in both casual and professional contexts.",
+  },
 ];
 
 const education = [
@@ -77,6 +98,7 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
+  const [activeSkill, setActiveSkill] = useState<(typeof skills)[number] | null>(null);
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -117,9 +139,16 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || loading ? "hidden" : "";
+    document.body.style.overflow = menuOpen || loading || activeSkill ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen, loading]);
+  }, [menuOpen, loading, activeSkill]);
+
+  useEffect(() => {
+    if (!activeSkill) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setActiveSkill(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeSkill]);
 
   return (
     <div className="grain relative min-h-screen overflow-hidden">
@@ -406,9 +435,14 @@ function Index() {
         <SectionTitle kicker="Things I do well" title="Skills" />
         <div className="flex flex-wrap justify-center gap-3">
           {skills.map((s) => (
-            <span key={s} className="px-5 py-3 text-sm md:text-base rounded-full border border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 magnetic cursor-default">
-              {s}
-            </span>
+            <button
+              key={s.name}
+              type="button"
+              onClick={() => setActiveSkill(s)}
+              className="px-5 py-3 text-sm md:text-base rounded-full border border-border bg-card/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 magnetic cursor-pointer"
+            >
+              {s.name}
+            </button>
           ))}
         </div>
       </section>
@@ -525,6 +559,36 @@ function Index() {
           <p className="text-3xl text-primary" style={{ fontFamily: '"Allison", cursive' }}>Charlie</p>
         </div>
       </footer>
+
+      {/* Skill brief modal */}
+      <div
+        className={`fixed inset-0 z-[60] transition-all duration-400 ${activeSkill ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        onClick={() => setActiveSkill(null)}
+      >
+        <div className={`absolute inset-0 bg-background/60 backdrop-blur-md transition-opacity duration-400 ${activeSkill ? "opacity-100" : "opacity-0"}`} />
+        <div
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md transition-all duration-400 ${activeSkill ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="relative rounded-3xl overflow-hidden border border-primary/40 bg-white/10 backdrop-blur-2xl shadow-[0_20px_80px_-20px_oklch(0.82_0.17_75/0.6)] p-7">
+            <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-50 pointer-events-none" />
+            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-accent/25 blur-3xl pointer-events-none" />
+
+            <button
+              onClick={() => setActiveSkill(null)}
+              aria-label="Close"
+              className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full border border-white/20 bg-white/10 text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+            >
+              <X size={16} />
+            </button>
+
+            <p className="relative text-[10px] uppercase tracking-[0.35em] text-primary mb-3">Skill</p>
+            <h3 className="relative font-display text-3xl md:text-4xl italic text-white drop-shadow-[0_0_15px_oklch(0.82_0.17_75/0.5)]">{activeSkill?.name}</h3>
+            <p className="relative mt-5 text-sm md:text-base text-foreground/85 leading-relaxed">{activeSkill?.brief}</p>
+          </div>
+        </div>
+      </div>
 
       {/* Scroll to top */}
       <button
