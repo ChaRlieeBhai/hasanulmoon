@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import profile from "@/assets/profile.png";
-import work1 from "@/assets/work-1.png";
-import work2 from "@/assets/work-2.png";
-import work3 from "@/assets/work-3.jpg";
-import work4 from "@/assets/work-4.jpg";
+import profile from "@/assets/profile.png?w=480;800;1200&format=webp&as=srcset";
+import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
+import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
+import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
+import work4 from "@/assets/work-4.jpg?w=400;800&format=webp&as=srcset";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -252,7 +252,7 @@ function Index() {
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
             <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:shadow-[0_0_80px_-10px_oklch(0.82_0.17_75/0.65)]">
-              <img src={profile} alt="Portrait of Hasanul Haque Moon" className="w-full h-auto object-cover" />
+              <img srcSet={profile} sizes="(max-width: 768px) 90vw, 480px" alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
             </div>
 
             {/* Circular rotating text badge — top-right edge */}
@@ -378,7 +378,7 @@ function Index() {
             className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
           >
             <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
-              <img src={work1} alt="All projects" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
+              <img srcSet={work1} sizes="(max-width: 640px) 90vw, 400px" alt="All projects" loading="lazy" decoding="async" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
             </div>
             <p className="mt-5 font-display text-2xl md:text-3xl italic group-hover:text-primary transition-colors">All Project Here</p>
             <span className="mt-2 text-xs uppercase tracking-[0.3em] text-primary opacity-0 group-hover:opacity-100 transition-opacity">Open drive ↗</span>
@@ -394,7 +394,7 @@ function Index() {
               className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
             >
               <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
-                <img src={w.img} alt={w.title} className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                <img srcSet={w.img} sizes="(max-width: 640px) 90vw, 400px" alt={w.title} loading="lazy" decoding="async" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
               </div>
               <p className="mt-5 font-display text-2xl md:text-3xl italic group-hover:text-primary transition-colors">{w.title}</p>
             </div>
