@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import profile from "@/assets/profile.png";
 
 export const Route = createFileRoute("/")({
@@ -70,6 +71,13 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 }
 
 function Index() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
     <div className="grain relative min-h-screen overflow-hidden">
       <div className="stars" aria-hidden />
@@ -78,16 +86,63 @@ function Index() {
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/50 border-b border-border/40">
         <nav className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
           <a href="#top" className="font-display text-2xl tracking-[0.25em] text-primary font-semibold">MOON</a>
-          <ul className="hidden md:flex items-center gap-8 text-sm text-foreground/80">
-            {navItems.map((s) => (
-              <li key={s.l}>
-                <a href={s.h} className="reveal-line hover:text-primary transition-colors">{s.l}</a>
-              </li>
-            ))}
-          </ul>
-          <a href="#contact" className="md:hidden text-primary text-sm">Menu</a>
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="relative w-11 h-11 grid place-items-center rounded-full border border-border bg-card/40 backdrop-blur-xl text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-110 transition-all magnetic"
+          >
+            <Menu size={18} className={`absolute transition-all duration-300 ${menuOpen ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"}`} />
+            <X size={18} className={`absolute transition-all duration-300 ${menuOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"}`} />
+          </button>
         </nav>
       </header>
+
+      {/* Fullscreen menu overlay */}
+      <div
+        className={`fixed inset-0 z-40 transition-all duration-500 ${menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        onClick={() => setMenuOpen(false)}
+      >
+        <div className={`absolute inset-0 bg-background/70 backdrop-blur-2xl transition-opacity duration-500 ${menuOpen ? "opacity-100" : "opacity-0"}`} />
+        <div
+          className={`absolute top-24 left-1/2 -translate-x-1/2 w-[90%] max-w-md transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "-translate-y-6 opacity-0"}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="relative rounded-3xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-xl shadow-[0_20px_80px_-20px_oklch(0_0_0/0.6)]">
+            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-accent/25 blur-3xl pointer-events-none" />
+            <ul className="relative p-3">
+              {navItems.map((s, i) => (
+                <li
+                  key={s.l}
+                  className="transition-all duration-500"
+                  style={{
+                    transitionDelay: menuOpen ? `${100 + i * 60}ms` : "0ms",
+                    opacity: menuOpen ? 1 : 0,
+                    transform: menuOpen ? "translateY(0)" : "translateY(12px)",
+                  }}
+                >
+                  <a
+                    href={s.h}
+                    onClick={() => setMenuOpen(false)}
+                    className="group flex items-center justify-between px-5 py-4 rounded-2xl hover:bg-primary/10 transition-colors"
+                  >
+                    <span className="font-display text-3xl italic group-hover:text-primary group-hover:translate-x-2 transition-all duration-300 inline-block">
+                      {s.l}
+                    </span>
+                    <span className="text-primary text-xs uppercase tracking-[0.3em] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                      0{i + 1} →
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="relative text-center text-xs uppercase tracking-[0.3em] text-muted-foreground pb-5">
+              A life without plot armour 💛
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Hero */}
       <section id="top" className="relative max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28">
