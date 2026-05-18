@@ -190,6 +190,25 @@ function Index() {
 
   useEffect(() => {
     let raf = 0;
+    let scrollHandler: (() => void) | null = null;
+    const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+    const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (isMobile || prefersReduced) {
+      // Native scroll on mobile — cheaper, no rAF loop
+      scrollHandler = () => {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const p = max > 0 ? doc.scrollTop / max : 0;
+        setScrollProgress(p);
+        setShowTopBtn(p > 0.08);
+      };
+      window.addEventListener("scroll", scrollHandler, { passive: true });
+      return () => {
+        if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
+      };
+    }
+
     (async () => {
       const Lenis = (await import("lenis")).default;
       const lenis = new Lenis({
