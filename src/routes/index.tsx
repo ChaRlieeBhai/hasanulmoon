@@ -211,11 +211,24 @@ function Index() {
           </div>
 
           <div className="relative group justify-self-center md:justify-self-end w-full max-w-md">
-            <div className="absolute -inset-4 bg-gradient-to-tr from-primary/30 to-accent/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-90 transition-opacity duration-700" />
-            <div className="relative overflow-hidden rounded-2xl border border-border tilt-card">
-              <img src={profile} alt="Portrait of Hasanul Haque Moon" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+            {/* Layered images peeking from edges */}
+            <div className="absolute -top-6 -left-6 w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-md rotate-[-8deg] opacity-70 group-hover:opacity-100 group-hover:-translate-y-1 group-hover:-translate-x-1 transition-all duration-500 shadow-xl pointer-events-none">
+              <img src={work2} alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-md rotate-[10deg] opacity-70 group-hover:opacity-100 group-hover:translate-y-1 group-hover:translate-x-1 transition-all duration-500 shadow-xl pointer-events-none">
+              <img src={work3} alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-md rotate-[6deg] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 shadow-xl pointer-events-none hidden md:block">
+              <img src={work4} alt="" className="w-full h-full object-cover" />
+            </div>
+
+            {/* Hover glow */}
+            <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
+
+            <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:shadow-[0_0_80px_-10px_oklch(0.82_0.17_75/0.65)]">
+              <img src={profile} alt="Portrait of Hasanul Haque Moon" className="w-full h-auto object-cover" />
               {/* floating socials */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border">
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border z-10">
                 {socials.map((s) => (
                   <a
                     key={s.label}
@@ -230,8 +243,25 @@ function Index() {
                 ))}
               </div>
               {/* music off pill */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border text-xs text-muted-foreground flex items-center gap-2">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border text-xs text-muted-foreground flex items-center gap-2 z-10">
                 <span className="w-2 h-2 rounded-full bg-muted-foreground" /> Music Off
+              </div>
+            </div>
+
+            {/* Circular rotating text badge — top-right edge */}
+            <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10 w-28 h-28 md:w-36 md:h-36 z-20 pointer-events-none">
+              <div className="relative w-full h-full">
+                <svg viewBox="0 0 200 200" className="spin-slow w-full h-full">
+                  <defs>
+                    <path id="circlePath" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+                  </defs>
+                  <text fill="currentColor" className="text-primary" style={{ fontSize: "18px", letterSpacing: "4px", fontFamily: "Inter, sans-serif" }}>
+                    <textPath href="#circlePath">DIGITAL MARKETING · CANVA · COMMUNICATION · </textPath>
+                  </text>
+                </svg>
+                <div className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary shadow-[0_0_30px_-5px_oklch(0.82_0.17_75/0.7)]">
+                  <span className="text-lg">↙</span>
+                </div>
               </div>
             </div>
           </div>
