@@ -959,7 +959,7 @@ function Index() {
 
             <div className="text-center mb-5">
               <div className="mx-auto w-12 h-12 rounded-full border border-white/25 bg-white/10 grid place-items-center text-primary glow-primary-sm">
-                <Camera size={20} strokeWidth={2.2} />
+                <Lock size={20} strokeWidth={2.2} />
               </div>
               <h3 className="mt-3 text-lg font-medium text-white">Locked</h3>
               <p className="text-xs text-white/70">Enter 4-digit PIN to unlock</p>
