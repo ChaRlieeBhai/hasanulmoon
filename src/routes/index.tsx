@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import profile from "@/assets/profile.png";
+import work1 from "@/assets/work-1.png";
+import work2 from "@/assets/work-2.png";
+import work3 from "@/assets/work-3.jpg";
+import work4 from "@/assets/work-4.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -288,22 +292,39 @@ function Index() {
       </section>
 
       {/* Works */}
-      <section id="works" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="works" className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Stuff I made" title="Works" />
-        <a
-          href="https://drive.google.com/drive/u/4/folders/1CEvtjbGyf-XL_8CUQ9gc6RV2JTDPubwh"
-          target="_blank" rel="noreferrer"
-          className="group block tilt-card border border-border rounded-2xl p-10 md:p-14 bg-card/40 overflow-hidden relative text-center"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/15 to-accent/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-          <div className="relative">
-            <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Portfolio archive</p>
-            <h3 className="font-display text-4xl md:text-6xl italic">Get all my works here</h3>
-            <span className="mt-6 inline-flex items-center gap-2 text-primary text-lg arrow-link">
-              Open the folder <span>↗</span>
-            </span>
-          </div>
-        </a>
+
+        <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
+          {/* First card — clickable, opens drive */}
+          <a
+            href="https://drive.google.com/drive/u/4/folders/1CEvtjbGyf-XL_8CUQ9gc6RV2JTDPubwh"
+            target="_blank" rel="noreferrer"
+            className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
+          >
+            <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
+              <img src={work1} alt="All projects" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <p className="mt-5 font-display text-2xl md:text-3xl italic group-hover:text-primary transition-colors">All Project Here</p>
+            <span className="mt-2 text-xs uppercase tracking-[0.3em] text-primary opacity-0 group-hover:opacity-100 transition-opacity">Open drive ↗</span>
+          </a>
+
+          {[
+            { img: work2, title: "Active Projects" },
+            { img: work3, title: "Reach" },
+            { img: work4, title: "Details" },
+          ].map((w) => (
+            <div
+              key={w.title}
+              className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
+            >
+              <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
+                <img src={w.img} alt={w.title} className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <p className="mt-5 font-display text-2xl md:text-3xl italic group-hover:text-primary transition-colors">{w.title}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Contact */}
