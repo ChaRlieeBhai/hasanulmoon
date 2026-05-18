@@ -139,9 +139,16 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || loading ? "hidden" : "";
+    document.body.style.overflow = menuOpen || loading || activeSkill ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen, loading]);
+  }, [menuOpen, loading, activeSkill]);
+
+  useEffect(() => {
+    if (!activeSkill) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setActiveSkill(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeSkill]);
 
   return (
     <div className="grain relative min-h-screen overflow-hidden">
