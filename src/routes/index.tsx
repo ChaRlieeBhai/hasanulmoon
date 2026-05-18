@@ -328,7 +328,7 @@ function Index() {
                 className="relative rounded-full px-4 py-1.5 border border-primary/50 bg-primary/20 backdrop-blur-2xl glow-primary-md overflow-hidden hover:scale-105 active:scale-95 transition-transform"
               >
                 <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/25 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-70" />
-                <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-white font-bold glow-text-primary">@hasanulmoon</span>
+                <span className="relative text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary font-bold glow-text-primary">@hasanulmoon</span>
               </button>
 
               {/* Liquid glass social popover */}
@@ -607,7 +607,7 @@ function Index() {
             </button>
 
             <p className="relative text-[10px] uppercase tracking-[0.35em] text-primary mb-3">Skill</p>
-            <h3 className="relative font-display text-3xl md:text-4xl italic text-white glow-text-primary">{activeSkill?.name}</h3>
+            <h3 className="relative font-display text-3xl md:text-4xl italic text-foreground glow-text-primary">{activeSkill?.name}</h3>
             <p className="relative mt-5 text-sm md:text-base text-foreground/85 leading-relaxed">{activeSkill?.brief}</p>
           </div>
         </div>
