@@ -530,8 +530,9 @@ function Index() {
                 Get in touch
               </a>
               <a
-                href="https://drive.google.com/drive/folders/1F5nYRVJbCxbIn1A8pSW5xEQ4um9MQbM8?usp=sharing"
+                href="/hasanul-moon-cv.pdf"
                 target="_blank" rel="noreferrer"
+                download="Hasanul-Moon-CV.pdf"
                 className="magnetic px-7 py-3.5 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
               >
                 Get CV
