@@ -393,7 +393,7 @@ function Index() {
           <ul className="relative divide-y divide-border/40">
             {[
               { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
-              { Icon: Phone, label: "Phone", value: "01521 758718", href: "tel:+8801521758718" },
+              { Icon: Phone, label: "Phone", value: "01823444069", href: "tel:+8801823444069" },
               { Icon: MessageCircle, label: "WhatsApp", value: "01823 444069", href: "https://api.whatsapp.com/send?phone=8801823444069&text=Hello%20Charlie!!" },
               { Icon: MapPin, label: "Location", value: "Dhaka, Bangladesh", href: null as string | null },
             ].map((row, i) => {
