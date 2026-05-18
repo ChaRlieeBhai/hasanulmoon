@@ -229,6 +229,45 @@ html, body, header, section, article, aside, nav, footer, main,
   100% { width: 100%; }
 }
 
+/* ---------- Mobile performance optimizations ---------- */
+@media (max-width: 768px) {
+  /* background-attachment: fixed is GPU-expensive on mobile */
+  body { background-attachment: scroll; }
+
+  /* Reduce / drop heavy backdrop-filter blurs */
+  .backdrop-blur-2xl { backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; }
+  .backdrop-blur-xl  { backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; }
+  .backdrop-blur-md  { backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important; }
+
+  /* Tame oversized blurs that cause paint hot spots on phones */
+  .blur-3xl { filter: blur(28px) !important; }
+  .blur-2xl { filter: blur(20px) !important; }
+
+  /* Drop grain noise & star field on mobile to free paint budget */
+  .grain::before { display: none; }
+  .stars { display: none; }
+
+  /* Slow marquee a bit, lighter shadows */
+  .marquee { animation-duration: 45s; }
+  .glow-primary-xl { box-shadow: 0 10px 40px -12px color-mix(in oklab, var(--glow) 50%, transparent); }
+  .glow-primary-lg { box-shadow: 0 6px 28px -8px color-mix(in oklab, var(--glow) 45%, transparent); }
+
+  /* Disable hover-only effects on touch */
+  .tilt-card:hover { transform: none; }
+  .magnetic:hover  { transform: none; }
+}
+
+/* Honor reduced-motion preference everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
