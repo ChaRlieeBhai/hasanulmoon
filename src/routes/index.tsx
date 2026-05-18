@@ -127,14 +127,14 @@ function Index() {
               <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border">
                 {socials.map((s) => (
                   <a
-                    key={s.l}
+                    key={s.label}
                     href={s.h}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={s.label}
-                    className="w-9 h-9 grid place-items-center rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all magnetic text-sm font-medium"
+                    className="w-9 h-9 grid place-items-center rounded-full text-primary hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all magnetic"
                   >
-                    {s.l}
+                    <s.Icon size={16} strokeWidth={2} />
                   </a>
                 ))}
               </div>
@@ -267,16 +267,18 @@ function Index() {
             </a>
             <p className="text-muted-foreground pt-2">Narail Sadar, Narail · Bangladesh</p>
           </div>
-          <ul className="space-y-3 md:text-right">
-            {[
-              { l: "Facebook", h: "https://www.facebook.com/hasanulmoon" },
-              { l: "Instagram", h: "https://www.instagram.com/hasanulmoon" },
-              { l: "WhatsApp", h: "https://wa.link/rifzjt" },
-              { l: "Telegram", h: "https://t.me/hasanulmoon" },
-            ].map((s) => (
-              <li key={s.l}>
-                <a href={s.h} target="_blank" rel="noreferrer" className="reveal-line text-lg hover:text-primary transition-colors">
-                  {s.l}
+          <ul className="flex md:justify-end gap-3 items-start">
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.h}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  title={s.label}
+                  className="w-12 h-12 grid place-items-center rounded-full border border-border text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-110 transition-all magnetic"
+                >
+                  <s.Icon size={18} />
                 </a>
               </li>
             ))}
