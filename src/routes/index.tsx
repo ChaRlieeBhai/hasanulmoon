@@ -426,25 +426,25 @@ function Index() {
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
               <span className="text-primary italic">Hasanul</span>
               <br />
-              <span className="whitespace-nowrap">
-                Haque Moon
+              <span className="inline-flex items-center whitespace-nowrap">
+                <span>Haque Moon</span>
                 <span
                   role="img"
                   aria-label="Verified"
                   title="Verified"
-                  className="relative inline-block align-middle ml-2"
-                  style={{ width: "0.55em", height: "0.55em", verticalAlign: "0.18em" }}
+                  className="relative inline-flex items-center justify-center ml-3 shrink-0"
+                  style={{ width: "0.7em", height: "0.7em" }}
                 >
                   <span
                     aria-hidden="true"
-                    className="absolute inset-0 rounded-full blur-md opacity-60"
-                    style={{ background: "radial-gradient(circle, oklch(0.7 0.18 240 / 0.7), transparent 70%)" }}
+                    className="absolute inset-0 rounded-full blur-md opacity-70"
+                    style={{ background: "radial-gradient(circle, color-mix(in oklab, var(--primary) 80%, transparent), transparent 70%)" }}
                   />
-                  <svg viewBox="0 0 24 24" className="relative w-full h-full drop-shadow-[0_2px_8px_rgba(56,135,255,0.45)]">
+                  <svg viewBox="0 0 24 24" className="relative w-full h-full" style={{ filter: "drop-shadow(0 2px 8px color-mix(in oklab, var(--primary) 45%, transparent))" }}>
                     <defs>
                       <linearGradient id="vbadge" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#4aa3ff" />
-                        <stop offset="100%" stopColor="#1c6ee0" />
+                        <stop offset="0%" stopColor="color-mix(in oklab, var(--primary) 85%, white)" />
+                        <stop offset="100%" stopColor="var(--primary)" />
                       </linearGradient>
                     </defs>
                     <path
@@ -454,8 +454,8 @@ function Index() {
                     <path
                       d="M7.5 12.3l3 3 6-6.2"
                       fill="none"
-                      stroke="#ffffff"
-                      strokeWidth="2.2"
+                      stroke="var(--background)"
+                      strokeWidth="2.4"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
