@@ -467,7 +467,7 @@ function Index() {
                   </text>
                 </svg>
                 <a
-                  href="https://www.instagram.com/hasanulmoon"
+                  href="https://shotbymoon.lovable.app"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Shot on iPhone — Hasanul Moon"
