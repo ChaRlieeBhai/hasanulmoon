@@ -70,6 +70,8 @@
   --border: oklch(0.4 0.1 150 / 50%);
   --input: oklch(0.28 0.06 155);
   --ring: oklch(0.78 0.2 150);
+  --glow: var(--primary);
+
 }
 
 :root[data-theme="sky"] {
