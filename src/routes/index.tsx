@@ -120,8 +120,23 @@ function Index() {
 
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/50 border-b border-border/40">
-        <nav className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between gap-6">
           <a href="#top" className="text-primary text-5xl md:text-6xl leading-none translate-y-1" style={{ fontFamily: '"Allison", cursive' }}>Charlie</a>
+
+          {/* Desktop inline nav */}
+          <ul className="hidden lg:flex items-center gap-1 px-3 py-2 rounded-full border border-border/60 bg-card/30 backdrop-blur-xl">
+            {navItems.map((s) => (
+              <li key={s.l}>
+                <a
+                  href={s.h}
+                  className="px-4 py-2 text-sm rounded-full text-foreground/80 hover:text-primary hover:bg-primary/10 transition-colors"
+                >
+                  {s.l}
+                </a>
+              </li>
+            ))}
+          </ul>
+
           <button
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
