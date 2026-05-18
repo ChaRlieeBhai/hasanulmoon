@@ -932,6 +932,91 @@ function Index() {
           />
         </div>
       )}
+
+      {/* Liquid glass PIN lock modal */}
+      {lockOpen && (
+        <div
+          onClick={() => setLockOpen(false)}
+          className="fixed inset-0 z-[120] grid place-items-center p-4 bg-black/60 backdrop-blur-xl animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-xs rounded-3xl p-6 border border-white/20 bg-white/10 backdrop-blur-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
+            style={{
+              backgroundImage:
+                "radial-gradient(120% 80% at 0% 0%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 60%), radial-gradient(120% 80% at 100% 100%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%)",
+            }}
+          >
+            <div className="pointer-events-none absolute -inset-px rounded-3xl ring-1 ring-inset ring-white/15" />
+            <button
+              type="button"
+              onClick={() => setLockOpen(false)}
+              aria-label="Close"
+              className="absolute top-3 right-3 w-9 h-9 rounded-full border border-white/20 bg-white/10 text-white grid place-items-center hover:bg-white/20 transition"
+            >
+              <X size={16} />
+            </button>
+
+            <div className="text-center mb-5">
+              <div className="mx-auto w-12 h-12 rounded-full border border-white/25 bg-white/10 grid place-items-center text-primary glow-primary-sm">
+                <Camera size={20} strokeWidth={2.2} />
+              </div>
+              <h3 className="mt-3 text-lg font-medium text-white">Locked</h3>
+              <p className="text-xs text-white/70">Enter 4-digit PIN to unlock</p>
+            </div>
+
+            {/* PIN dots */}
+            <div className={`flex justify-center gap-3 mb-5 ${pinError ? "animate-pulse" : ""}`}>
+              {[0, 1, 2, 3].map((i) => (
+                <span
+                  key={i}
+                  className={`w-3.5 h-3.5 rounded-full border transition-all ${
+                    pinError
+                      ? "border-destructive bg-destructive"
+                      : pin.length > i
+                        ? "border-primary bg-primary glow-primary-sm scale-110"
+                        : "border-white/40 bg-white/10"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Keypad */}
+            <div className="grid grid-cols-3 gap-3">
+              {["1","2","3","4","5","6","7","8","9"].map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => handlePinPress(d)}
+                  className="h-14 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/20 active:scale-95 backdrop-blur-md text-white text-xl font-light transition"
+                >
+                  {d}
+                </button>
+              ))}
+              <div />
+              <button
+                type="button"
+                onClick={() => handlePinPress("0")}
+                className="h-14 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/20 active:scale-95 backdrop-blur-md text-white text-xl font-light transition"
+              >
+                0
+              </button>
+              <button
+                type="button"
+                onClick={handlePinDelete}
+                aria-label="Delete"
+                className="h-14 rounded-2xl border border-white/15 bg-white/5 hover:bg-white/15 active:scale-95 backdrop-blur-md text-white/80 grid place-items-center transition"
+              >
+                ⌫
+              </button>
+            </div>
+
+            {pinError && (
+              <p className="mt-3 text-center text-xs text-destructive">Wrong PIN — try again</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
