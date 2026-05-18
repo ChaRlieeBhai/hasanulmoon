@@ -342,7 +342,7 @@ function Index() {
               { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
               { Icon: Phone, label: "Phone", value: "01823 444069", href: "tel:+8801823444069" },
               { Icon: Phone, label: "Phone", value: "01521 758718", href: "tel:+8801521758718" },
-              { Icon: MapPin, label: "Location", value: "Narail Sadar, Narail · Bangladesh", href: null as string | null },
+              { Icon: MapPin, label: "Location", value: "Dhaka, Bangladesh", href: null as string | null },
             ].map((row, i) => {
               const Inner = (
                 <div className="flex items-center gap-4 p-5 md:p-6 group transition-colors hover:bg-primary/5">
