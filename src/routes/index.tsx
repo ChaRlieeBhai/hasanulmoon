@@ -525,7 +525,7 @@ function Index() {
       </section>
 
       {/* Education */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="education" className="cv-auto relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Where I learned" title="Education" />
         <div className="space-y-4">
           {education.map((e) => (
@@ -542,7 +542,7 @@ function Index() {
       </section>
 
       {/* Experience */}
-      <section id="work" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="work" className="cv-auto relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="What I've done" title="Experience" />
         <div className="space-y-4">
           {experience.map((e) => (
@@ -568,7 +568,7 @@ function Index() {
       </section>
 
       {/* Skills */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
+      <section id="skills" className="cv-auto relative max-w-5xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Things I do well" title="Skills" />
         <div className="flex flex-wrap justify-center gap-3">
           {skills.map((s) => {
@@ -624,7 +624,7 @@ function Index() {
       </section>
 
       {/* Works */}
-      <section id="works" className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
+      <section id="works" className="cv-auto relative max-w-6xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Stuff I made" title="Works" />
 
         <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
@@ -660,7 +660,7 @@ function Index() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-24 md:py-32">
+      <section id="contact" className="cv-auto relative max-w-3xl mx-auto px-6 py-24 md:py-32">
         <SectionTitle kicker="Say hello" title="Contact" />
 
         {/* Liquid glass card */}
