@@ -506,7 +506,7 @@ function Index() {
             </div>
           </div>
 
-          <div className="relative group justify-self-center md:justify-self-end w-full max-w-md">
+          <div className="relative group justify-self-center lg:justify-self-end w-full max-w-md mx-auto">
             {/* Hover glow */}
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
