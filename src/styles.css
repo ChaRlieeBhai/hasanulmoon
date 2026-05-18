@@ -303,21 +303,27 @@ html { -webkit-overflow-scrolling: touch; }
   100% { transform: translateX(150%) rotate(45deg); }
 }
 
-/* Typewriter intro line */
+/* Typewriter intro line — clip-path reveal works inside flex containers */
 .typing-line {
   display: inline-block;
-  overflow: hidden;
+  position: relative;
   white-space: nowrap;
-  border-right: 1.5px solid currentColor;
-  width: 0;
-  animation:
-    typing-line 2.6s steps(26, end) 0.3s forwards,
-    typing-caret 0.8s step-end infinite;
+  clip-path: inset(0 100% 0 0);
+  animation: typing-reveal 2.4s steps(26, end) 0.3s forwards;
 }
-@keyframes typing-line {
-  from { width: 0; }
-  to { width: 100%; }
+.typing-line::after {
+  content: "";
+  position: absolute;
+  right: -0.15em;
+  top: 5%;
+  bottom: 5%;
+  width: 1.5px;
+  background: currentColor;
+  animation: typing-caret 0.8s step-end infinite;
+}
+@keyframes typing-reveal {
+  to { clip-path: inset(0 0 0 0); }
 }
 @keyframes typing-caret {
-  50% { border-color: transparent; }
+  50% { opacity: 0; }
 }
