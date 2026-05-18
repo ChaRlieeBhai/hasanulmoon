@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
@@ -173,7 +173,25 @@ function Index() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [themeIdx, setThemeIdx] = useState(0);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
+
+  const toggleMusic = () => {
+    if (!audioRef.current) {
+      const a = new Audio("/audio/theme.mp3");
+      a.loop = true;
+      a.volume = 0.6;
+      audioRef.current = a;
+    }
+    const a = audioRef.current;
+    if (a.paused) {
+      a.play().then(() => setMusicPlaying(true)).catch(() => setMusicPlaying(false));
+    } else {
+      a.pause();
+      setMusicPlaying(false);
+    }
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -497,6 +515,24 @@ function Index() {
                     ))}
                   </ul>
                 </div>
+              </div>
+
+              {/* Music toggle — liquid glass round button */}
+              <div className="mt-4 flex justify-center">
+                <button
+                  type="button"
+                  onClick={toggleMusic}
+                  aria-label={musicPlaying ? "Pause music" : "Play music"}
+                  aria-pressed={musicPlaying}
+                  title={musicPlaying ? "Pause music" : "Play music"}
+                  className="relative w-12 h-12 rounded-full border border-primary/50 bg-white/10 backdrop-blur-2xl text-primary grid place-items-center glow-primary-md overflow-hidden hover:scale-110 active:scale-95 transition-transform"
+                >
+                  <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-60 pointer-events-none" />
+                  <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/30 to-transparent rotate-45 animate-[shimmer_3s_infinite] pointer-events-none" />
+                  <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/40 blur-2xl pointer-events-none" />
+                  <span className="absolute -bottom-4 -right-4 w-10 h-10 rounded-full bg-accent/40 blur-2xl pointer-events-none" />
+                  {musicPlaying ? <Pause size={16} className="relative" /> : <Play size={16} className="relative ml-0.5" />}
+                </button>
               </div>
             </div>
 
