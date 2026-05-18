@@ -77,26 +77,36 @@ function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showTopBtn, setShowTopBtn] = useState(false);
+  const lenisRef = useRef<import("lenis").default | null>(null);
 
   useEffect(() => {
-    let lenis: import("lenis").default | null = null;
     let raf = 0;
     (async () => {
       const Lenis = (await import("lenis")).default;
-      lenis = new Lenis({
+      const lenis = new Lenis({
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
       });
+      lenisRef.current = lenis;
+
+      lenis.on("scroll", (e: { progress: number }) => {
+        setScrollProgress(e.progress);
+        setShowTopBtn(e.progress > 0.08);
+      });
+
       const loop = (time: number) => {
-        lenis?.raf(time);
+        lenis.raf(time);
         raf = requestAnimationFrame(loop);
       };
       raf = requestAnimationFrame(loop);
     })();
     return () => {
       cancelAnimationFrame(raf);
-      lenis?.destroy();
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
