@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
@@ -93,6 +93,7 @@ const socials = [
   { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
   { Icon: MessageCircle, h: "https://wa.link/rifzjt", label: "WhatsApp" },
   { Icon: Send, h: "https://t.me/hasanulmoon", label: "Telegram" },
+  { Icon: Linkedin, h: "https://www.linkedin.com/in/hasanulmoon", label: "LinkedIn" },
 ];
 
 function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
