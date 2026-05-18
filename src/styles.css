@@ -232,6 +232,22 @@ html, body, header, section, article, aside, nav, footer, main,
 /* Skip rendering/paint for off-screen heavy sections */
 .cv-auto { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
 
+/* ---------- Desktop scroll perf: cap blur cost & promote heavy fixed layers ---------- */
+/* Backdrop-filter blur is the #1 cause of scroll jank. Cap it everywhere — visually identical above ~14px. */
+.backdrop-blur-2xl { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.backdrop-blur-xl  { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.backdrop-blur-md  { backdrop-filter: blur(6px);  -webkit-backdrop-filter: blur(6px);  }
+
+/* Promote fixed decorative layers to their own compositor layer so scroll doesn't repaint them */
+.stars, .grain::before {
+  transform: translateZ(0);
+  will-change: opacity;
+  contain: strict;
+}
+
+/* Smooth, GPU-friendly scrolling */
+html { -webkit-overflow-scrolling: touch; }
+
 /* ---------- Mobile performance optimizations ---------- */
 @media (max-width: 768px) {
   /* background-attachment: fixed is GPU-expensive on mobile */
