@@ -242,8 +242,12 @@ function Index() {
         <MatrixRain active={loading} />
         <div className="relative z-10 flex flex-col items-center gap-6 w-[80%] max-w-md">
           <p
-            className={`text-primary text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
-            style={{ fontFamily: '"Allison", cursive' }}
+            className={`text-7xl md:text-8xl leading-none transition-all duration-700 ${loading ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+            style={{
+              fontFamily: '"Allison", cursive',
+              color: "#39ff7a",
+              textShadow: "0 0 20px #39ff7a, 0 0 40px rgba(57,255,122,0.6), 2px 0 0 rgba(255,0,80,0.6), -2px 0 0 rgba(0,200,255,0.6)",
+            }}
           >
             Charlie
           </p>
