@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Facebook, Instagram, MessageCircle, Send } from "lucide-react";
 import profile from "@/assets/profile.png";
 
 export const Route = createFileRoute("/")({
@@ -53,10 +54,10 @@ const navItems = [
 ];
 
 const socials = [
-  { l: "Fb", h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
-  { l: "Ig", h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
-  { l: "Wa", h: "https://wa.link/rifzjt", label: "WhatsApp" },
-  { l: "Tg", h: "https://t.me/hasanulmoon", label: "Telegram" },
+  { Icon: Facebook, h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
+  { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
+  { Icon: MessageCircle, h: "https://wa.link/rifzjt", label: "WhatsApp" },
+  { Icon: Send, h: "https://t.me/hasanulmoon", label: "Telegram" },
 ];
 
 function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
