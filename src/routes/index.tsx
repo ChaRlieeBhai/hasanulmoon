@@ -177,6 +177,21 @@ function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
+  // Typewriter effect for hero tagline
+  const TAGLINE = "A life without plot armour";
+  const [typed, setTyped] = useState("");
+  useEffect(() => {
+    if (loading) return;
+    setTyped("");
+    let i = 0;
+    const id = window.setInterval(() => {
+      i += 1;
+      setTyped(TAGLINE.slice(0, i));
+      if (i >= TAGLINE.length) window.clearInterval(id);
+    }, 75);
+    return () => window.clearInterval(id);
+  }, [loading]);
+
   const toggleMusic = () => {
     if (!audioRef.current) {
       const a = new Audio("/audio/theme.mp3");
