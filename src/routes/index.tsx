@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import profile from "@/assets/profile.png";
-import work1 from "@/assets/work-1.png";
-import work2 from "@/assets/work-2.png";
-import work3 from "@/assets/work-3.jpg";
-import work4 from "@/assets/work-4.jpg";
+import profile from "@/assets/profile.png?w=480;800;1200&format=webp&as=srcset";
+import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
+import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
+import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
+import work4 from "@/assets/work-4.jpg?w=400;800&format=webp&as=srcset";
 
 export const Route = createFileRoute("/")({
   component: Index,
