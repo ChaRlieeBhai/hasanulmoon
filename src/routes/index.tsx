@@ -761,6 +761,29 @@ function Index() {
         </svg>
         <ArrowUp size={18} className="relative text-primary group-hover:-translate-y-0.5 transition-transform" />
       </button>
+
+      {/* Image lightbox */}
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[100] grid place-items-center p-4 md:p-8 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+        >
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label="Close"
+            className="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl text-white grid place-items-center hover:bg-white/20 transition"
+          >
+            <X size={20} />
+          </button>
+          <img
+            srcSet={lightbox.img}
+            alt={lightbox.title}
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 }
