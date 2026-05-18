@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import profile from "@/assets/profile.png?w=480;800;1200&format=webp&as=srcset";
+import profile from "@/assets/profile.png";
 import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
 import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
 import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
@@ -262,7 +262,7 @@ function Index() {
             <div className="absolute -inset-6 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
             <div className="relative overflow-hidden rounded-2xl border border-border tilt-card transition-shadow duration-500 group-hover:shadow-[0_0_80px_-10px_oklch(0.82_0.17_75/0.65)]">
-              <img srcSet={profile} sizes="(max-width: 768px) 90vw, 480px" alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
+              <img src={profile} alt="Portrait of Hasanul Haque Moon" fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
             </div>
 
             {/* Circular rotating text badge — top-right edge */}
@@ -480,15 +480,19 @@ function Index() {
       <button
         onClick={() => lenisRef.current?.scrollTo(0)}
         aria-label="Scroll to top"
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full border border-border bg-card/50 backdrop-blur-xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.5)] transition-all duration-500 grid place-items-center ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
+        className={`fixed bottom-5 right-5 z-50 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-white/10 backdrop-blur-2xl shadow-[0_8px_30px_-6px_oklch(0_0_0/0.4)] transition-all duration-500 grid place-items-center overflow-hidden group hover:scale-110 hover:shadow-[0_0_40px_-5px_oklch(0.82_0.17_75/0.5)] ${showTopBtn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`}
       >
+        {/* Liquid glass shimmer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/15 to-transparent rotate-45 animate-[shimmer_3s_infinite] opacity-60" />
+
         <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
           <circle
             cx="50" cy="50" r="44"
             fill="none"
             stroke="currentColor"
             strokeWidth="3"
-            className="text-border"
+            className="text-white/10"
           />
           <circle
             cx="50" cy="50" r="44"
@@ -501,7 +505,7 @@ function Index() {
             strokeDashoffset={2 * Math.PI * 44 * (1 - scrollProgress)}
           />
         </svg>
-        <ArrowUp size={20} className="relative text-primary" />
+        <ArrowUp size={18} className="relative text-primary group-hover:-translate-y-0.5 transition-transform" />
       </button>
     </div>
   );
