@@ -263,6 +263,8 @@ function Index() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [themeIdx, setThemeIdx] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(false);
+  const [musicPrompt, setMusicPrompt] = useState(false);
+  const [musicPromptDone, setMusicPromptDone] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
@@ -345,6 +347,13 @@ function Index() {
     { id: "LdKrO0CAoqI", title: "Track 4" },
     { id: "W0xY4narQD0", title: "Track 5" },
     { id: "cA8fmhB-v1k", title: "Track 6" },
+    { id: "rDzFL0L2T_g", title: "Track 7" },
+    { id: "Qgu8c0cgK2U", title: "Track 8" },
+    { id: "Pi1NDP1Z1aw", title: "Track 9" },
+    { id: "VgozmhLGAfw", title: "Track 10" },
+    { id: "iTZEvi4ULhw", title: "Track 11" },
+    { id: "vsboT4wAII8", title: "Track 12" },
+    { id: "Bw3RnxWTLxs", title: "Track 13" },
   ];
   const [trackIdx, setTrackIdx] = useState(0);
   const currentTrack = PLAYLIST[trackIdx];
@@ -388,6 +397,24 @@ function Index() {
     loadTrack(prev, true);
     setMusicPlaying(true);
   };
+
+  useEffect(() => {
+    if (musicPromptDone || musicPlaying) return;
+    let scrolled = false;
+    const onScroll = () => { scrolled = true; };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const t = window.setTimeout(() => {
+      if (scrolled && !musicPlaying && !musicPromptDone) {
+        setMusicPrompt(true);
+      }
+    }, 15000);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(t);
+    };
+  }, [musicPlaying, musicPromptDone]);
+
+
 
   useEffect(() => {
     const root = document.documentElement;
@@ -1214,6 +1241,51 @@ function Index() {
             {pinError && (
               <p className="mt-3 text-center text-xs text-destructive">Wrong PIN — try again</p>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Music prompt popup */}
+      {musicPrompt && (
+        <div
+          className="fixed inset-0 z-[120] grid place-items-center px-4"
+          style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(6px)" }}
+          onClick={() => { setMusicPrompt(false); setMusicPromptDone(true); }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-[min(360px,90vw)] rounded-3xl border border-white/20 p-6 text-center"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))",
+              backdropFilter: "blur(24px) saturate(180%)",
+              WebkitBackdropFilter: "blur(24px) saturate(180%)",
+              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25)",
+            }}
+          >
+            <p className="text-lg font-semibold text-foreground">
+              Want Some Music? <span aria-hidden>🎵</span>
+            </p>
+            <div className="mt-5 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  loadTrack(trackIdx, true);
+                  setMusicPlaying(true);
+                  setMusicPrompt(false);
+                  setMusicPromptDone(true);
+                }}
+                className="px-6 py-2 rounded-full border border-primary/60 bg-primary/25 text-primary backdrop-blur-xl hover:scale-105 active:scale-95 transition-all"
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                onClick={() => { setMusicPrompt(false); setMusicPromptDone(true); }}
+                className="px-6 py-2 rounded-full border border-white/20 bg-white/10 text-foreground backdrop-blur-xl hover:scale-105 active:scale-95 transition-all"
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
       )}
