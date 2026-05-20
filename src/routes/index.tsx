@@ -769,11 +769,11 @@ function Index() {
               </div>
 
               {/* Liquid-glass mini music player */}
-              <div className="mt-4 flex justify-center">
+              <div className="mt-4 w-full flex justify-center">
                 <div
                   role="group"
                   aria-label="Music player"
-                  className="relative flex items-center gap-1 rounded-full border border-primary/40 bg-white/10 backdrop-blur-2xl px-2 py-1.5 glow-primary-md overflow-hidden"
+                  className="relative w-full flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-white/10 backdrop-blur-2xl px-4 py-2 glow-primary-md overflow-hidden"
                 >
                   <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/20 to-transparent rotate-45 animate-[shimmer_4s_infinite] pointer-events-none" />
                   <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/30 blur-2xl pointer-events-none" />
@@ -784,9 +784,9 @@ function Index() {
                     onClick={prevTrack}
                     aria-label="Previous track"
                     title="Previous"
-                    className="relative w-8 h-8 grid place-items-center rounded-full text-primary/90 hover:bg-white/10 hover:scale-110 active:scale-95 transition-all"
+                    className="relative w-9 h-9 grid place-items-center rounded-full text-primary/90 hover:bg-white/10 hover:scale-110 active:scale-95 transition-all"
                   >
-                    <SkipBack size={15} fill="currentColor" />
+                    <SkipBack size={16} fill="currentColor" />
                   </button>
 
                   <button
@@ -795,9 +795,9 @@ function Index() {
                     aria-label={musicPlaying ? "Pause music" : "Play music"}
                     aria-pressed={musicPlaying}
                     title={musicPlaying ? "Pause" : "Play"}
-                    className="relative w-10 h-10 grid place-items-center rounded-full border border-primary/60 bg-primary/25 backdrop-blur-xl text-primary glow-primary-sm hover:scale-110 active:scale-95 transition-all"
+                    className="relative w-11 h-11 grid place-items-center rounded-full border border-primary/60 bg-primary/25 backdrop-blur-xl text-primary glow-primary-sm hover:scale-110 active:scale-95 transition-all"
                   >
-                    {musicPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-0.5" />}
+                    {musicPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-0.5" />}
                   </button>
 
                   <button
@@ -805,17 +805,10 @@ function Index() {
                     onClick={nextTrack}
                     aria-label="Next track"
                     title="Next"
-                    className="relative w-8 h-8 grid place-items-center rounded-full text-primary/90 hover:bg-white/10 hover:scale-110 active:scale-95 transition-all"
+                    className="relative w-9 h-9 grid place-items-center rounded-full text-primary/90 hover:bg-white/10 hover:scale-110 active:scale-95 transition-all"
                   >
-                    <SkipForward size={15} fill="currentColor" />
+                    <SkipForward size={16} fill="currentColor" />
                   </button>
-
-                  <span
-                    className="relative ml-1 mr-2 max-w-[80px] sm:max-w-[120px] truncate text-[10px] uppercase tracking-[0.2em] text-primary/60"
-                    aria-live="polite"
-                  >
-                    {currentTrack.title}
-                  </span>
                 </div>
                 <iframe
                   ref={ytIframeRef}
