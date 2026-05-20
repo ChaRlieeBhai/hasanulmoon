@@ -282,36 +282,36 @@ function Index() {
   const [lockOpen, setLockOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const pinInputRef = useRef<HTMLInputElement | null>(null);
   const SHOT_URL = "https://shotbymoon.lovable.app";
-  const CORRECT_PIN = "2003";
+  const CORRECT_PIN = "mj2003";
 
-  function handlePinPress(digit: string) {
+  function handlePinChange(value: string) {
     setPinError(false);
-    setPin((prev) => {
-      if (prev.length >= 4) return prev;
-      const next = prev + digit;
-      if (next.length === 4) {
-        if (next === CORRECT_PIN) {
-          setTimeout(() => {
-            window.open(SHOT_URL, "_blank", "noreferrer");
-            setLockOpen(false);
-            setPin("");
-          }, 250);
-        } else {
-          setTimeout(() => {
-            setPinError(true);
-            setPin("");
-          }, 200);
-        }
-      }
-      return next;
-    });
+    const v = value.slice(0, 12).toLowerCase();
+    setPin(v);
+    if (v === CORRECT_PIN) {
+      setTimeout(() => {
+        setLockOpen(false);
+        setPin("");
+        setUnlocked(true);
+      }, 200);
+    } else if (v.length >= CORRECT_PIN.length) {
+      setTimeout(() => {
+        setPinError(true);
+        setPin("");
+      }, 200);
+    }
   }
 
-  function handlePinDelete() {
-    setPinError(false);
-    setPin((prev) => prev.slice(0, -1));
-  }
+  useEffect(() => {
+    if (lockOpen) {
+      const t = setTimeout(() => pinInputRef.current?.focus(), 50);
+      return () => clearTimeout(t);
+    }
+  }, [lockOpen]);
+
   useEffect(() => {
     const word = CHALK_WORDS[chalkWordIdx];
     let delay = 110;
