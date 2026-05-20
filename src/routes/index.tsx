@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock, Music, Music2 } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock, Music, Music2, SkipBack, SkipForward } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
@@ -338,17 +338,50 @@ function Index() {
     }
   }, [chalkPhase, chalkText, chalkWordIdx]);
 
-  const YT_VIDEO_ID = "uKM3hEbLEOg";
-  const toggleMusic = () => {
+  const PLAYLIST = [
+    { id: "uKM3hEbLEOg", title: "Track 1" },
+  ];
+  const [trackIdx, setTrackIdx] = useState(0);
+  const currentTrack = PLAYLIST[trackIdx];
+
+  const ytCommand = (func: "playVideo" | "pauseVideo") => {
+    const iframe = ytIframeRef.current;
+    if (!iframe || !iframe.contentWindow) return;
+    iframe.contentWindow.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*"
+    );
+  };
+
+  const loadTrack = (idx: number, autoplay: boolean) => {
     const iframe = ytIframeRef.current;
     if (!iframe) return;
+    const id = PLAYLIST[idx].id;
+    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&autoplay=${autoplay ? 1 : 0}&loop=1&playlist=${id}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+  };
+
+  const toggleMusic = () => {
     if (!musicPlaying) {
-      iframe.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+      loadTrack(trackIdx, true);
       setMusicPlaying(true);
     } else {
-      iframe.src = "about:blank";
+      ytCommand("pauseVideo");
       setMusicPlaying(false);
     }
+  };
+
+  const nextTrack = () => {
+    const next = (trackIdx + 1) % PLAYLIST.length;
+    setTrackIdx(next);
+    loadTrack(next, true);
+    setMusicPlaying(true);
+  };
+
+  const prevTrack = () => {
+    const prev = (trackIdx - 1 + PLAYLIST.length) % PLAYLIST.length;
+    setTrackIdx(prev);
+    loadTrack(prev, true);
+    setMusicPlaying(true);
   };
 
   useEffect(() => {
@@ -730,22 +763,55 @@ function Index() {
                 </div>
               </div>
 
-              {/* Music toggle — liquid glass round button */}
+              {/* Liquid-glass mini music player */}
               <div className="mt-4 flex justify-center">
-                <button
-                  type="button"
-                  onClick={toggleMusic}
-                  aria-label={musicPlaying ? "Turn music off" : "Turn music on"}
-                  aria-pressed={musicPlaying}
-                  title={musicPlaying ? "Turn music off" : "Turn music on"}
-                  className="relative w-12 h-12 rounded-full border border-primary/50 bg-white/10 backdrop-blur-2xl text-primary grid place-items-center glow-primary-md overflow-hidden hover:scale-110 active:scale-95 transition-transform"
+                <div
+                  role="group"
+                  aria-label="Music player"
+                  className="relative flex items-center gap-1 rounded-full border border-primary/40 bg-white/10 backdrop-blur-2xl px-2 py-1.5 glow-primary-md overflow-hidden"
                 >
-                  <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-60 pointer-events-none" />
-                  <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/30 to-transparent rotate-45 animate-[shimmer_3s_infinite] pointer-events-none" />
-                  <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/40 blur-2xl pointer-events-none" />
-                  <span className="absolute -bottom-4 -right-4 w-10 h-10 rounded-full bg-accent/40 blur-2xl pointer-events-none" />
-                  {musicPlaying ? <Music2 size={18} className="relative" /> : <Music size={18} className="relative" />}
-                </button>
+                  <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/20 to-transparent rotate-45 animate-[shimmer_4s_infinite] pointer-events-none" />
+                  <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/30 blur-2xl pointer-events-none" />
+                  <span className="absolute -bottom-4 -right-4 w-10 h-10 rounded-full bg-accent/30 blur-2xl pointer-events-none" />
+
+                  <button
+                    type="button"
+                    onClick={prevTrack}
+                    aria-label="Previous track"
+                    title="Previous"
+                    className="relative w-8 h-8 grid place-items-center rounded-full text-primary/90 hover:bg-white/10 hover:scale-110 active:scale-95 transition-all"
+                  >
+                    <SkipBack size={15} fill="currentColor" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={toggleMusic}
+                    aria-label={musicPlaying ? "Pause music" : "Play music"}
+                    aria-pressed={musicPlaying}
+                    title={musicPlaying ? "Pause" : "Play"}
+                    className="relative w-10 h-10 grid place-items-center rounded-full border border-primary/60 bg-primary/25 backdrop-blur-xl text-primary glow-primary-sm hover:scale-110 active:scale-95 transition-all"
+                  >
+                    {musicPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-0.5" />}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={nextTrack}
+                    aria-label="Next track"
+                    title="Next"
+                    className="relative w-8 h-8 grid place-items-center rounded-full text-primary/90 hover:bg-white/10 hover:scale-110 active:scale-95 transition-all"
+                  >
+                    <SkipForward size={15} fill="currentColor" />
+                  </button>
+
+                  <span
+                    className="relative ml-1 mr-2 max-w-[80px] sm:max-w-[120px] truncate text-[10px] uppercase tracking-[0.2em] text-primary/60"
+                    aria-live="polite"
+                  >
+                    {currentTrack.title}
+                  </span>
+                </div>
                 <iframe
                   ref={ytIframeRef}
                   src="about:blank"
