@@ -1404,6 +1404,49 @@ function Index() {
           </div>
         </div>
       )}
+
+      {/* Unlocked fullscreen reveal */}
+      {unlocked && (
+        <div
+          className="fixed inset-0 z-[130] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 animate-in fade-in duration-300"
+          onClick={() => setUnlocked(false)}
+        >
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setUnlocked(false); }}
+            aria-label="Close"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/20 bg-white/10 text-white grid place-items-center hover:bg-white/20 transition z-10"
+          >
+            <X size={18} />
+          </button>
+          <img
+            src={mjForever}
+            alt="MJ"
+            className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+            style={{ boxShadow: "0 0 60px color-mix(in oklab, var(--primary) 40%, transparent)" }}
+          />
+          <p
+            className="mt-6 text-2xl md:text-3xl font-display tracking-widest text-white flex items-center gap-3"
+            style={{
+              textShadow:
+                "0 0 12px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 28px color-mix(in oklab, var(--primary) 45%, transparent)",
+            }}
+          >
+            MJ FOREVER
+            <span
+              aria-hidden
+              className="inline-block animate-pulse"
+              style={{
+                filter:
+                  "drop-shadow(0 0 8px #ff5577) drop-shadow(0 0 18px #ff2244)",
+              }}
+            >
+              ❤️
+            </span>
+          </p>
+        </div>
+      )}
     </div>
+
   );
 }
