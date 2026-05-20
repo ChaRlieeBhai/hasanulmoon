@@ -340,6 +340,11 @@ function Index() {
 
   const PLAYLIST = [
     { id: "uKM3hEbLEOg", title: "Track 1" },
+    { id: "CL97xVw5RgU", title: "Track 2" },
+    { id: "o7R869JhEz8", title: "Track 3" },
+    { id: "LdKrO0CAoqI", title: "Track 4" },
+    { id: "W0xY4narQD0", title: "Track 5" },
+    { id: "cA8fmhB-v1k", title: "Track 6" },
   ];
   const [trackIdx, setTrackIdx] = useState(0);
   const currentTrack = PLAYLIST[trackIdx];
