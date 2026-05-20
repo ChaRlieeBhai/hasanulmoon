@@ -990,12 +990,19 @@ function Index() {
           >
             <X size={20} />
           </button>
-          <img
-            srcSet={lightbox.img}
-            alt={lightbox.title}
+          <div
             onClick={(e) => e.stopPropagation()}
-            className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
-          />
+            className="max-w-5xl w-full max-h-full overflow-y-auto flex flex-col items-center gap-4 p-2"
+          >
+            {lightbox.imgs.map((src, i) => (
+              <img
+                key={i}
+                srcSet={src}
+                alt={`${lightbox.title} ${i + 1}`}
+                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+              />
+            ))}
+          </div>
         </div>
       )}
 
