@@ -242,8 +242,10 @@ function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
-  const TAGLINE = "A life without plot armour";
-  const [taglineRevealed, setTaglineRevealed] = useState(false);
+  const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "Web Developer", "Gamer", "Designer", "Unemployed"];
+  const [chalkWordIdx, setChalkWordIdx] = useState(0);
+  const [chalkText, setChalkText] = useState("");
+  const [chalkPhase, setChalkPhase] = useState<"typing" | "hold" | "erasing" | "gap">("typing");
   const [lockOpen, setLockOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
