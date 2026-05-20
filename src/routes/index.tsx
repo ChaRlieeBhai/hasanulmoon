@@ -526,10 +526,23 @@ function Index() {
          <div className="grid lg:grid-cols-2 gap-12 items-center">
            <div>
              <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2 min-h-[1.25em]">
-               <span aria-label={TAGLINE}>
-                 {typed}
-                 <span className="type-caret" aria-hidden="true">|</span>
-               </span>
+               <button
+                 type="button"
+                 onClick={() => setTaglineRevealed(true)}
+                 aria-label={TAGLINE}
+                 className="relative inline-flex items-center group focus:outline-none cursor-pointer"
+               >
+                 <span
+                   className="transition-all duration-700 ease-out inline-block"
+                   style={{
+                     filter: taglineRevealed ? "blur(0px)" : "blur(6px)",
+                     opacity: taglineRevealed ? 1 : 0.85,
+                     letterSpacing: taglineRevealed ? "0.3em" : "0.5em",
+                   }}
+                 >
+                   {TAGLINE}
+                 </span>
+               </button>
                <span>💛</span>
              </p>
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
