@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock, Music, Music2 } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock, Music, Music2, SkipBack, SkipForward } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
