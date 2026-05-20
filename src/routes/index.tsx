@@ -769,11 +769,11 @@ function Index() {
               </div>
 
               {/* Liquid-glass mini music player */}
-              <div className="mt-4 w-full flex justify-center">
+              <div className="mt-4 flex justify-center">
                 <div
                   role="group"
                   aria-label="Music player"
-                  className="relative w-full flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-white/10 backdrop-blur-2xl px-4 py-2 glow-primary-md overflow-hidden"
+                  className="relative w-fit flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-white/10 backdrop-blur-2xl px-5 py-2 glow-primary-md overflow-hidden"
                 >
                   <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/20 to-transparent rotate-45 animate-[shimmer_4s_infinite] pointer-events-none" />
                   <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/30 blur-2xl pointer-events-none" />
