@@ -242,9 +242,8 @@ function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
-  // Typewriter effect for hero tagline
   const TAGLINE = "A life without plot armour";
-  const [typed, setTyped] = useState("");
+  const [taglineRevealed, setTaglineRevealed] = useState(false);
   const [lockOpen, setLockOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
@@ -279,23 +278,10 @@ function Index() {
     setPin((prev) => prev.slice(0, -1));
   }
   useEffect(() => {
-    if (loading) return;
-    let i = 0;
-    let cancelled = false;
-    setTyped("");
-    const tick = () => {
-      if (cancelled) return;
-      i += 1;
-      setTyped(TAGLINE.slice(0, i));
-      if (i < TAGLINE.length) window.setTimeout(tick, 90);
-    };
-    const start = window.setTimeout(tick, 300);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(start);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+    if (!taglineRevealed) return;
+    const t = window.setTimeout(() => setTaglineRevealed(false), 7000);
+    return () => window.clearTimeout(t);
+  }, [taglineRevealed]);
 
   const toggleMusic = () => {
     if (!audioRef.current) {
@@ -540,10 +526,23 @@ function Index() {
          <div className="grid lg:grid-cols-2 gap-12 items-center">
            <div>
              <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2 min-h-[1.25em]">
-               <span aria-label={TAGLINE}>
-                 {typed}
-                 <span className="type-caret" aria-hidden="true">|</span>
-               </span>
+               <button
+                 type="button"
+                 onClick={() => setTaglineRevealed(true)}
+                 aria-label={TAGLINE}
+                 className="relative inline-flex items-center group focus:outline-none cursor-pointer"
+               >
+                 <span
+                   className="transition-all duration-700 ease-out inline-block"
+                   style={{
+                     filter: taglineRevealed ? "blur(0px)" : "blur(6px)",
+                     opacity: taglineRevealed ? 1 : 0.85,
+                     letterSpacing: taglineRevealed ? "0.3em" : "0.5em",
+                   }}
+                 >
+                   {TAGLINE}
+                 </span>
+               </button>
                <span>💛</span>
              </p>
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
