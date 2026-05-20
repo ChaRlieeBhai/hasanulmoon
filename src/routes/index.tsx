@@ -1301,58 +1301,61 @@ function Index() {
                 <Lock size={20} strokeWidth={2.2} />
               </div>
               <h3 className="mt-3 text-lg font-medium text-white">Locked</h3>
-              <p className="text-xs text-white/70">Enter 4-digit PIN to unlock</p>
+              <p
+                className="mt-2 text-sm font-medium tracking-wide"
+                style={{
+                  color: "color-mix(in oklab, var(--primary) 85%, white)",
+                  textShadow:
+                    "0 0 10px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 22px color-mix(in oklab, var(--primary) 45%, transparent)",
+                }}
+              >
+                YOU & YOUR'S BiRTHDAY
+              </p>
             </div>
 
-            {/* PIN dots */}
-            <div className={`flex justify-center gap-3 mb-5 ${pinError ? "animate-pulse" : ""}`}>
-              {[0, 1, 2, 3].map((i) => (
-                <span
-                  key={i}
-                  className={`w-3.5 h-3.5 rounded-full border transition-all ${
-                    pinError
-                      ? "border-destructive bg-destructive"
-                      : pin.length > i
-                        ? "border-primary bg-primary glow-primary-sm scale-110"
-                        : "border-white/40 bg-white/10"
-                  }`}
-                />
-              ))}
-            </div>
+            {/* Hidden input — uses device keyboard */}
+            <input
+              ref={pinInputRef}
+              type="text"
+              inputMode="text"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              value={pin}
+              onChange={(e) => handlePinChange(e.target.value)}
+              className="sr-only"
+              aria-label="Enter passcode"
+            />
 
-            {/* Keypad */}
-            <div className="grid grid-cols-3 gap-3">
-              {["1","2","3","4","5","6","7","8","9"].map((d) => (
-                <button
-                  key={d}
-                  type="button"
-                  onClick={() => handlePinPress(d)}
-                  className="h-14 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/20 active:scale-95 backdrop-blur-md text-white text-xl font-light transition"
-                >
-                  {d}
-                </button>
-              ))}
-              <div />
-              <button
-                type="button"
-                onClick={() => handlePinPress("0")}
-                className="h-14 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/20 active:scale-95 backdrop-blur-md text-white text-xl font-light transition"
-              >
-                0
-              </button>
-              <button
-                type="button"
-                onClick={handlePinDelete}
-                aria-label="Delete"
-                className="h-14 rounded-2xl border border-white/15 bg-white/5 hover:bg-white/15 active:scale-95 backdrop-blur-md text-white/80 grid place-items-center transition"
-              >
-                ⌫
-              </button>
+            {/* Visual display of typed chars */}
+            <div
+              onClick={() => pinInputRef.current?.focus()}
+              className={`mx-auto flex items-center justify-center gap-2 min-h-12 px-4 py-3 rounded-2xl border bg-white/5 cursor-text ${
+                pinError ? "border-destructive animate-pulse" : "border-white/20"
+              }`}
+            >
+              {pin.length === 0 ? (
+                <span className="text-white/40 text-sm">tap & type…</span>
+              ) : (
+                pin.split("").map((ch, i) => (
+                  <span
+                    key={i}
+                    className="text-white text-lg font-medium"
+                    style={{
+                      textShadow:
+                        "0 0 8px color-mix(in oklab, var(--primary) 70%, transparent)",
+                    }}
+                  >
+                    {ch}
+                  </span>
+                ))
+              )}
             </div>
 
             {pinError && (
-              <p className="mt-3 text-center text-xs text-destructive">Wrong PIN — try again</p>
+              <p className="mt-3 text-center text-xs text-destructive">Wrong — try again</p>
             )}
+
           </div>
         </div>
       )}
