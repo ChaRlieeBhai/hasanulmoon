@@ -15,6 +15,10 @@ import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
 import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
 import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
 import work4 from "@/assets/work-4.jpg?w=400;800&format=webp&as=srcset";
+import workActiveNew from "@/assets/work-active-new.jpg?w=400;800&format=webp&as=srcset";
+import workReach1 from "@/assets/work-reach-1.jpg?w=400;800&format=webp&as=srcset";
+import workReach2 from "@/assets/work-reach-2.jpg?w=400;800&format=webp&as=srcset";
+import workReach3 from "@/assets/work-reach-3.jpg?w=400;800&format=webp&as=srcset";
 
 const SITE_URL = "https://hasanulmoon.online";
 const OG_IMAGE = "https://storage.googleapis.com/gpt-engineer-file-uploads/h56DTb9HKJazIrohTsuQvHLWa9s1/social-images/social-1779093527915-ChatGPT_Image_May_9,_2026,_11_04_37_PM.webp";
