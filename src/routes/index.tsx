@@ -345,6 +345,13 @@ function Index() {
     { id: "LdKrO0CAoqI", title: "Track 4" },
     { id: "W0xY4narQD0", title: "Track 5" },
     { id: "cA8fmhB-v1k", title: "Track 6" },
+    { id: "rDzFL0L2T_g", title: "Track 7" },
+    { id: "Qgu8c0cgK2U", title: "Track 8" },
+    { id: "Pi1NDP1Z1aw", title: "Track 9" },
+    { id: "VgozmhLGAfw", title: "Track 10" },
+    { id: "iTZEvi4ULhw", title: "Track 11" },
+    { id: "vsboT4wAII8", title: "Track 12" },
+    { id: "Bw3RnxWTLxs", title: "Track 13" },
   ];
   const [trackIdx, setTrackIdx] = useState(0);
   const currentTrack = PLAYLIST[trackIdx];
