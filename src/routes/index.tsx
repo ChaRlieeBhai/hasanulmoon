@@ -264,6 +264,7 @@ function Index() {
   const [themeIdx, setThemeIdx] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
   const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "Web Developer", "Gamer", "Designer", "Unemployed"];
