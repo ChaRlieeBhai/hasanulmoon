@@ -242,9 +242,8 @@ function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
-  // Typewriter effect for hero tagline
   const TAGLINE = "A life without plot armour";
-  const [typed, setTyped] = useState("");
+  const [taglineRevealed, setTaglineRevealed] = useState(false);
   const [lockOpen, setLockOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
