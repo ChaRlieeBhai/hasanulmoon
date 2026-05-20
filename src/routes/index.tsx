@@ -293,7 +293,7 @@ function Index() {
       return () => window.clearTimeout(t);
     }
     if (chalkPhase === "hold") {
-      const t = window.setTimeout(() => setChalkPhase("erasing"), 1400);
+      const t = window.setTimeout(() => setChalkPhase("erasing"), 3000);
       return () => window.clearTimeout(t);
     }
     if (chalkPhase === "erasing") {
@@ -574,19 +574,6 @@ function Index() {
                       className="inline-block w-[0.08em] h-[0.9em] align-baseline ml-[2px] bg-foreground/70"
                       style={{ animation: "type-caret 0.85s steps(1) infinite" }}
                     />
-                  )}
-                  {chalkPhase === "erasing" && (
-                    <span
-                      aria-hidden
-                      className="inline-block ml-1 px-2 py-1 rounded-sm text-[0.45em] uppercase tracking-widest align-middle"
-                      style={{
-                        background: "linear-gradient(180deg, #6b4a2b 0%, #4a3320 100%)",
-                        color: "rgba(255,255,255,0.85)",
-                        boxShadow: "inset 0 -2px 0 rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.4)",
-                      }}
-                    >
-                      duster
-                    </span>
                   )}
                 </span>
               </p>
