@@ -338,17 +338,50 @@ function Index() {
     }
   }, [chalkPhase, chalkText, chalkWordIdx]);
 
-  const YT_VIDEO_ID = "uKM3hEbLEOg";
-  const toggleMusic = () => {
+  const PLAYLIST = [
+    { id: "uKM3hEbLEOg", title: "Track 1" },
+  ];
+  const [trackIdx, setTrackIdx] = useState(0);
+  const currentTrack = PLAYLIST[trackIdx];
+
+  const ytCommand = (func: "playVideo" | "pauseVideo") => {
+    const iframe = ytIframeRef.current;
+    if (!iframe || !iframe.contentWindow) return;
+    iframe.contentWindow.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*"
+    );
+  };
+
+  const loadTrack = (idx: number, autoplay: boolean) => {
     const iframe = ytIframeRef.current;
     if (!iframe) return;
+    const id = PLAYLIST[idx].id;
+    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&autoplay=${autoplay ? 1 : 0}&loop=1&playlist=${id}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+  };
+
+  const toggleMusic = () => {
     if (!musicPlaying) {
-      iframe.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+      loadTrack(trackIdx, true);
       setMusicPlaying(true);
     } else {
-      iframe.src = "about:blank";
+      ytCommand("pauseVideo");
       setMusicPlaying(false);
     }
+  };
+
+  const nextTrack = () => {
+    const next = (trackIdx + 1) % PLAYLIST.length;
+    setTrackIdx(next);
+    loadTrack(next, true);
+    setMusicPlaying(true);
+  };
+
+  const prevTrack = () => {
+    const prev = (trackIdx - 1 + PLAYLIST.length) % PLAYLIST.length;
+    setTrackIdx(prev);
+    loadTrack(prev, true);
+    setMusicPlaying(true);
   };
 
   useEffect(() => {
