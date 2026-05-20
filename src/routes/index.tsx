@@ -5,6 +5,7 @@ import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
 import profileJacket from "@/assets/profile-jacket.png";
 import introBg from "@/assets/intro-bg.jpg";
+import mjForever from "@/assets/mj-forever.jpg";
 
 const themeCycle = [
   { theme: "", img: profile },
@@ -281,36 +282,36 @@ function Index() {
   const [lockOpen, setLockOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const pinInputRef = useRef<HTMLInputElement | null>(null);
   const SHOT_URL = "https://shotbymoon.lovable.app";
-  const CORRECT_PIN = "2003";
+  const CORRECT_PIN = "mj2003";
 
-  function handlePinPress(digit: string) {
+  function handlePinChange(value: string) {
     setPinError(false);
-    setPin((prev) => {
-      if (prev.length >= 4) return prev;
-      const next = prev + digit;
-      if (next.length === 4) {
-        if (next === CORRECT_PIN) {
-          setTimeout(() => {
-            window.open(SHOT_URL, "_blank", "noreferrer");
-            setLockOpen(false);
-            setPin("");
-          }, 250);
-        } else {
-          setTimeout(() => {
-            setPinError(true);
-            setPin("");
-          }, 200);
-        }
-      }
-      return next;
-    });
+    const v = value.slice(0, 12).toLowerCase();
+    setPin(v);
+    if (v === CORRECT_PIN) {
+      setTimeout(() => {
+        setLockOpen(false);
+        setPin("");
+        setUnlocked(true);
+      }, 200);
+    } else if (v.length >= CORRECT_PIN.length) {
+      setTimeout(() => {
+        setPinError(true);
+        setPin("");
+      }, 200);
+    }
   }
 
-  function handlePinDelete() {
-    setPinError(false);
-    setPin((prev) => prev.slice(0, -1));
-  }
+  useEffect(() => {
+    if (lockOpen) {
+      const t = setTimeout(() => pinInputRef.current?.focus(), 50);
+      return () => clearTimeout(t);
+    }
+  }, [lockOpen]);
+
   useEffect(() => {
     const word = CHALK_WORDS[chalkWordIdx];
     let delay = 110;
@@ -1300,58 +1301,61 @@ function Index() {
                 <Lock size={20} strokeWidth={2.2} />
               </div>
               <h3 className="mt-3 text-lg font-medium text-white">Locked</h3>
-              <p className="text-xs text-white/70">Enter 4-digit PIN to unlock</p>
+              <p
+                className="mt-2 text-sm font-medium tracking-wide"
+                style={{
+                  color: "color-mix(in oklab, var(--primary) 85%, white)",
+                  textShadow:
+                    "0 0 10px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 22px color-mix(in oklab, var(--primary) 45%, transparent)",
+                }}
+              >
+                YOU & YOUR'S BiRTHDAY
+              </p>
             </div>
 
-            {/* PIN dots */}
-            <div className={`flex justify-center gap-3 mb-5 ${pinError ? "animate-pulse" : ""}`}>
-              {[0, 1, 2, 3].map((i) => (
-                <span
-                  key={i}
-                  className={`w-3.5 h-3.5 rounded-full border transition-all ${
-                    pinError
-                      ? "border-destructive bg-destructive"
-                      : pin.length > i
-                        ? "border-primary bg-primary glow-primary-sm scale-110"
-                        : "border-white/40 bg-white/10"
-                  }`}
-                />
-              ))}
-            </div>
+            {/* Hidden input — uses device keyboard */}
+            <input
+              ref={pinInputRef}
+              type="text"
+              inputMode="text"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              value={pin}
+              onChange={(e) => handlePinChange(e.target.value)}
+              className="sr-only"
+              aria-label="Enter passcode"
+            />
 
-            {/* Keypad */}
-            <div className="grid grid-cols-3 gap-3">
-              {["1","2","3","4","5","6","7","8","9"].map((d) => (
-                <button
-                  key={d}
-                  type="button"
-                  onClick={() => handlePinPress(d)}
-                  className="h-14 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/20 active:scale-95 backdrop-blur-md text-white text-xl font-light transition"
-                >
-                  {d}
-                </button>
-              ))}
-              <div />
-              <button
-                type="button"
-                onClick={() => handlePinPress("0")}
-                className="h-14 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/20 active:scale-95 backdrop-blur-md text-white text-xl font-light transition"
-              >
-                0
-              </button>
-              <button
-                type="button"
-                onClick={handlePinDelete}
-                aria-label="Delete"
-                className="h-14 rounded-2xl border border-white/15 bg-white/5 hover:bg-white/15 active:scale-95 backdrop-blur-md text-white/80 grid place-items-center transition"
-              >
-                ⌫
-              </button>
+            {/* Visual display of typed chars */}
+            <div
+              onClick={() => pinInputRef.current?.focus()}
+              className={`mx-auto flex items-center justify-center gap-2 min-h-12 px-4 py-3 rounded-2xl border bg-white/5 cursor-text ${
+                pinError ? "border-destructive animate-pulse" : "border-white/20"
+              }`}
+            >
+              {pin.length === 0 ? (
+                <span className="text-white/40 text-sm">tap & type…</span>
+              ) : (
+                pin.split("").map((ch, i) => (
+                  <span
+                    key={i}
+                    className="text-white text-lg font-medium"
+                    style={{
+                      textShadow:
+                        "0 0 8px color-mix(in oklab, var(--primary) 70%, transparent)",
+                    }}
+                  >
+                    {ch}
+                  </span>
+                ))
+              )}
             </div>
 
             {pinError && (
-              <p className="mt-3 text-center text-xs text-destructive">Wrong PIN — try again</p>
+              <p className="mt-3 text-center text-xs text-destructive">Wrong — try again</p>
             )}
+
           </div>
         </div>
       )}
@@ -1400,6 +1404,49 @@ function Index() {
           </div>
         </div>
       )}
+
+      {/* Unlocked fullscreen reveal */}
+      {unlocked && (
+        <div
+          className="fixed inset-0 z-[130] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 animate-in fade-in duration-300"
+          onClick={() => setUnlocked(false)}
+        >
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setUnlocked(false); }}
+            aria-label="Close"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/20 bg-white/10 text-white grid place-items-center hover:bg-white/20 transition z-10"
+          >
+            <X size={18} />
+          </button>
+          <img
+            src={mjForever}
+            alt="MJ"
+            className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+            style={{ boxShadow: "0 0 60px color-mix(in oklab, var(--primary) 40%, transparent)" }}
+          />
+          <p
+            className="mt-6 text-2xl md:text-3xl font-display tracking-widest text-white flex items-center gap-3"
+            style={{
+              textShadow:
+                "0 0 12px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 28px color-mix(in oklab, var(--primary) 45%, transparent)",
+            }}
+          >
+            MJ FOREVER
+            <span
+              aria-hidden
+              className="inline-block animate-pulse"
+              style={{
+                filter:
+                  "drop-shadow(0 0 8px #ff5577) drop-shadow(0 0 18px #ff2244)",
+              }}
+            >
+              ❤️
+            </span>
+          </p>
+        </div>
+      )}
     </div>
+
   );
 }
