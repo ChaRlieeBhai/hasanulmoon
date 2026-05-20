@@ -263,6 +263,8 @@ function Index() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [themeIdx, setThemeIdx] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(false);
+  const [musicPrompt, setMusicPrompt] = useState(false);
+  const [musicPromptDone, setMusicPromptDone] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
