@@ -16,8 +16,69 @@ import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
 import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
 import work4 from "@/assets/work-4.jpg?w=400;800&format=webp&as=srcset";
 
+const SITE_URL = "https://hasanulmoon.online";
+const OG_IMAGE = "https://storage.googleapis.com/gpt-engineer-file-uploads/h56DTb9HKJazIrohTsuQvHLWa9s1/social-images/social-1779093527915-ChatGPT_Image_May_9,_2026,_11_04_37_PM.webp";
+
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Hasanul Moon — Digital Marketer & Portfolio | Hasanul Haque Moon" },
+      { name: "description", content: "Hasanul Moon (Hasanul Haque Moon) — digital marketer, web developer & computer applications specialist from Dhaka, Bangladesh. View portfolio, skills, projects, and CV." },
+      { name: "keywords", content: "Hasanul Moon, Hasanul Haque Moon, hasanulmoon, digital marketer Bangladesh, portfolio, web developer Dhaka, Hasanul Moon portfolio, hasanulmoon.online" },
+      { name: "author", content: "Hasanul Haque Moon" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { property: "og:title", content: "Hasanul Moon — Digital Marketer & Portfolio" },
+      { property: "og:description", content: "Portfolio of Hasanul Haque Moon — digital marketer, web developer, and computer applications specialist from Dhaka, Bangladesh." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL + "/" },
+      { property: "og:site_name", content: "Hasanul Moon" },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:alt", content: "Hasanul Moon — Portfolio" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Hasanul Moon — Digital Marketer & Portfolio" },
+      { name: "twitter:description", content: "Portfolio of Hasanul Haque Moon — digital marketer, web developer, and computer applications specialist from Dhaka, Bangladesh." },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [
+      { rel: "canonical", href: SITE_URL + "/" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Hasanul Haque Moon",
+          alternateName: ["Hasanul Moon", "hasanulmoon"],
+          url: SITE_URL,
+          image: OG_IMAGE,
+          jobTitle: "Digital Marketer & Web Developer",
+          worksFor: { "@type": "Organization", name: "Self-employed" },
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Dhaka",
+            addressCountry: "Bangladesh",
+          },
+          sameAs: [
+            "https://www.facebook.com/hasanulmoon",
+            "https://www.instagram.com/hasanulmoon",
+            "https://www.linkedin.com/in/hasanulmoon",
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Hasanul Moon",
+          url: SITE_URL,
+          inLanguage: "en",
+        }),
+      },
+    ],
+  }),
 });
 
 const skills: { name: string; brief: string }[] = [
