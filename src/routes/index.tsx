@@ -857,14 +857,14 @@ function Index() {
           </a>
 
           {[
-            { img: work2, title: "Active Projects" },
-            { img: work3, title: "Reach" },
-            { img: work4, title: "Details" },
+            { img: workActiveNew, title: "Active Projects", popup: [workActiveNew, work2] },
+            { img: workReach1, title: "Reach", popup: [workReach1, workReach2, workReach3] },
+            { img: work4, title: "Details", popup: [work4] },
           ].map((w) => (
             <button
               type="button"
               key={w.title}
-              onClick={() => setLightbox({ img: w.img, title: w.title })}
+              onClick={() => setLightbox({ imgs: w.popup, title: w.title })}
               className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
             >
               <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
