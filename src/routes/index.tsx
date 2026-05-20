@@ -556,7 +556,7 @@ function Index() {
          <div className="grid lg:grid-cols-2 gap-12 items-center">
            <div>
               <p
-                className="-mt-4 md:-mt-6 mb-2 flex items-center h-[3rem] md:h-[4rem] text-3xl md:text-5xl text-foreground overflow-hidden"
+                className="-mt-4 md:-mt-6 mb-2 flex items-center h-[2.25rem] md:h-[3rem] text-2xl md:text-4xl text-foreground overflow-hidden"
                 style={{
                   fontFamily: '"Caveat", cursive',
                   textShadow:
