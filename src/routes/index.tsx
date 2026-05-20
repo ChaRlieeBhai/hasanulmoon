@@ -938,10 +938,10 @@ function Index() {
                     style={{ boxShadow: "inset 0 0 6px rgba(0,0,0,0.3)" }}
                   >
                     <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-accent"
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-accent text-primary"
                       style={{
                         width: `${progress * 100}%`,
-                        boxShadow: "0 0 10px hsl(var(--primary) / 0.8), 0 0 18px hsl(var(--primary) / 0.5)",
+                        boxShadow: "0 0 8px currentColor, 0 0 16px currentColor",
                         transition: scrubbing ? "none" : "width 200ms linear",
                       }}
                     />
