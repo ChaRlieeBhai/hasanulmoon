@@ -265,6 +265,11 @@ function Index() {
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [musicPrompt, setMusicPrompt] = useState(false);
   const [musicPromptDone, setMusicPromptDone] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [scrubbing, setScrubbing] = useState(false);
+  const ytPlayerRef = useRef<any>(null);
+  const ytReadyRef = useRef(false);
+  const seekBarRef = useRef<HTMLDivElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
@@ -358,28 +363,59 @@ function Index() {
   const [trackIdx, setTrackIdx] = useState(0);
   const currentTrack = PLAYLIST[trackIdx];
 
-  const ytCommand = (func: "playVideo" | "pauseVideo") => {
-    const iframe = ytIframeRef.current;
-    if (!iframe || !iframe.contentWindow) return;
-    iframe.contentWindow.postMessage(
-      JSON.stringify({ event: "command", func, args: [] }),
-      "*"
-    );
-  };
+  // Load YouTube IFrame API and attach to hidden iframe
+  useEffect(() => {
+    const w = window as any;
+    const init = () => {
+      if (!ytIframeRef.current || ytPlayerRef.current) return;
+      ytPlayerRef.current = new w.YT.Player(ytIframeRef.current, {
+        events: {
+          onReady: () => { ytReadyRef.current = true; },
+          onStateChange: (e: any) => {
+            // 0 = ended -> next; 1 = playing; 2 = paused
+            if (e.data === 0) {
+              const next = (trackIdxRef.current + 1) % PLAYLIST.length;
+              setTrackIdx(next);
+              try { ytPlayerRef.current.loadVideoById(PLAYLIST[next].id); } catch {}
+              setMusicPlaying(true);
+            } else if (e.data === 1) {
+              setMusicPlaying(true);
+            } else if (e.data === 2) {
+              setMusicPlaying(false);
+            }
+          },
+        },
+      });
+    };
+    if (w.YT && w.YT.Player) { init(); return; }
+    w.onYouTubeIframeAPIReady = init;
+    if (!document.getElementById("yt-iframe-api")) {
+      const tag = document.createElement("script");
+      tag.id = "yt-iframe-api";
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    }
+  }, []);
+
+  const trackIdxRef = useRef(0);
+  useEffect(() => { trackIdxRef.current = trackIdx; }, [trackIdx]);
 
   const loadTrack = (idx: number, autoplay: boolean) => {
-    const iframe = ytIframeRef.current;
-    if (!iframe) return;
-    const id = PLAYLIST[idx].id;
-    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&autoplay=${autoplay ? 1 : 0}&loop=1&playlist=${id}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+    const p = ytPlayerRef.current;
+    if (p && ytReadyRef.current && p.loadVideoById) {
+      if (autoplay) p.loadVideoById(PLAYLIST[idx].id);
+      else p.cueVideoById(PLAYLIST[idx].id);
+    }
   };
 
   const toggleMusic = () => {
+    const p = ytPlayerRef.current;
+    if (!p) return;
     if (!musicPlaying) {
-      loadTrack(trackIdx, true);
+      try { p.playVideo(); } catch {}
       setMusicPlaying(true);
     } else {
-      ytCommand("pauseVideo");
+      try { p.pauseVideo(); } catch {}
       setMusicPlaying(false);
     }
   };
@@ -397,6 +433,37 @@ function Index() {
     loadTrack(prev, true);
     setMusicPlaying(true);
   };
+
+  // Poll progress while playing
+  useEffect(() => {
+    if (!musicPlaying) return;
+    const id = window.setInterval(() => {
+      const p = ytPlayerRef.current;
+      if (!p || scrubbing) return;
+      try {
+        const dur = p.getDuration?.() || 0;
+        const cur = p.getCurrentTime?.() || 0;
+        if (dur > 0) setProgress(Math.min(1, cur / dur));
+      } catch {}
+    }, 250);
+    return () => window.clearInterval(id);
+  }, [musicPlaying, scrubbing]);
+
+  const seekFromEvent = (clientX: number, commit: boolean) => {
+    const el = seekBarRef.current;
+    const p = ytPlayerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    setProgress(ratio);
+    if (commit && p) {
+      try {
+        const dur = p.getDuration?.() || 0;
+        if (dur > 0) p.seekTo(ratio * dur, true);
+      } catch {}
+    }
+  };
+
 
   useEffect(() => {
     if (musicPromptDone || musicPlaying) return;
@@ -796,7 +863,7 @@ function Index() {
               </div>
 
               {/* Liquid-glass mini music player */}
-              <div className="mt-4 flex justify-center">
+              <div className="mt-4 flex flex-col items-center">
                 <div
                   role="group"
                   aria-label="Music player"
@@ -837,9 +904,53 @@ function Index() {
                     <SkipForward size={16} fill="currentColor" />
                   </button>
                 </div>
+
+                {/* Glowing seek bar — same width as controls pill above */}
+                <div
+                  ref={seekBarRef}
+                  role="slider"
+                  aria-label="Seek"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(progress * 100)}
+                  onPointerDown={(e) => {
+                    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+                    setScrubbing(true);
+                    seekFromEvent(e.clientX, false);
+                  }}
+                  onPointerMove={(e) => { if (scrubbing) seekFromEvent(e.clientX, false); }}
+                  onPointerUp={(e) => {
+                    if (scrubbing) {
+                      seekFromEvent(e.clientX, true);
+                      setScrubbing(false);
+                    }
+                  }}
+                  onPointerCancel={() => setScrubbing(false)}
+                  className="mt-2 w-full max-w-[220px] cursor-pointer touch-none select-none"
+                  style={{
+                    transform: scrubbing ? "scaleY(2.2) scaleX(1.05)" : "scaleY(1)",
+                    transformOrigin: "center",
+                    transition: "transform 180ms cubic-bezier(0.2,0.8,0.2,1)",
+                  }}
+                >
+                  <div
+                    className="relative h-1.5 rounded-full bg-white/10 overflow-hidden border border-primary/20"
+                    style={{ boxShadow: "inset 0 0 6px rgba(0,0,0,0.3)" }}
+                  >
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-accent text-primary"
+                      style={{
+                        width: `${progress * 100}%`,
+                        boxShadow: "0 0 8px currentColor, 0 0 16px currentColor",
+                        transition: scrubbing ? "none" : "width 200ms linear",
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <iframe
                   ref={ytIframeRef}
-                  src="about:blank"
+                  src={`https://www.youtube.com/embed/${PLAYLIST[0].id}?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&playsinline=1&rel=0`}
                   title="Background music"
                   allow="autoplay; encrypted-media"
                   aria-hidden="true"
