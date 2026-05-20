@@ -5,6 +5,7 @@ import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
 import profileJacket from "@/assets/profile-jacket.png";
 import introBg from "@/assets/intro-bg.jpg";
+import mjForever from "@/assets/mj-forever.jpg";
 
 const themeCycle = [
   { theme: "", img: profile },
