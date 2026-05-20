@@ -278,23 +278,10 @@ function Index() {
     setPin((prev) => prev.slice(0, -1));
   }
   useEffect(() => {
-    if (loading) return;
-    let i = 0;
-    let cancelled = false;
-    setTyped("");
-    const tick = () => {
-      if (cancelled) return;
-      i += 1;
-      setTyped(TAGLINE.slice(0, i));
-      if (i < TAGLINE.length) window.setTimeout(tick, 90);
-    };
-    const start = window.setTimeout(tick, 300);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(start);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+    if (!taglineRevealed) return;
+    const t = window.setTimeout(() => setTaglineRevealed(false), 7000);
+    return () => window.clearTimeout(t);
+  }, [taglineRevealed]);
 
   const toggleMusic = () => {
     if (!audioRef.current) {
