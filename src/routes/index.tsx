@@ -265,6 +265,11 @@ function Index() {
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [musicPrompt, setMusicPrompt] = useState(false);
   const [musicPromptDone, setMusicPromptDone] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [scrubbing, setScrubbing] = useState(false);
+  const ytPlayerRef = useRef<any>(null);
+  const ytReadyRef = useRef(false);
+  const seekBarRef = useRef<HTMLDivElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
