@@ -293,7 +293,7 @@ function Index() {
       return () => window.clearTimeout(t);
     }
     if (chalkPhase === "hold") {
-      const t = window.setTimeout(() => setChalkPhase("erasing"), 1400);
+      const t = window.setTimeout(() => setChalkPhase("erasing"), 3000);
       return () => window.clearTimeout(t);
     }
     if (chalkPhase === "erasing") {
