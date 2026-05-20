@@ -920,7 +920,7 @@ function Index() {
               type="button"
               key={w.title}
               onClick={() => setLightbox({ imgs: w.popup, title: w.title })}
-              className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
+              className="hidden sm:flex group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
             >
               <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
                 <img srcSet={w.img} sizes="(max-width: 640px) 90vw, 400px" alt={w.title} loading="lazy" decoding="async" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
