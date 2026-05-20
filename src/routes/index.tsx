@@ -15,6 +15,10 @@ import work1 from "@/assets/work-1.png?w=400;800&format=webp&as=srcset";
 import work2 from "@/assets/work-2.png?w=400;800&format=webp&as=srcset";
 import work3 from "@/assets/work-3.jpg?w=400;800&format=webp&as=srcset";
 import work4 from "@/assets/work-4.jpg?w=400;800&format=webp&as=srcset";
+import workActiveNew from "@/assets/work-active-new.jpg?w=400;800&format=webp&as=srcset";
+import workReach1 from "@/assets/work-reach-1.jpg?w=400;800&format=webp&as=srcset";
+import workReach2 from "@/assets/work-reach-2.jpg?w=400;800&format=webp&as=srcset";
+import workReach3 from "@/assets/work-reach-3.jpg?w=400;800&format=webp&as=srcset";
 
 const SITE_URL = "https://hasanulmoon.online";
 const OG_IMAGE = "https://storage.googleapis.com/gpt-engineer-file-uploads/h56DTb9HKJazIrohTsuQvHLWa9s1/social-images/social-1779093527915-ChatGPT_Image_May_9,_2026,_11_04_37_PM.webp";
@@ -229,7 +233,7 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tagOpen, setTagOpen] = useState(false);
   const [activeSkill, setActiveSkill] = useState<(typeof skills)[number] | null>(null);
-  const [lightbox, setLightbox] = useState<{ img: string; title: string } | null>(null);
+  const [lightbox, setLightbox] = useState<{ imgs: string[]; title: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -853,14 +857,14 @@ function Index() {
           </a>
 
           {[
-            { img: work2, title: "Active Projects" },
-            { img: work3, title: "Reach" },
-            { img: work4, title: "Details" },
+            { img: workActiveNew, title: "Active Projects", popup: [workActiveNew, work2] },
+            { img: workReach1, title: "Reach", popup: [workReach1, workReach2, workReach3] },
+            { img: work4, title: "Details", popup: [work4] },
           ].map((w) => (
             <button
               type="button"
               key={w.title}
-              onClick={() => setLightbox({ img: w.img, title: w.title })}
+              onClick={() => setLightbox({ imgs: w.popup, title: w.title })}
               className="group tilt-card relative rounded-2xl overflow-hidden border border-border bg-card/40 backdrop-blur-xl p-4 flex flex-col items-center text-center transition-all hover:border-primary hover:shadow-[0_20px_60px_-20px_oklch(0_0_0/0.5)]"
             >
               <div className="w-full aspect-square overflow-hidden rounded-xl bg-background/40 grid place-items-center">
@@ -986,12 +990,19 @@ function Index() {
           >
             <X size={20} />
           </button>
-          <img
-            srcSet={lightbox.img}
-            alt={lightbox.title}
+          <div
             onClick={(e) => e.stopPropagation()}
-            className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
-          />
+            className="max-w-5xl w-full max-h-full overflow-y-auto flex flex-col items-center gap-4 p-2"
+          >
+            {lightbox.imgs.map((src, i) => (
+              <img
+                key={i}
+                srcSet={src}
+                alt={`${lightbox.title} ${i + 1}`}
+                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+              />
+            ))}
+          </div>
         </div>
       )}
 
