@@ -863,7 +863,7 @@ function Index() {
               </div>
 
               {/* Liquid-glass mini music player */}
-              <div className="mt-4 flex justify-center">
+              <div className="mt-4 flex flex-col items-center">
                 <div
                   role="group"
                   aria-label="Music player"
@@ -904,9 +904,53 @@ function Index() {
                     <SkipForward size={16} fill="currentColor" />
                   </button>
                 </div>
+
+                {/* Glowing seek bar — same width as controls pill above */}
+                <div
+                  ref={seekBarRef}
+                  role="slider"
+                  aria-label="Seek"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(progress * 100)}
+                  onPointerDown={(e) => {
+                    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+                    setScrubbing(true);
+                    seekFromEvent(e.clientX, false);
+                  }}
+                  onPointerMove={(e) => { if (scrubbing) seekFromEvent(e.clientX, false); }}
+                  onPointerUp={(e) => {
+                    if (scrubbing) {
+                      seekFromEvent(e.clientX, true);
+                      setScrubbing(false);
+                    }
+                  }}
+                  onPointerCancel={() => setScrubbing(false)}
+                  className="mt-2 w-full max-w-[220px] cursor-pointer touch-none select-none"
+                  style={{
+                    transform: scrubbing ? "scaleY(2.2) scaleX(1.05)" : "scaleY(1)",
+                    transformOrigin: "center",
+                    transition: "transform 180ms cubic-bezier(0.2,0.8,0.2,1)",
+                  }}
+                >
+                  <div
+                    className="relative h-1.5 rounded-full bg-white/10 overflow-hidden border border-primary/20"
+                    style={{ boxShadow: "inset 0 0 6px rgba(0,0,0,0.3)" }}
+                  >
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-accent"
+                      style={{
+                        width: `${progress * 100}%`,
+                        boxShadow: "0 0 10px hsl(var(--primary) / 0.8), 0 0 18px hsl(var(--primary) / 0.5)",
+                        transition: scrubbing ? "none" : "width 200ms linear",
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <iframe
                   ref={ytIframeRef}
-                  src="about:blank"
+                  src={`https://www.youtube.com/embed/${PLAYLIST[0].id}?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&playsinline=1&rel=0`}
                   title="Background music"
                   allow="autoplay; encrypted-media"
                   aria-hidden="true"
