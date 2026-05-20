@@ -280,10 +280,38 @@ function Index() {
     setPin((prev) => prev.slice(0, -1));
   }
   useEffect(() => {
-    if (!taglineRevealed) return;
-    const t = window.setTimeout(() => setTaglineRevealed(false), 7000);
-    return () => window.clearTimeout(t);
-  }, [taglineRevealed]);
+    const word = CHALK_WORDS[chalkWordIdx];
+    let delay = 110;
+    if (chalkPhase === "typing") {
+      if (chalkText.length < word.length) {
+        delay = 90 + Math.random() * 60;
+      } else {
+        const t = window.setTimeout(() => setChalkPhase("hold"), 0);
+        return () => window.clearTimeout(t);
+      }
+      const t = window.setTimeout(() => setChalkText(word.slice(0, chalkText.length + 1)), delay);
+      return () => window.clearTimeout(t);
+    }
+    if (chalkPhase === "hold") {
+      const t = window.setTimeout(() => setChalkPhase("erasing"), 1400);
+      return () => window.clearTimeout(t);
+    }
+    if (chalkPhase === "erasing") {
+      if (chalkText.length === 0) {
+        const t = window.setTimeout(() => setChalkPhase("gap"), 0);
+        return () => window.clearTimeout(t);
+      }
+      const t = window.setTimeout(() => setChalkText(chalkText.slice(0, -1)), 45);
+      return () => window.clearTimeout(t);
+    }
+    if (chalkPhase === "gap") {
+      const t = window.setTimeout(() => {
+        setChalkWordIdx((i) => (i + 1) % CHALK_WORDS.length);
+        setChalkPhase("typing");
+      }, 350);
+      return () => window.clearTimeout(t);
+    }
+  }, [chalkPhase, chalkText, chalkWordIdx]);
 
   const toggleMusic = () => {
     if (!audioRef.current) {
