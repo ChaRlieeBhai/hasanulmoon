@@ -735,17 +735,6 @@ function Index() {
                 <button
                   type="button"
                   onClick={toggleMusic}
-                  aria-label={musicPlaying ? "Pause music" : "Play music"}
-                  aria-pressed={musicPlaying}
-                  title={musicPlaying ? "Pause music" : "Play music"}
-                  className="relative w-12 h-12 rounded-full border border-primary/50 bg-white/10 backdrop-blur-2xl text-primary grid place-items-center glow-primary-md overflow-hidden hover:scale-110 active:scale-95 transition-transform"
-                >
-                  <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-60 pointer-events-none" />
-              {/* Music toggle — liquid glass round button */}
-              <div className="mt-4 flex justify-center">
-                <button
-                  type="button"
-                  onClick={toggleMusic}
                   aria-label={musicPlaying ? "Turn music off" : "Turn music on"}
                   aria-pressed={musicPlaying}
                   title={musicPlaying ? "Turn music off" : "Turn music on"}
@@ -768,16 +757,7 @@ function Index() {
                 />
               </div>
             </div>
-            {/* end hero card */}
-            {/* placeholder to keep original structure — original button JSX removed below */}
-            <div style={{ display: "none" }}>
-                  <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/30 to-transparent rotate-45 animate-[shimmer_3s_infinite] pointer-events-none" />
-                  <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/40 blur-2xl pointer-events-none" />
-                  <span className="absolute -bottom-4 -right-4 w-10 h-10 rounded-full bg-accent/40 blur-2xl pointer-events-none" />
-                  {musicPlaying ? <Pause size={16} className="relative" /> : <Play size={16} className="relative ml-0.5" />}
-                </button>
-              </div>
-            </div>
+
 
             {/* Circular rotating text badge — top-right edge */}
             <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10 w-28 h-28 md:w-36 md:h-36 z-20">
