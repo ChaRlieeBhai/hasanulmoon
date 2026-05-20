@@ -242,8 +242,10 @@ function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
-  const TAGLINE = "A life without plot armour";
-  const [taglineRevealed, setTaglineRevealed] = useState(false);
+  const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "Web Developer", "Gamer", "Designer", "Unemployed"];
+  const [chalkWordIdx, setChalkWordIdx] = useState(0);
+  const [chalkText, setChalkText] = useState("");
+  const [chalkPhase, setChalkPhase] = useState<"typing" | "hold" | "erasing" | "gap">("typing");
   const [lockOpen, setLockOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
@@ -278,10 +280,38 @@ function Index() {
     setPin((prev) => prev.slice(0, -1));
   }
   useEffect(() => {
-    if (!taglineRevealed) return;
-    const t = window.setTimeout(() => setTaglineRevealed(false), 7000);
-    return () => window.clearTimeout(t);
-  }, [taglineRevealed]);
+    const word = CHALK_WORDS[chalkWordIdx];
+    let delay = 110;
+    if (chalkPhase === "typing") {
+      if (chalkText.length < word.length) {
+        delay = 90 + Math.random() * 60;
+      } else {
+        const t = window.setTimeout(() => setChalkPhase("hold"), 0);
+        return () => window.clearTimeout(t);
+      }
+      const t = window.setTimeout(() => setChalkText(word.slice(0, chalkText.length + 1)), delay);
+      return () => window.clearTimeout(t);
+    }
+    if (chalkPhase === "hold") {
+      const t = window.setTimeout(() => setChalkPhase("erasing"), 1400);
+      return () => window.clearTimeout(t);
+    }
+    if (chalkPhase === "erasing") {
+      if (chalkText.length === 0) {
+        const t = window.setTimeout(() => setChalkPhase("gap"), 0);
+        return () => window.clearTimeout(t);
+      }
+      const t = window.setTimeout(() => setChalkText(chalkText.slice(0, -1)), 45);
+      return () => window.clearTimeout(t);
+    }
+    if (chalkPhase === "gap") {
+      const t = window.setTimeout(() => {
+        setChalkWordIdx((i) => (i + 1) % CHALK_WORDS.length);
+        setChalkPhase("typing");
+      }, 350);
+      return () => window.clearTimeout(t);
+    }
+  }, [chalkPhase, chalkText, chalkWordIdx]);
 
   const toggleMusic = () => {
     if (!audioRef.current) {
@@ -525,30 +555,41 @@ function Index() {
        <section id="top" className="relative max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28">
          <div className="grid lg:grid-cols-2 gap-12 items-center">
            <div>
-             <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2 min-h-[1.25em]">
-               <button
-                 type="button"
-                 onClick={() => setTaglineRevealed(true)}
-                 aria-label={TAGLINE}
-                 className="relative inline-flex items-center group focus:outline-none cursor-pointer"
-               >
-                 <span
-                   className="transition-all duration-700 ease-out inline-block uppercase font-semibold"
-                   style={{
-                     filter: taglineRevealed
-                       ? "blur(0px) drop-shadow(0 0 10px color-mix(in oklab, var(--primary) 80%, transparent)) drop-shadow(0 0 22px color-mix(in oklab, var(--primary) 55%, transparent))"
-                       : "blur(6px) drop-shadow(0 0 14px color-mix(in oklab, var(--primary) 85%, transparent)) drop-shadow(0 0 28px color-mix(in oklab, var(--primary) 65%, transparent))",
-                     opacity: taglineRevealed ? 1 : 0.95,
-                     letterSpacing: taglineRevealed ? "0.3em" : "0.5em",
-                     textShadow:
-                       "0 0 8px color-mix(in oklab, var(--primary) 90%, transparent), 0 0 18px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 32px color-mix(in oklab, var(--primary) 45%, transparent)",
-                   }}
-                 >
-                   {TAGLINE.toUpperCase()}
-                 </span>
-               </button>
-               <span>💛</span>
-             </p>
+              <p
+                className="mb-6 flex items-center min-h-[2.5rem] md:min-h-[3rem] text-3xl md:text-5xl text-foreground"
+                style={{
+                  fontFamily: '"Caveat", cursive',
+                  textShadow:
+                    "0 0 1px rgba(255,255,255,0.55), 0 0 2px rgba(255,255,255,0.35), 0.5px 0.5px 0 rgba(255,255,255,0.25)",
+                  letterSpacing: "0.01em",
+                }}
+                aria-live="polite"
+                aria-label={CHALK_WORDS[chalkWordIdx]}
+              >
+                <span className="inline-block relative">
+                  {chalkText}
+                  {chalkPhase === "typing" && (
+                    <span
+                      aria-hidden
+                      className="inline-block w-[0.08em] h-[0.9em] align-baseline ml-[2px] bg-foreground/70"
+                      style={{ animation: "type-caret 0.85s steps(1) infinite" }}
+                    />
+                  )}
+                  {chalkPhase === "erasing" && (
+                    <span
+                      aria-hidden
+                      className="inline-block ml-1 px-2 py-1 rounded-sm text-[0.45em] uppercase tracking-widest align-middle"
+                      style={{
+                        background: "linear-gradient(180deg, #6b4a2b 0%, #4a3320 100%)",
+                        color: "rgba(255,255,255,0.85)",
+                        boxShadow: "inset 0 -2px 0 rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.4)",
+                      }}
+                    >
+                      duster
+                    </span>
+                  )}
+                </span>
+              </p>
             <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-balance">
               <span className="text-primary italic">Hasanul</span>
               <br />
