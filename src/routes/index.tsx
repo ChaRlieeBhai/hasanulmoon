@@ -338,18 +338,15 @@ function Index() {
     }
   }, [chalkPhase, chalkText, chalkWordIdx]);
 
+  const YT_VIDEO_ID = "uKM3hEbLEOg";
   const toggleMusic = () => {
-    if (!audioRef.current) {
-      const a = new Audio("/audio/theme.mp3");
-      a.loop = true;
-      a.volume = 0.6;
-      audioRef.current = a;
-    }
-    const a = audioRef.current;
-    if (a.paused) {
-      a.play().then(() => setMusicPlaying(true)).catch(() => setMusicPlaying(false));
+    const iframe = ytIframeRef.current;
+    if (!iframe) return;
+    if (!musicPlaying) {
+      iframe.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+      setMusicPlaying(true);
     } else {
-      a.pause();
+      iframe.src = "about:blank";
       setMusicPlaying(false);
     }
   };
