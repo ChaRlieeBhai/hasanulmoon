@@ -533,14 +533,18 @@ function Index() {
                  className="relative inline-flex items-center group focus:outline-none cursor-pointer"
                >
                  <span
-                   className="transition-all duration-700 ease-out inline-block"
+                   className="transition-all duration-700 ease-out inline-block uppercase font-semibold"
                    style={{
-                     filter: taglineRevealed ? "blur(0px)" : "blur(6px)",
-                     opacity: taglineRevealed ? 1 : 0.85,
+                     filter: taglineRevealed
+                       ? "blur(0px) drop-shadow(0 0 10px color-mix(in oklab, var(--primary) 80%, transparent)) drop-shadow(0 0 22px color-mix(in oklab, var(--primary) 55%, transparent))"
+                       : "blur(6px) drop-shadow(0 0 14px color-mix(in oklab, var(--primary) 85%, transparent)) drop-shadow(0 0 28px color-mix(in oklab, var(--primary) 65%, transparent))",
+                     opacity: taglineRevealed ? 1 : 0.95,
                      letterSpacing: taglineRevealed ? "0.3em" : "0.5em",
+                     textShadow:
+                       "0 0 8px color-mix(in oklab, var(--primary) 90%, transparent), 0 0 18px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 32px color-mix(in oklab, var(--primary) 45%, transparent)",
                    }}
                  >
-                   {TAGLINE}
+                   {TAGLINE.toUpperCase()}
                  </span>
                </button>
                <span>💛</span>
