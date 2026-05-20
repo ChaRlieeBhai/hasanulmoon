@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock, Music, Music2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
@@ -264,6 +264,7 @@ function Index() {
   const [themeIdx, setThemeIdx] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
   const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "Web Developer", "Gamer", "Designer", "Unemployed"];
@@ -337,18 +338,15 @@ function Index() {
     }
   }, [chalkPhase, chalkText, chalkWordIdx]);
 
+  const YT_VIDEO_ID = "uKM3hEbLEOg";
   const toggleMusic = () => {
-    if (!audioRef.current) {
-      const a = new Audio("/audio/theme.mp3");
-      a.loop = true;
-      a.volume = 0.6;
-      audioRef.current = a;
-    }
-    const a = audioRef.current;
-    if (a.paused) {
-      a.play().then(() => setMusicPlaying(true)).catch(() => setMusicPlaying(false));
+    const iframe = ytIframeRef.current;
+    if (!iframe) return;
+    if (!musicPlaying) {
+      iframe.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}&controls=0&modestbranding=1&playsinline=1&rel=0`;
+      setMusicPlaying(true);
     } else {
-      a.pause();
+      iframe.src = "about:blank";
       setMusicPlaying(false);
     }
   };
@@ -737,19 +735,29 @@ function Index() {
                 <button
                   type="button"
                   onClick={toggleMusic}
-                  aria-label={musicPlaying ? "Pause music" : "Play music"}
+                  aria-label={musicPlaying ? "Turn music off" : "Turn music on"}
                   aria-pressed={musicPlaying}
-                  title={musicPlaying ? "Pause music" : "Play music"}
+                  title={musicPlaying ? "Turn music off" : "Turn music on"}
                   className="relative w-12 h-12 rounded-full border border-primary/50 bg-white/10 backdrop-blur-2xl text-primary grid place-items-center glow-primary-md overflow-hidden hover:scale-110 active:scale-95 transition-transform"
                 >
                   <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-60 pointer-events-none" />
                   <span className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/30 to-transparent rotate-45 animate-[shimmer_3s_infinite] pointer-events-none" />
                   <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-primary/40 blur-2xl pointer-events-none" />
                   <span className="absolute -bottom-4 -right-4 w-10 h-10 rounded-full bg-accent/40 blur-2xl pointer-events-none" />
-                  {musicPlaying ? <Pause size={16} className="relative" /> : <Play size={16} className="relative ml-0.5" />}
+                  {musicPlaying ? <Music2 size={18} className="relative" /> : <Music size={18} className="relative" />}
                 </button>
+                <iframe
+                  ref={ytIframeRef}
+                  src="about:blank"
+                  title="Background music"
+                  allow="autoplay; encrypted-media"
+                  aria-hidden="true"
+                  tabIndex={-1}
+                  style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none", border: 0 }}
+                />
               </div>
             </div>
+
 
             {/* Circular rotating text badge — top-right edge */}
             <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10 w-28 h-28 md:w-36 md:h-36 z-20">
