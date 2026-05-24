@@ -1360,50 +1360,6 @@ function Index() {
         </div>
       )}
 
-      {/* Music prompt popup */}
-      {musicPrompt && (
-        <div
-          className="fixed inset-0 z-[120] grid place-items-center px-4"
-          style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(6px)" }}
-          onClick={() => { setMusicPrompt(false); setMusicPromptDone(true); }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-[min(360px,90vw)] rounded-3xl border border-white/20 p-6 text-center"
-            style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))",
-              backdropFilter: "blur(24px) saturate(180%)",
-              WebkitBackdropFilter: "blur(24px) saturate(180%)",
-              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25)",
-            }}
-          >
-            <p className="text-lg font-semibold text-foreground">
-              Want Some Music? <span aria-hidden>🎵</span>
-            </p>
-            <div className="mt-5 flex items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  loadTrack(trackIdx, true);
-                  setMusicPlaying(true);
-                  setMusicPrompt(false);
-                  setMusicPromptDone(true);
-                }}
-                className="px-6 py-2 rounded-full border border-primary/60 bg-primary/25 text-primary backdrop-blur-xl hover:scale-105 active:scale-95 transition-all"
-              >
-                Yes
-              </button>
-              <button
-                type="button"
-                onClick={() => { setMusicPrompt(false); setMusicPromptDone(true); }}
-                className="px-6 py-2 rounded-full border border-white/20 bg-white/10 text-foreground backdrop-blur-xl hover:scale-105 active:scale-95 transition-all"
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Unlocked fullscreen reveal */}
       {unlocked && (
