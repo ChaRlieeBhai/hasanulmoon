@@ -775,9 +775,8 @@ function Index() {
                 Get in touch
               </a>
               <a
-                href="/hasanul-moon-cv.pdf"
+                href="/hasanulmoon-cv.pdf"
                 target="_blank" rel="noreferrer"
-                download="Hasanul-Moon-CV.pdf"
                 className="magnetic px-7 py-3.5 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
               >
                 Get CV
