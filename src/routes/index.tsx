@@ -945,11 +945,11 @@ function Index() {
 
                 <iframe
                   ref={ytIframeRef}
-                  src={`https://www.youtube.com/embed/${PLAYLIST[0].id}?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&playsinline=1&rel=0`}
                   title="Background music"
                   allow="autoplay; encrypted-media"
                   aria-hidden="true"
                   tabIndex={-1}
+                  loading="lazy"
                   style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none", border: 0 }}
                 />
               </div>
