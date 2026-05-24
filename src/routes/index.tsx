@@ -264,8 +264,6 @@ function Index() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [themeIdx, setThemeIdx] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(false);
-  const [musicPrompt, setMusicPrompt] = useState(false);
-  const [musicPromptDone, setMusicPromptDone] = useState(false);
   const [progress, setProgress] = useState(0);
   const [scrubbing, setScrubbing] = useState(false);
   const ytPlayerRef = useRef<any>(null);
