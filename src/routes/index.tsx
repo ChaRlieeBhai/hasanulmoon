@@ -362,61 +362,71 @@ function Index() {
   const [trackIdx, setTrackIdx] = useState(0);
   const currentTrack = PLAYLIST[trackIdx];
 
-  // Load YouTube IFrame API and attach to hidden iframe
-  useEffect(() => {
+  // Lazy-load YouTube IFrame API and attach to hidden iframe on first interaction
+  const ytInitStartedRef = useRef(false);
+  const ensureYT = (cb?: () => void) => {
     const w = window as any;
     const init = () => {
-      if (!ytIframeRef.current || ytPlayerRef.current) return;
+      if (!ytIframeRef.current || ytPlayerRef.current) { cb?.(); return; }
+      // set iframe src lazily
+      if (!ytIframeRef.current.src) {
+        ytIframeRef.current.src = `https://www.youtube.com/embed/${PLAYLIST[trackIdxRef.current].id}?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&playsinline=1&rel=0`;
+      }
       ytPlayerRef.current = new w.YT.Player(ytIframeRef.current, {
         events: {
-          onReady: () => { ytReadyRef.current = true; },
+          onReady: () => { ytReadyRef.current = true; cb?.(); },
           onStateChange: (e: any) => {
-            // 0 = ended -> next; 1 = playing; 2 = paused
             if (e.data === 0) {
               const next = (trackIdxRef.current + 1) % PLAYLIST.length;
               setTrackIdx(next);
               try { ytPlayerRef.current.loadVideoById(PLAYLIST[next].id); } catch {}
               setMusicPlaying(true);
-            } else if (e.data === 1) {
-              setMusicPlaying(true);
-            } else if (e.data === 2) {
-              setMusicPlaying(false);
-            }
+            } else if (e.data === 1) setMusicPlaying(true);
+            else if (e.data === 2) setMusicPlaying(false);
           },
         },
       });
     };
     if (w.YT && w.YT.Player) { init(); return; }
     w.onYouTubeIframeAPIReady = init;
+    if (ytInitStartedRef.current) return;
+    ytInitStartedRef.current = true;
     if (!document.getElementById("yt-iframe-api")) {
       const tag = document.createElement("script");
       tag.id = "yt-iframe-api";
       tag.src = "https://www.youtube.com/iframe_api";
+      tag.async = true;
       document.body.appendChild(tag);
     }
-  }, []);
+  };
 
   const trackIdxRef = useRef(0);
   useEffect(() => { trackIdxRef.current = trackIdx; }, [trackIdx]);
 
   const loadTrack = (idx: number, autoplay: boolean) => {
-    const p = ytPlayerRef.current;
-    if (p && ytReadyRef.current && p.loadVideoById) {
-      if (autoplay) p.loadVideoById(PLAYLIST[idx].id);
-      else p.cueVideoById(PLAYLIST[idx].id);
-    }
+    ensureYT(() => {
+      const p = ytPlayerRef.current;
+      if (p && ytReadyRef.current && p.loadVideoById) {
+        if (autoplay) p.loadVideoById(PLAYLIST[idx].id);
+        else p.cueVideoById(PLAYLIST[idx].id);
+      }
+    });
   };
 
   const toggleMusic = () => {
-    const p = ytPlayerRef.current;
-    if (!p) return;
-    if (!musicPlaying) {
-      try { p.playVideo(); } catch {}
-      setMusicPlaying(true);
-    } else {
-      try { p.pauseVideo(); } catch {}
-      setMusicPlaying(false);
-    }
+    ensureYT(() => {
+      const p = ytPlayerRef.current;
+      if (!p) return;
+      if (!musicPlaying) {
+        try { p.playVideo(); } catch {}
+        setMusicPlaying(true);
+      } else {
+        try { p.pauseVideo(); } catch {}
+        setMusicPlaying(false);
+      }
+    });
+    // Optimistic state toggle for snappy UX
+    if (!ytReadyRef.current) setMusicPlaying((v) => !v);
   };
 
   const nextTrack = () => {
@@ -432,6 +442,7 @@ function Index() {
     loadTrack(prev, true);
     setMusicPlaying(true);
   };
+
 
   // Poll progress while playing
   useEffect(() => {
