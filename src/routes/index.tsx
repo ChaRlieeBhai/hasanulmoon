@@ -275,7 +275,7 @@ function Index() {
   const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
-  const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "Web Developer", "Gamer", "Designer", "Unemployed"];
+  const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "AI Tools", "Gamer", "Designer", "Unemployed"];
   const [chalkWordIdx, setChalkWordIdx] = useState(0);
   const [chalkText, setChalkText] = useState("");
   const [chalkPhase, setChalkPhase] = useState<"typing" | "hold" | "erasing" | "gap">("typing");
