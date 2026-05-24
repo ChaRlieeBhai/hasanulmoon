@@ -124,8 +124,8 @@ const skills: { name: string; brief: string }[] = [
     brief: "Promoting products and brands online through social media, content, SEO basics, paid ads, and analytics — turning attention into engagement, leads, and sales.",
   },
   {
-    name: "Web Developer",
-    brief: "Building responsive, modern websites with clean HTML, CSS, and JavaScript — crafting fast, accessible interfaces and bringing designs to life on the web.",
+    name: "AI Tools",
+    brief: "Using modern AI tools to write, design, research, automate tasks, and boost productivity — turning prompts into content, images, code, and ideas at speed.",
   },
   {
     name: "Customer Handling",
