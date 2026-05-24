@@ -466,21 +466,6 @@ function Index() {
   };
 
 
-  useEffect(() => {
-    if (musicPromptDone || musicPlaying) return;
-    let scrolled = false;
-    const onScroll = () => { scrolled = true; };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const t = window.setTimeout(() => {
-      if (scrolled && !musicPlaying && !musicPromptDone) {
-        setMusicPrompt(true);
-      }
-    }, 15000);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.clearTimeout(t);
-    };
-  }, [musicPlaying, musicPromptDone]);
 
 
 
