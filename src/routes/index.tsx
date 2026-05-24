@@ -124,8 +124,8 @@ const skills: { name: string; brief: string }[] = [
     brief: "Promoting products and brands online through social media, content, SEO basics, paid ads, and analytics — turning attention into engagement, leads, and sales.",
   },
   {
-    name: "Web Developer",
-    brief: "Building responsive, modern websites with clean HTML, CSS, and JavaScript — crafting fast, accessible interfaces and bringing designs to life on the web.",
+    name: "AI Tools",
+    brief: "Using modern AI tools to write, design, research, automate tasks, and boost productivity — turning prompts into content, images, code, and ideas at speed.",
   },
   {
     name: "Customer Handling",
@@ -264,8 +264,6 @@ function Index() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [themeIdx, setThemeIdx] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(false);
-  const [musicPrompt, setMusicPrompt] = useState(false);
-  const [musicPromptDone, setMusicPromptDone] = useState(false);
   const [progress, setProgress] = useState(0);
   const [scrubbing, setScrubbing] = useState(false);
   const ytPlayerRef = useRef<any>(null);
@@ -275,7 +273,7 @@ function Index() {
   const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
   const lenisRef = useRef<import("lenis").default | null>(null);
 
-  const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "Web Developer", "Gamer", "Designer", "Unemployed"];
+  const CHALK_WORDS = ["Digital Marketer", "Marketing Specialist", "AI Tools", "Gamer", "Designer", "Unemployed"];
   const [chalkWordIdx, setChalkWordIdx] = useState(0);
   const [chalkText, setChalkText] = useState("");
   const [chalkPhase, setChalkPhase] = useState<"typing" | "hold" | "erasing" | "gap">("typing");
@@ -364,61 +362,71 @@ function Index() {
   const [trackIdx, setTrackIdx] = useState(0);
   const currentTrack = PLAYLIST[trackIdx];
 
-  // Load YouTube IFrame API and attach to hidden iframe
-  useEffect(() => {
+  // Lazy-load YouTube IFrame API and attach to hidden iframe on first interaction
+  const ytInitStartedRef = useRef(false);
+  const ensureYT = (cb?: () => void) => {
     const w = window as any;
     const init = () => {
-      if (!ytIframeRef.current || ytPlayerRef.current) return;
+      if (!ytIframeRef.current || ytPlayerRef.current) { cb?.(); return; }
+      // set iframe src lazily
+      if (!ytIframeRef.current.src) {
+        ytIframeRef.current.src = `https://www.youtube.com/embed/${PLAYLIST[trackIdxRef.current].id}?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&playsinline=1&rel=0`;
+      }
       ytPlayerRef.current = new w.YT.Player(ytIframeRef.current, {
         events: {
-          onReady: () => { ytReadyRef.current = true; },
+          onReady: () => { ytReadyRef.current = true; cb?.(); },
           onStateChange: (e: any) => {
-            // 0 = ended -> next; 1 = playing; 2 = paused
             if (e.data === 0) {
               const next = (trackIdxRef.current + 1) % PLAYLIST.length;
               setTrackIdx(next);
               try { ytPlayerRef.current.loadVideoById(PLAYLIST[next].id); } catch {}
               setMusicPlaying(true);
-            } else if (e.data === 1) {
-              setMusicPlaying(true);
-            } else if (e.data === 2) {
-              setMusicPlaying(false);
-            }
+            } else if (e.data === 1) setMusicPlaying(true);
+            else if (e.data === 2) setMusicPlaying(false);
           },
         },
       });
     };
     if (w.YT && w.YT.Player) { init(); return; }
     w.onYouTubeIframeAPIReady = init;
+    if (ytInitStartedRef.current) return;
+    ytInitStartedRef.current = true;
     if (!document.getElementById("yt-iframe-api")) {
       const tag = document.createElement("script");
       tag.id = "yt-iframe-api";
       tag.src = "https://www.youtube.com/iframe_api";
+      tag.async = true;
       document.body.appendChild(tag);
     }
-  }, []);
+  };
 
   const trackIdxRef = useRef(0);
   useEffect(() => { trackIdxRef.current = trackIdx; }, [trackIdx]);
 
   const loadTrack = (idx: number, autoplay: boolean) => {
-    const p = ytPlayerRef.current;
-    if (p && ytReadyRef.current && p.loadVideoById) {
-      if (autoplay) p.loadVideoById(PLAYLIST[idx].id);
-      else p.cueVideoById(PLAYLIST[idx].id);
-    }
+    ensureYT(() => {
+      const p = ytPlayerRef.current;
+      if (p && ytReadyRef.current && p.loadVideoById) {
+        if (autoplay) p.loadVideoById(PLAYLIST[idx].id);
+        else p.cueVideoById(PLAYLIST[idx].id);
+      }
+    });
   };
 
   const toggleMusic = () => {
-    const p = ytPlayerRef.current;
-    if (!p) return;
-    if (!musicPlaying) {
-      try { p.playVideo(); } catch {}
-      setMusicPlaying(true);
-    } else {
-      try { p.pauseVideo(); } catch {}
-      setMusicPlaying(false);
-    }
+    ensureYT(() => {
+      const p = ytPlayerRef.current;
+      if (!p) return;
+      if (!musicPlaying) {
+        try { p.playVideo(); } catch {}
+        setMusicPlaying(true);
+      } else {
+        try { p.pauseVideo(); } catch {}
+        setMusicPlaying(false);
+      }
+    });
+    // Optimistic state toggle for snappy UX
+    if (!ytReadyRef.current) setMusicPlaying((v) => !v);
   };
 
   const nextTrack = () => {
@@ -434,6 +442,7 @@ function Index() {
     loadTrack(prev, true);
     setMusicPlaying(true);
   };
+
 
   // Poll progress while playing
   useEffect(() => {
@@ -466,21 +475,6 @@ function Index() {
   };
 
 
-  useEffect(() => {
-    if (musicPromptDone || musicPlaying) return;
-    let scrolled = false;
-    const onScroll = () => { scrolled = true; };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const t = window.setTimeout(() => {
-      if (scrolled && !musicPlaying && !musicPromptDone) {
-        setMusicPrompt(true);
-      }
-    }, 15000);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.clearTimeout(t);
-    };
-  }, [musicPlaying, musicPromptDone]);
 
 
 
@@ -807,6 +801,7 @@ function Index() {
                     alt="Portrait of Hasanul Haque Moon"
                     fetchPriority={i === 0 ? "high" : "low"}
                     decoding="async"
+                    loading={i === 0 ? "eager" : "lazy"}
                     draggable={false}
                     className={`${i === 0 ? "relative" : "absolute inset-0"} w-full h-auto object-cover select-none transition-opacity duration-1000 ease-out`}
                     style={{ opacity: i === themeIdx ? 1 : 0, willChange: "opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
@@ -951,11 +946,11 @@ function Index() {
 
                 <iframe
                   ref={ytIframeRef}
-                  src={`https://www.youtube.com/embed/${PLAYLIST[0].id}?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&playsinline=1&rel=0`}
                   title="Background music"
                   allow="autoplay; encrypted-media"
                   aria-hidden="true"
                   tabIndex={-1}
+                  loading="lazy"
                   style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none", border: 0 }}
                 />
               </div>
@@ -1360,50 +1355,6 @@ function Index() {
         </div>
       )}
 
-      {/* Music prompt popup */}
-      {musicPrompt && (
-        <div
-          className="fixed inset-0 z-[120] grid place-items-center px-4"
-          style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(6px)" }}
-          onClick={() => { setMusicPrompt(false); setMusicPromptDone(true); }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-[min(360px,90vw)] rounded-3xl border border-white/20 p-6 text-center"
-            style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))",
-              backdropFilter: "blur(24px) saturate(180%)",
-              WebkitBackdropFilter: "blur(24px) saturate(180%)",
-              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25)",
-            }}
-          >
-            <p className="text-lg font-semibold text-foreground">
-              Want Some Music? <span aria-hidden>🎵</span>
-            </p>
-            <div className="mt-5 flex items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  loadTrack(trackIdx, true);
-                  setMusicPlaying(true);
-                  setMusicPrompt(false);
-                  setMusicPromptDone(true);
-                }}
-                className="px-6 py-2 rounded-full border border-primary/60 bg-primary/25 text-primary backdrop-blur-xl hover:scale-105 active:scale-95 transition-all"
-              >
-                Yes
-              </button>
-              <button
-                type="button"
-                onClick={() => { setMusicPrompt(false); setMusicPromptDone(true); }}
-                className="px-6 py-2 rounded-full border border-white/20 bg-white/10 text-foreground backdrop-blur-xl hover:scale-105 active:scale-95 transition-all"
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Unlocked fullscreen reveal */}
       {unlocked && (
