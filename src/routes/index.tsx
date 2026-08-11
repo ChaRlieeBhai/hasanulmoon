@@ -978,15 +978,13 @@ function Index() {
                     <textPath href="#circlePath" startOffset="0">MARKETING  •  SPECIALIST  •  </textPath>
                   </text>
                 </svg>
-                <button
-                  type="button"
-                  onClick={() => { setPin(""); setPinError(false); setLockOpen(true); }}
-                  aria-label="Locked — Shot by Moon"
-                  title="Locked — enter PIN"
-                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary glow-primary-sm hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/70 backdrop-blur-md border border-primary/60 grid place-items-center text-primary m-glow select-none"
                 >
-                  <Lock size={20} strokeWidth={2.2} />
-                </button>
+                  <span className="text-2xl md:text-3xl font-bold leading-none" style={{ fontFamily: "'Caveat', cursive" }}>M</span>
+                </div>
+
               </div>
             </div>
           </div>
