@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Camera, Linkedin, Play, Pause, Lock, Music, Music2, SkipBack, SkipForward } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Send, Mail, Phone, MapPin, Menu, X, ArrowUp, Linkedin, Play, Pause, Music, Music2, SkipBack, SkipForward } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/profile.png";
 import profileJersey from "@/assets/profile-jersey.png";
 import profileJacket from "@/assets/profile-jacket.png";
 import introBg from "@/assets/intro-bg.jpg";
-import mjForever from "@/assets/mj-forever.jpg";
 
 const themeCycle = [
   { theme: "", img: profile },
@@ -192,7 +191,7 @@ const navItems = [
 const socials = [
   { Icon: Facebook, h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
   { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
-  { Icon: MessageCircle, h: "https://api.whatsapp.com/send?phone=8801616444418&text=Hello", label: "WhatsApp" },
+  { Icon: MessageCircle, h: "https://wa.me/8801616444418", label: "WhatsApp" },
   { Icon: Send, h: "https://t.me/+8801616444418", label: "Telegram" },
   { Icon: Linkedin, h: "https://www.linkedin.com/in/hasanulmoon", label: "LinkedIn" },
 ];
@@ -288,38 +287,8 @@ function Index() {
   const [chalkWordIdx, setChalkWordIdx] = useState(0);
   const [chalkText, setChalkText] = useState("");
   const [chalkPhase, setChalkPhase] = useState<"typing" | "hold" | "erasing" | "gap">("typing");
-  const [lockOpen, setLockOpen] = useState(false);
-  const [pin, setPin] = useState("");
-  const [pinError, setPinError] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
-  const pinInputRef = useRef<HTMLInputElement | null>(null);
-  const SHOT_URL = "https://shotbymoon.lovable.app";
-  const CORRECT_PIN = "mj2003";
 
-  function handlePinChange(value: string) {
-    setPinError(false);
-    const v = value.slice(0, 12).toLowerCase();
-    setPin(v);
-    if (v === CORRECT_PIN) {
-      setTimeout(() => {
-        setLockOpen(false);
-        setPin("");
-        setUnlocked(true);
-      }, 200);
-    } else if (v.length >= CORRECT_PIN.length) {
-      setTimeout(() => {
-        setPinError(true);
-        setPin("");
-      }, 200);
-    }
-  }
 
-  useEffect(() => {
-    if (lockOpen) {
-      const t = setTimeout(() => pinInputRef.current?.focus(), 50);
-      return () => clearTimeout(t);
-    }
-  }, [lockOpen]);
 
   useEffect(() => {
     const word = CHALK_WORDS[chalkWordIdx];
@@ -978,15 +947,13 @@ function Index() {
                     <textPath href="#circlePath" startOffset="0">MARKETING  •  SPECIALIST  •  </textPath>
                   </text>
                 </svg>
-                <button
-                  type="button"
-                  onClick={() => { setPin(""); setPinError(false); setLockOpen(true); }}
-                  aria-label="Locked — Shot by Moon"
-                  title="Locked — enter PIN"
-                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/80 backdrop-blur-md border border-primary/60 grid place-items-center text-primary glow-primary-sm hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all"
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/70 backdrop-blur-md border border-primary/60 grid place-items-center text-primary m-glow select-none"
                 >
-                  <Lock size={20} strokeWidth={2.2} />
-                </button>
+                  <span className="text-2xl md:text-3xl font-bold leading-none" style={{ fontFamily: "'Caveat', cursive" }}>M</span>
+                </div>
+
               </div>
             </div>
           </div>
@@ -1162,7 +1129,7 @@ function Index() {
             {[
               { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
               { Icon: Phone, label: "Phone", value: "01616-444418", href: "tel:+8801616444418" },
-              { Icon: MessageCircle, label: "WhatsApp", value: "01616-444418", href: "https://api.whatsapp.com/send?phone=8801616444418&text=Hello%20Charlie!!" },
+              { Icon: MessageCircle, label: "WhatsApp", value: "01616-444418", href: "https://wa.me/8801616444418" },
               { Icon: MapPin, label: "Location", value: "Dhaka, Bangladesh", href: null as string | null },
             ].map((row, i) => {
               const Inner = (
@@ -1277,136 +1244,8 @@ function Index() {
         </div>
       )}
 
-      {/* Liquid glass PIN lock modal */}
-      {lockOpen && (
-        <div
-          onClick={() => setLockOpen(false)}
-          className="fixed inset-0 z-[120] grid place-items-center p-4 bg-black/60 backdrop-blur-xl animate-in fade-in duration-200"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-xs rounded-3xl p-6 border border-white/20 bg-white/10 backdrop-blur-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
-            style={{
-              backgroundImage:
-                "radial-gradient(120% 80% at 0% 0%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 60%), radial-gradient(120% 80% at 100% 100%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%)",
-            }}
-          >
-            <div className="pointer-events-none absolute -inset-px rounded-3xl ring-1 ring-inset ring-white/15" />
-            <button
-              type="button"
-              onClick={() => setLockOpen(false)}
-              aria-label="Close"
-              className="absolute top-3 right-3 w-9 h-9 rounded-full border border-white/20 bg-white/10 text-white grid place-items-center hover:bg-white/20 transition"
-            >
-              <X size={16} />
-            </button>
-
-            <div className="text-center mb-5">
-              <div className="mx-auto w-12 h-12 rounded-full border border-white/25 bg-white/10 grid place-items-center text-primary glow-primary-sm">
-                <Lock size={20} strokeWidth={2.2} />
-              </div>
-              <h3 className="mt-3 text-lg font-medium text-white">Locked</h3>
-              <p
-                className="mt-2 text-sm font-medium tracking-wide"
-                style={{
-                  color: "color-mix(in oklab, var(--primary) 85%, white)",
-                  textShadow:
-                    "0 0 10px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 22px color-mix(in oklab, var(--primary) 45%, transparent)",
-                }}
-              >
-                YOU & YOUR'S BiRTHDAY
-              </p>
-            </div>
-
-            {/* Hidden input — uses device keyboard */}
-            <input
-              ref={pinInputRef}
-              type="text"
-              inputMode="text"
-              autoCapitalize="none"
-              autoCorrect="off"
-              spellCheck={false}
-              value={pin}
-              onChange={(e) => handlePinChange(e.target.value)}
-              className="sr-only"
-              aria-label="Enter passcode"
-            />
-
-            {/* Visual display of typed chars */}
-            <div
-              onClick={() => pinInputRef.current?.focus()}
-              className={`mx-auto flex items-center justify-center gap-2 min-h-12 px-4 py-3 rounded-2xl border bg-white/5 cursor-text ${
-                pinError ? "border-destructive animate-pulse" : "border-white/20"
-              }`}
-            >
-              {pin.length === 0 ? (
-                <span className="text-white/40 text-sm">tap & type…</span>
-              ) : (
-                pin.split("").map((ch, i) => (
-                  <span
-                    key={i}
-                    className="text-white text-lg font-medium"
-                    style={{
-                      textShadow:
-                        "0 0 8px color-mix(in oklab, var(--primary) 70%, transparent)",
-                    }}
-                  >
-                    {ch}
-                  </span>
-                ))
-              )}
-            </div>
-
-            {pinError && (
-              <p className="mt-3 text-center text-xs text-destructive">Wrong — try again</p>
-            )}
-
-          </div>
-        </div>
-      )}
 
 
-      {/* Unlocked fullscreen reveal */}
-      {unlocked && (
-        <div
-          className="fixed inset-0 z-[130] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 animate-in fade-in duration-300"
-          onClick={() => setUnlocked(false)}
-        >
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setUnlocked(false); }}
-            aria-label="Close"
-            className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/20 bg-white/10 text-white grid place-items-center hover:bg-white/20 transition z-10"
-          >
-            <X size={18} />
-          </button>
-          <img
-            src={mjForever}
-            alt="MJ"
-            className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
-            style={{ boxShadow: "0 0 60px color-mix(in oklab, var(--primary) 40%, transparent)" }}
-          />
-          <p
-            className="mt-6 text-2xl md:text-3xl font-display tracking-widest text-white flex items-center gap-3"
-            style={{
-              textShadow:
-                "0 0 12px color-mix(in oklab, var(--primary) 70%, transparent), 0 0 28px color-mix(in oklab, var(--primary) 45%, transparent)",
-            }}
-          >
-            MJ FOREVER
-            <span
-              aria-hidden
-              className="inline-block animate-pulse"
-              style={{
-                filter:
-                  "drop-shadow(0 0 8px #ff5577) drop-shadow(0 0 18px #ff2244)",
-              }}
-            >
-              ❤️
-            </span>
-          </p>
-        </div>
-      )}
     </div>
 
   );

@@ -313,3 +313,19 @@ html { -webkit-overflow-scrolling: touch; }
 @keyframes type-caret {
   50% { opacity: 0; }
 }
+
+/* Glowing M monogram (theme-aware) */
+.m-glow {
+  box-shadow: 0 0 12px -2px var(--glow, var(--primary));
+  animation: m-glow 2.6s ease-in-out infinite;
+}
+.m-glow > span {
+  text-shadow: 0 0 10px var(--glow, var(--primary));
+}
+@keyframes m-glow {
+  0%, 100% { box-shadow: 0 0 8px -3px var(--glow, var(--primary)); }
+  50% { box-shadow: 0 0 20px 1px var(--glow, var(--primary)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-glow { animation: none; }
+}
