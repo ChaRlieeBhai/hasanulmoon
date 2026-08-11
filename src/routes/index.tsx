@@ -150,6 +150,17 @@ const education = [
 
 const experience = [
   {
+    role: "Digital Marketing & IT Specialist",
+    org: "Victoria Specialized Hospital and Diagnostic Center, Narail",
+    period: "Present",
+    points: [
+      "Managed digital marketing, social media, and online promotional activities.",
+      "Created content and implemented strategies to improve online reach and engagement.",
+      "Handled basic IT support and day-to-day technical operations.",
+      "Managed digital communication and online platform updates.",
+    ],
+  },
+  {
     role: "E-commerce Page Owner",
     org: "Self-initiated",
     period: "2025 — Present",
@@ -181,8 +192,8 @@ const navItems = [
 const socials = [
   { Icon: Facebook, h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
   { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
-  { Icon: MessageCircle, h: "https://wa.link/rifzjt", label: "WhatsApp" },
-  { Icon: Send, h: "https://t.me/hasanulmoon", label: "Telegram" },
+  { Icon: MessageCircle, h: "https://api.whatsapp.com/send?phone=8801616444418&text=Hello", label: "WhatsApp" },
+  { Icon: Send, h: "https://t.me/+8801616444418", label: "Telegram" },
   { Icon: Linkedin, h: "https://www.linkedin.com/in/hasanulmoon", label: "LinkedIn" },
 ];
 
