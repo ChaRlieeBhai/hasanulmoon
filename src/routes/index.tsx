@@ -193,7 +193,7 @@ const socials = [
   { Icon: Facebook, h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
   { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
   { Icon: MessageCircle, h: "https://api.whatsapp.com/send?phone=8801616444418&text=Hello", label: "WhatsApp" },
-  { Icon: Send, h: "https://t.me/01616444418", label: "Telegram" },
+  { Icon: Send, h: "https://t.me/+8801616444418", label: "Telegram" },
   { Icon: Linkedin, h: "https://www.linkedin.com/in/hasanulmoon", label: "LinkedIn" },
 ];
 
