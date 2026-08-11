@@ -288,38 +288,8 @@ function Index() {
   const [chalkWordIdx, setChalkWordIdx] = useState(0);
   const [chalkText, setChalkText] = useState("");
   const [chalkPhase, setChalkPhase] = useState<"typing" | "hold" | "erasing" | "gap">("typing");
-  const [lockOpen, setLockOpen] = useState(false);
-  const [pin, setPin] = useState("");
-  const [pinError, setPinError] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
-  const pinInputRef = useRef<HTMLInputElement | null>(null);
-  const SHOT_URL = "https://shotbymoon.lovable.app";
-  const CORRECT_PIN = "mj2003";
 
-  function handlePinChange(value: string) {
-    setPinError(false);
-    const v = value.slice(0, 12).toLowerCase();
-    setPin(v);
-    if (v === CORRECT_PIN) {
-      setTimeout(() => {
-        setLockOpen(false);
-        setPin("");
-        setUnlocked(true);
-      }, 200);
-    } else if (v.length >= CORRECT_PIN.length) {
-      setTimeout(() => {
-        setPinError(true);
-        setPin("");
-      }, 200);
-    }
-  }
 
-  useEffect(() => {
-    if (lockOpen) {
-      const t = setTimeout(() => pinInputRef.current?.focus(), 50);
-      return () => clearTimeout(t);
-    }
-  }, [lockOpen]);
 
   useEffect(() => {
     const word = CHALK_WORDS[chalkWordIdx];
