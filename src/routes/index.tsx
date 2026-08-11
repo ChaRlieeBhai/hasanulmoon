@@ -192,7 +192,7 @@ const navItems = [
 const socials = [
   { Icon: Facebook, h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
   { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
-  { Icon: MessageCircle, h: "https://api.whatsapp.com/send?phone=8801616444418&text=Hello", label: "WhatsApp" },
+  { Icon: MessageCircle, h: "https://wa.me/8801616444418", label: "WhatsApp" },
   { Icon: Send, h: "https://t.me/+8801616444418", label: "Telegram" },
   { Icon: Linkedin, h: "https://www.linkedin.com/in/hasanulmoon", label: "LinkedIn" },
 ];
@@ -1160,7 +1160,7 @@ function Index() {
             {[
               { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
               { Icon: Phone, label: "Phone", value: "01616-444418", href: "tel:+8801616444418" },
-              { Icon: MessageCircle, label: "WhatsApp", value: "01616-444418", href: "https://api.whatsapp.com/send?phone=8801616444418&text=Hello%20Charlie!!" },
+              { Icon: MessageCircle, label: "WhatsApp", value: "01616-444418", href: "https://wa.me/8801616444418" },
               { Icon: MapPin, label: "Location", value: "Dhaka, Bangladesh", href: null as string | null },
             ].map((row, i) => {
               const Inner = (
