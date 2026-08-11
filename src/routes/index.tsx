@@ -150,6 +150,17 @@ const education = [
 
 const experience = [
   {
+    role: "Digital Marketing & IT Specialist",
+    org: "Victoria Specialized Hospital and Diagnostic Center, Narail",
+    period: "Present",
+    points: [
+      "Managed digital marketing, social media, and online promotional activities.",
+      "Created content and implemented strategies to improve online reach and engagement.",
+      "Handled basic IT support and day-to-day technical operations.",
+      "Managed digital communication and online platform updates.",
+    ],
+  },
+  {
     role: "E-commerce Page Owner",
     org: "Self-initiated",
     period: "2025 — Present",
