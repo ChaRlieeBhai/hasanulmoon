@@ -947,12 +947,15 @@ function Index() {
                     <textPath href="#circlePath" startOffset="0">MARKETING  •  SPECIALIST  •  </textPath>
                   </text>
                 </svg>
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/70 backdrop-blur-md border border-primary/60 grid place-items-center text-primary m-glow select-none"
+                <button
+                  type="button"
+                  aria-label="Locked"
+                  onClick={() => { setLockOpen(true); setPinValue(""); setPinError(false); }}
+                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-background/70 backdrop-blur-md border border-primary/60 grid place-items-center text-primary m-glow select-none cursor-pointer"
                 >
                   <span className="text-2xl md:text-3xl font-bold leading-none" style={{ fontFamily: "'Caveat', cursive" }}>M</span>
-                </div>
+                </button>
+
 
               </div>
             </div>
