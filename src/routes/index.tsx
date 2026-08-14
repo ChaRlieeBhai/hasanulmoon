@@ -1128,8 +1128,8 @@ function Index() {
           <ul className="relative divide-y divide-border/40">
             {[
               { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
-              { Icon: Phone, label: "Phone", value: "01616-444418", href: "tel:+8801616444418" },
-              { Icon: MessageCircle, label: "WhatsApp", value: "01616-444418", href: "https://wa.me/8801616444418" },
+              { Icon: Phone, label: "Phone", value: "01606-061234", href: "tel:+8801606061234" },
+              { Icon: MessageCircle, label: "WhatsApp", value: "01606-061234", href: "https://wa.me/8801606061234" },
               { Icon: MapPin, label: "Location", value: "Dhaka, Bangladesh", href: null as string | null },
             ].map((row, i) => {
               const Inner = (
