@@ -1252,6 +1252,75 @@ function Index() {
         </div>
       )}
 
+      {/* Locked reveal */}
+      {lockOpen && (
+        <div
+          onClick={() => { setLockOpen(false); setUnlocked(false); }}
+          className="fixed inset-0 z-[110] grid place-items-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-sm rounded-3xl border border-white/20 bg-white/10 backdrop-blur-2xl p-6 shadow-2xl overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/5 pointer-events-none" />
+            <button
+              type="button"
+              onClick={() => { setLockOpen(false); setUnlocked(false); }}
+              aria-label="Close"
+              className="absolute top-3 right-3 w-9 h-9 rounded-full border border-white/20 bg-white/10 grid place-items-center text-white/80 hover:bg-white/20 transition"
+            >
+              <X size={16} />
+            </button>
+
+            {!unlocked ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (pinValue.trim().toLowerCase() === "mj2003") { setUnlocked(true); setPinError(false); }
+                  else setPinError(true);
+                }}
+                className="relative flex flex-col items-center gap-5 pt-4"
+              >
+                <p
+                  className="text-center text-sm md:text-base tracking-[0.2em] uppercase text-primary font-semibold"
+                  style={{ textShadow: "0 0 12px var(--glow, var(--primary)), 0 0 28px var(--glow, var(--primary))" }}
+                >
+                  YOU &amp; YOUR'S BiRTHDAY
+                </p>
+                <input
+                  autoFocus
+                  value={pinValue}
+                  onChange={(e) => { setPinValue(e.target.value); setPinError(false); }}
+                  placeholder="••••••"
+                  className="w-full text-center tracking-[0.3em] rounded-xl bg-white/10 border border-white/25 px-4 py-3 text-foreground outline-none focus:border-primary/70 transition"
+                />
+                {pinError && <p className="text-xs text-red-400">Wrong answer</p>}
+                <button
+                  type="submit"
+                  className="w-full rounded-xl border border-primary/50 bg-primary/20 py-3 text-sm uppercase tracking-widest text-primary hover:bg-primary/30 transition"
+                >
+                  Unlock
+                </button>
+              </form>
+            ) : (
+              <div className="relative flex flex-col items-center gap-4 pt-4 animate-in fade-in duration-300">
+                <img
+                  src={mjForever}
+                  alt="MJ Forever"
+                  className="w-full max-h-[65vh] object-contain rounded-2xl shadow-2xl"
+                />
+                <p
+                  className="text-lg md:text-xl font-semibold tracking-[0.25em] text-primary"
+                  style={{ textShadow: "0 0 14px var(--glow, var(--primary)), 0 0 30px var(--glow, var(--primary))" }}
+                >
+                  MJ FOREVER{" "}
+                  <span style={{ filter: "drop-shadow(0 0 10px #ff4d6d)" }}>❤️</span>
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
 
     </div>
