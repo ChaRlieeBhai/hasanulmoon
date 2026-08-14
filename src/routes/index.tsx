@@ -191,8 +191,8 @@ const navItems = [
 const socials = [
   { Icon: Facebook, h: "https://www.facebook.com/hasanulmoon", label: "Facebook" },
   { Icon: Instagram, h: "https://www.instagram.com/hasanulmoon", label: "Instagram" },
-  { Icon: MessageCircle, h: "https://wa.me/8801616444418", label: "WhatsApp" },
-  { Icon: Send, h: "https://t.me/+8801616444418", label: "Telegram" },
+  { Icon: MessageCircle, h: "https://wa.me/8801606061234", label: "WhatsApp" },
+  { Icon: Send, h: "https://t.me/+8801606061234", label: "Telegram" },
   { Icon: Linkedin, h: "https://www.linkedin.com/in/hasanulmoon", label: "LinkedIn" },
 ];
 
@@ -1128,8 +1128,8 @@ function Index() {
           <ul className="relative divide-y divide-border/40">
             {[
               { Icon: Mail, label: "Email", value: "hasanulhaquemoon@gmail.com", href: "mailto:hasanulhaquemoon@gmail.com" },
-              { Icon: Phone, label: "Phone", value: "01616-444418", href: "tel:+8801616444418" },
-              { Icon: MessageCircle, label: "WhatsApp", value: "01616-444418", href: "https://wa.me/8801616444418" },
+              { Icon: Phone, label: "Phone", value: "01606-061234", href: "tel:+8801606061234" },
+              { Icon: MessageCircle, label: "WhatsApp", value: "01606-061234", href: "https://wa.me/8801606061234" },
               { Icon: MapPin, label: "Location", value: "Dhaka, Bangladesh", href: null as string | null },
             ].map((row, i) => {
               const Inner = (
